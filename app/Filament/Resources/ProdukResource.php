@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class ProdukResource extends Resource
 {
@@ -36,6 +37,9 @@ class ProdukResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('deskripsi')
                     ->columnSpanFull(),
+                Forms\Components\Hidden::make('tenant_id')
+                    ->default(fn() => Auth::user()?->teams->first()?->id)
+                    ->required(),
             ]);
     }
 
