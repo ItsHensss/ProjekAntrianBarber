@@ -35,12 +35,16 @@ class DatabaseSeeder extends Seeder
             'Eko Saputra',
         ];
 
+        $users = collect();
+
         foreach ($names as $name) {
             $user = User::factory()->create([
                 'name' => $name,
                 'email' => strtolower(str_replace(' ', '', $name)) . '@example.com',
-                'password' => bcrypt('password'), // password
+                'password' => bcrypt('password'),
             ]);
+
+            $users->push($user->id);
         }
 
         $tenant = Tenant::create([
@@ -48,6 +52,6 @@ class DatabaseSeeder extends Seeder
             'slug' => 'cabang-utama'
         ]);
 
-        $tenant->users()->attach($user);
+        $tenant->users()->attach($users);
     }
 }
