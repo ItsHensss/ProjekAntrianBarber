@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('judul');
             $table->text('deskripsi')->nullable();
+            $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

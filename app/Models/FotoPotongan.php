@@ -11,6 +11,7 @@ class FotoPotongan extends Model
     protected $fillable = [
         'image',
         'judul',
+        'team_id',
         'deskripsi',
     ];
 

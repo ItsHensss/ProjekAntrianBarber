@@ -17,6 +17,7 @@ return new class extends Migration
             $table->time('open_time'); // Jam buka
             $table->time('close_time'); // Jam tutup
             $table->boolean('is_open')->default(true); // Apakah toko buka di hari tersebut
+            $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

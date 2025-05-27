@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class OperationalResource extends Resource
 {
     protected static ?string $model = Operational::class;
+    protected static null|string $tenantOwnershipRelationshipName = 'users';
+
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

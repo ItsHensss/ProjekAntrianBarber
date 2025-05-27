@@ -13,6 +13,7 @@ class Queue extends Model
         'status',
         'is_validated',
         'requested_chapster_id',
+        'team_id',
         'booking_date',
     ];
 

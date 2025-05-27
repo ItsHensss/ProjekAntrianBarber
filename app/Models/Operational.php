@@ -12,6 +12,7 @@ class Operational extends Model
         'day',
         'open_time',
         'close_time',
+        'team_id',
         'is_open',
     ];
 

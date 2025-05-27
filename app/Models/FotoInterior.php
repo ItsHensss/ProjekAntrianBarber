@@ -12,6 +12,7 @@ class FotoInterior extends Model
         'image',
         'judul',
         'deskripsi',
+        'team_id',
     ];
 
     public function team()
