@@ -34,7 +34,7 @@ class Queue extends Model
         return $this->belongsTo(Produk::class);
     }
 
-    public function teams(): BelongsToMany
+    public function tenant(): BelongsToMany
     {
         return $this->belongsToMany(Tenant::class);
     }

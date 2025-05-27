@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class QueueResource extends Resource
 {
@@ -40,6 +41,9 @@ class QueueResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('requested_chapster_id'),
                 Forms\Components\DatePicker::make('booking_date'),
+                Forms\Components\Hidden::make('tenant_id')
+                    ->default(fn() => Auth::user()?->teams->first()?->id)
+                    ->required(),
             ]);
     }
 
