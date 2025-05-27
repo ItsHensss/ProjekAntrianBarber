@@ -8,7 +8,6 @@ class Queue extends Model
 {
     protected $fillable = [
         'user_id',
-        'barber_table_id',
         'nomor_antrian',
         'status',
         'is_validated',
@@ -21,21 +20,5 @@ class Queue extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the barber associated with the queue.
-     */
-    public function barberTable()
-    {
-        return $this->belongsTo(BarberTable::class, 'barber_table_id');
-    }
-
-    /**
-     * Get the requested chapster associated with the queue.
-     */
-    public function requestedChapster()
-    {
-        return $this->belongsTo(Employee::class, 'requested_chapster_id');
     }
 }
