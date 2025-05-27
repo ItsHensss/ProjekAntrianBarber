@@ -35,8 +35,8 @@ class DatabaseSeeder extends Seeder
             'Eko Saputra',
         ];
 
-        foreach ($names as $index => $name) {
-            User::factory()->create([
+        foreach ($names as $name) {
+            $user = User::factory()->create([
                 'name' => $name,
                 'email' => strtolower(str_replace(' ', '', $name)) . '@example.com',
                 'password' => bcrypt('password'), // password
@@ -48,6 +48,6 @@ class DatabaseSeeder extends Seeder
             'slug' => 'cabang-utama'
         ]);
 
-        $tenant->users()->attach();
+        $tenant->users()->attach($user);
     }
 }

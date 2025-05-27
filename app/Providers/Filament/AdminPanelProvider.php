@@ -55,7 +55,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->tenant(Tenant::class, slugAttribute: 'slug')
-            ->tenantRegistration(RegisterTeam::class)
+            // ->tenantRegistration(RegisterTeam::class)
             ->authMiddleware([
                 Authenticate::class,
             ]);

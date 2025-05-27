@@ -2,7 +2,6 @@
 
 namespace App\Filament\Pages\Tenancy;
 
-use App\Models\Team;
 use App\Models\Tenant;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
