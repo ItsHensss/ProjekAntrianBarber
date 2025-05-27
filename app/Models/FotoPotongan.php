@@ -16,7 +16,7 @@ class FotoPotongan extends Model
         'deskripsi',
     ];
 
-    public function teams(): BelongsToMany
+    public function tenant(): BelongsToMany
     {
         return $this->belongsToMany(Tenant::class);
     }

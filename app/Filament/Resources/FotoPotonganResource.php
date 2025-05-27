@@ -34,8 +34,8 @@ class FotoPotonganResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('deskripsi')
                     ->columnSpanFull(),
-                Forms\Components\Hidden::make('team_id')
-                    ->default(fn() => Auth::user()?->current_team_id)
+                Forms\Components\Hidden::make('tenant_id')
+                    ->default(fn() => Auth::user()?->teams->first()?->id)
                     ->required(),
             ]);
     }
