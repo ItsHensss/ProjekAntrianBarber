@@ -20,4 +20,25 @@ class Tenant extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    // relasi foto interior
+    public function fotoInteriors()
+    {
+        return $this->hasMany(FotoInterior::class);
+    }
+    // relasi produk
+    public function produks()
+    {
+        return $this->hasMany(Produk::class);
+    }
+    // relasi queue
+    public function queues()
+    {
+        return $this->hasMany(Queue::class);
+    }
+    // relasi operational
+    public function operationals()
+    {
+        return $this->hasMany(Operational::class);
+    }
 }

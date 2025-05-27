@@ -33,9 +33,8 @@ class FotoInteriorResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('deskripsi')
                     ->columnSpanFull(),
-                //tambahkan relasi ke team dan ambil langsung team yang sekarang digunakan
-                Forms\Components\Hidden::make('team_id')
-                    ->default(fn() => Auth::user()?->current_team_id)
+                Forms\Components\Hidden::make('tenant_id')
+                    ->default(fn() => Auth::user()?->teams->first()?->id)
                     ->required(),
             ]);
     }

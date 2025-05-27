@@ -52,6 +52,12 @@ class DatabaseSeeder extends Seeder
             'slug' => 'cabang-utama'
         ]);
 
+        $tenant2 = Tenant::create([
+            'name' => 'cabang kedua',
+            'slug' => 'cabang-kedua'
+        ]);
+
         $tenant->users()->attach($users);
+        $tenant2->users()->attach($users);
     }
 }
