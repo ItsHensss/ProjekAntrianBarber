@@ -17,7 +17,7 @@ class Operational extends Model
         'is_open',
     ];
 
-    public function teams(): BelongsToMany
+    public function tenant(): BelongsToMany
     {
         return $this->belongsToMany(Tenant::class);
     }

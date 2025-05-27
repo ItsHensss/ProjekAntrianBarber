@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class OperationalResource extends Resource
 {
@@ -33,6 +34,9 @@ class OperationalResource extends Resource
                 Forms\Components\TextInput::make('close_time')
                     ->required(),
                 Forms\Components\Toggle::make('is_open')
+                    ->required(),
+                Forms\Components\Hidden::make('tenant_id')
+                    ->default(fn() => Auth::user()?->teams->first()?->id)
                     ->required(),
             ]);
     }
