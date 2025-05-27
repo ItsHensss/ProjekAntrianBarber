@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('harga');
             $table->text('deskripsi')->nullable();
-            $table->unsignedBigInteger('tenant_id');
+            $table->unsignedBigInteger('tenant_id')->nullable();
             $table->timestamps();
         });
     }

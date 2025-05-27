@@ -17,7 +17,7 @@ return new class extends Migration
             $table->time('open_time'); // Jam buka
             $table->time('close_time'); // Jam tutup
             $table->boolean('is_open')->default(true); // Apakah toko buka di hari tersebut
-            $table->unsignedBigInteger('tenant_id');
+            $table->unsignedBigInteger('tenant_id')->nullable(); // Relasi ke tenant, nullable jika tidak ada tenant yang terkait
             $table->timestamps();
         });
     }

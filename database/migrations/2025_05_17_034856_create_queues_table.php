@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('produk_id')->constrained()->onDelete('cascade');
-            $table->unsignedBigInteger('tenant_id');
+            $table->unsignedBigInteger('tenant_id')->nullable();
             $table->integer('nomor_antrian');
             $table->enum('status', ['menunggu', 'selesai'])->default('menunggu');
             $table->boolean('is_validated')->default(false);

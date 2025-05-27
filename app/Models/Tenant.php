@@ -12,4 +12,12 @@ class Tenant extends Model
         'name',
         'slug',
     ];
+
+    /**
+     * Get the users associated with the tenant.
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

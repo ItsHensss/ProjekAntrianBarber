@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('judul');
             $table->text('deskripsi')->nullable();
-            $table->unsignedBigInteger('tenant_id');
+            $table->unsignedBigInteger('tenant_id')->nullable();
             $table->timestamps();
         });
     }
