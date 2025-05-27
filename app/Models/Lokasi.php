@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Lokasi extends Model
 {
@@ -16,8 +17,8 @@ class Lokasi extends Model
         'email',
     ];
 
-    public function team()
+    public function teams(): BelongsToMany
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsToMany(Tenant::class);
     }
 }

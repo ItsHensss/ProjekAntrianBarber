@@ -17,6 +17,6 @@ class FotoInterior extends Model
 
     public function team()
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo(Tenant::class);
     }
 }

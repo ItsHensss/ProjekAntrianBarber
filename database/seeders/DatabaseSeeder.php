@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Tenant;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -41,5 +42,12 @@ class DatabaseSeeder extends Seeder
                 'password' => bcrypt('password'), // password
             ]);
         }
+
+        $tenant = Tenant::create([
+            'name' => 'cabang utama',
+            'slug' => 'cabang-utama'
+        ]);
+
+        $tenant->users()->attach();
     }
 }

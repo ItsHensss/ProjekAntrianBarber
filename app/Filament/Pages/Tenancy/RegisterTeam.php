@@ -3,6 +3,7 @@
 namespace App\Filament\Pages\Tenancy;
 
 use App\Models\Team;
+use App\Models\Tenant;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Pages\Tenancy\RegisterTenant;
@@ -20,16 +21,16 @@ class RegisterTeam extends RegisterTenant
             ->schema([
                 TextInput::make('name')->required()->maxLength(255),
                 TextInput::make('slug')->required()->maxLength(255)->unique(
-                    Team::class,
+                    Tenant::class,
                     'slug',
                     fn($record) => $record ? $record->id : null
                 )->label('Slug'),
             ]);
     }
 
-    protected function handleRegistration(array $data): Team
+    protected function handleRegistration(array $data): Tenant
     {
-        $team = Team::create($data);
+        $team = Tenant::create($data);
 
         $team->users()->attach(auth()->user());
 

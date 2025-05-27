@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Tenancy\RegisterTeam;
 use App\Models\Team;
+use App\Models\Tenant;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -53,7 +54,7 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
-            ->tenant(Team::class, slugAttribute: 'slug')
+            ->tenant(Tenant::class, slugAttribute: 'slug')
             ->tenantRegistration(RegisterTeam::class)
             ->authMiddleware([
                 Authenticate::class,

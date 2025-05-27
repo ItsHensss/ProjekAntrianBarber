@@ -12,13 +12,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class FotoInteriorResource extends Resource
 {
     protected static ?string $model = FotoInterior::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static null|string $tenantOwnershipRelationshipName = 'team';
+    protected static null|string $tenantOwnershipRelationshipName = 'teams';
 
     public static function form(Form $form): Form
     {
@@ -32,6 +33,10 @@ class FotoInteriorResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('deskripsi')
                     ->columnSpanFull(),
+                //tambahkan relasi ke team dan ambil langsung team yang sekarang digunakan
+                Forms\Components\Hidden::make('team_id')
+                    ->default(fn() => Auth::user()?->current_team_id)
+                    ->required(),
             ]);
     }
 

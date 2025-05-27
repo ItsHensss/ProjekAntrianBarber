@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('harga');
             $table->text('deskripsi')->nullable();
-            $table->foreignId('team_id')->nullable()->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('tenant_id');
             $table->timestamps();
         });
     }

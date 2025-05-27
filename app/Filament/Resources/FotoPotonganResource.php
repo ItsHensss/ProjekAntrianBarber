@@ -12,13 +12,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class FotoPotonganResource extends Resource
 {
     protected static ?string $model = FotoPotongan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static null|string $tenantOwnershipRelationshipName = 'users';
+    protected static ?string $tenantOwnershipRelationshipName = 'team';
 
 
     public static function form(Form $form): Form
@@ -33,6 +34,9 @@ class FotoPotonganResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Textarea::make('deskripsi')
                     ->columnSpanFull(),
+                Forms\Components\Hidden::make('team_id')
+                    ->default(fn() => Auth::user()?->current_team_id)
+                    ->required(),
             ]);
     }
 

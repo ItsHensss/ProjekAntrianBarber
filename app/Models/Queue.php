@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Queue extends Model
 {
@@ -22,7 +23,7 @@ class Queue extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Tenant::class);
     }
 
     /**
@@ -33,8 +34,8 @@ class Queue extends Model
         return $this->belongsTo(Produk::class);
     }
 
-    public function team()
+    public function teams(): BelongsToMany
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsToMany(Tenant::class);
     }
 }

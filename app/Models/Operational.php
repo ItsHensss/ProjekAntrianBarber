@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Operational extends Model
 {
@@ -16,8 +17,8 @@ class Operational extends Model
         'is_open',
     ];
 
-    public function team()
+    public function teams(): BelongsToMany
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsToMany(Tenant::class);
     }
 }

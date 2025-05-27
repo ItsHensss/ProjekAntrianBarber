@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class FotoPotongan extends Model
 {
@@ -15,8 +16,8 @@ class FotoPotongan extends Model
         'deskripsi',
     ];
 
-    public function team()
+    public function teams(): BelongsToMany
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsToMany(Tenant::class);
     }
 }
