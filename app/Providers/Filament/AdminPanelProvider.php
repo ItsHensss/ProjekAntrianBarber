@@ -53,10 +53,10 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->tenant(team::class)
+            ->tenantRegistration(RegisterTeam::class)
             ->authMiddleware([
                 Authenticate::class,
-            ])
-            ->tenant(team::class)
-            ->tenantRegistration(RegisterTeam::class);
+            ]);
     }
 }
