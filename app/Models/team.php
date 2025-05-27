@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class team extends Model
+class Team extends Model
 {
     /**
      * The attributes that are mass assignable.
