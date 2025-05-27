@@ -8,10 +8,12 @@ class Queue extends Model
 {
     protected $fillable = [
         'user_id',
+        'produk_id',
         'nomor_antrian',
         'status',
         'is_validated',
         'requested_chapster_id',
+        'booking_date',
     ];
 
     /**
@@ -20,5 +22,13 @@ class Queue extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the produk associated with the queue.
+     */
+    public function produk()
+    {
+        return $this->belongsTo(Produk::class);
     }
 }

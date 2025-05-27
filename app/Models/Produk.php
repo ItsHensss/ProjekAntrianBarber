@@ -14,21 +14,4 @@ class Produk extends Model
         'judul',
         'deskripsi',
     ];
-
-    // Relasi ke Kategori
-    public function kategori()
-    {
-        return $this->belongsTo(Kategori::class, 'kategori_id');
-    }
-
-    public function pakets()
-    {
-        return $this->hasMany(Paket::class, 'produk_id');
-    }
-
-    // Relasi ke DetailPaket
-    public function detailPakets()
-    {
-        return $this->hasMany(DetailPaket::class, 'produk_id');
-    }
 }

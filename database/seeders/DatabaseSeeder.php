@@ -15,10 +15,31 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => 'password',
+        // Jalankan seeder operationalSeeder
+        $this->call([
+            operationalSeeder::class,
+            lokasiSeeder::class,
         ]);
+
+        $names = [
+            'Budi Santoso',
+            'Siti Aminah',
+            'Agus Prabowo',
+            'Dewi Lestari',
+            'Rina Marlina',
+            'Andi Wijaya',
+            'Fitriani Putri',
+            'Joko Susilo',
+            'Sri Wahyuni',
+            'Eko Saputra',
+        ];
+
+        foreach ($names as $index => $name) {
+            User::factory()->create([
+                'name' => $name,
+                'email' => strtolower(str_replace(' ', '', $name)) . '@example.com',
+                'password' => bcrypt('password'), // password
+            ]);
+        }
     }
 }

@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::create('produks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('kategori_id');
             $table->string('image');
             $table->string('judul');
             $table->string('harga');
             $table->text('deskripsi')->nullable();
             $table->timestamps();
-            $table->foreign('kategori_id')->references('id')->on('kategoris')->onDelete('cascade');
         });
     }
 
