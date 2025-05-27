@@ -12,10 +12,10 @@ class FotoInterior extends Model
         'image',
         'judul',
         'deskripsi',
-        'team_id',
+        'tenant_id',
     ];
 
-    public function team()
+    public function tenant()
     {
         return $this->belongsTo(Tenant::class);
     }

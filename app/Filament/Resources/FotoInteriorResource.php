@@ -19,7 +19,7 @@ class FotoInteriorResource extends Resource
     protected static ?string $model = FotoInterior::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static null|string $tenantOwnershipRelationshipName = 'teams';
+    protected static null|string $tenantOwnershipRelationshipName = 'tenant';
 
     public static function form(Form $form): Form
     {

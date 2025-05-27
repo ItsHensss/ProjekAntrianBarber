@@ -19,7 +19,7 @@ class FotoPotonganResource extends Resource
     protected static ?string $model = FotoPotongan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $tenantOwnershipRelationshipName = 'team';
+    protected static ?string $tenantOwnershipRelationshipName = 'tenant';
 
 
     public static function form(Form $form): Form
