@@ -15,4 +15,9 @@ class Lokasi extends Model
         'telepon',
         'email',
     ];
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }
