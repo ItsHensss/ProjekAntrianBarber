@@ -31,4 +31,9 @@ class Queue extends Model
     {
         return $this->belongsTo(Produk::class);
     }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }

@@ -14,4 +14,9 @@ class Produk extends Model
         'judul',
         'deskripsi',
     ];
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }
