@@ -14,4 +14,9 @@ class Operational extends Model
         'close_time',
         'is_open',
     ];
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
 }
