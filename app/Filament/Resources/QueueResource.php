@@ -73,18 +73,6 @@ class QueueResource extends Resource
                     })
                     ->required(),
 
-                Forms\Components\TextInput::make('nomor_antrian')
-                    ->required()
-                    ->numeric()
-                    ->readOnly()
-                    ->default(function () {
-                        $today = now()->toDateString();
-                        $lastQueueToday = Queue::whereDate('booking_date', $today)
-                            ->orderByDesc('nomor_antrian')
-                            ->first();
-                        return $lastQueueToday ? $lastQueueToday->nomor_antrian + 1 : 1;
-                    }),
-
                 Forms\Components\TextInput::make('status')
                     ->readOnly()
                     ->default('menunggu')
@@ -101,7 +89,23 @@ class QueueResource extends Resource
                     ])
                     ->required(),
 
-                Forms\Components\DatePicker::make('booking_date'),
+                DatePicker::make('booking_date')
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $lastQueue = \App\Models\Queue::whereDate('booking_date', $state)
+                            ->orderByDesc('nomor_antrian')
+                            ->first();
+
+                        $nextNumber = $lastQueue ? $lastQueue->nomor_antrian + 1 : 1;
+
+                        $set('nomor_antrian', $nextNumber);
+                    }),
+
+                TextInput::make('nomor_antrian')
+                    ->required()
+                    ->numeric()
+                    ->readOnly()
+                    ->hint('Akan otomatis terisi jika tanggal booking sudah terisi'),
 
                 Forms\Components\Hidden::make('tenant_id')
                     ->default(fn() => Auth::user()?->teams->first()?->id)
@@ -113,20 +117,33 @@ class QueueResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('produk_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('customer.nama')
+                    ->label('Pelanggan')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('produk.judul')
+                    ->label('Produk')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nomor_antrian')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state) => match ($state) {
+                        'menunggu' => 'warning',
+                        'selesai' => 'success',
+                        'batal' => 'danger',
+                        default => 'secondary',
+                    }),
                 Tables\Columns\IconColumn::make('is_validated')
+                    ->label('Validated')
+                    ->sortable()
                     ->boolean(),
-                Tables\Columns\TextColumn::make('requested_chapster_id'),
+                Tables\Columns\TextColumn::make('requested_chapster_id')
+                    ->label('Chapster')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('booking_date')
+                    ->label('Tanggal Booking')
                     ->date('l, d F Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -173,30 +190,38 @@ class QueueResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                //action to validate the queue
-                Tables\Actions\Action::make('validate')
-                    ->label('Validate')
-                    ->action(function (Queue $record) {
-                        $record->update(['is_validated' => true]);
-                    })
-                    ->requiresConfirmation()
-                    ->icon('heroicon-o-check-circle'),
-                // action selesai
-                Tables\Actions\Action::make('selesai')
-                    ->label('Selesai')
-                    ->action(function (Queue $record) {
-                        $record->update(['status' => 'selesai']);
-                    })
-                    ->requiresConfirmation()
-                    ->icon('heroicon-o-check'),
-                // action batalkan
-                Tables\Actions\Action::make('batalkan')
-                    ->label('Batalkan')
-                    ->action(function (Queue $record) {
-                        $record->update(['status' => 'batal']);
-                    })
-                    ->requiresConfirmation()
-                    ->icon('heroicon-o-x-circle'),
+                Tables\Actions\ActionGroup::make([
+                    // action to validate the queue
+                    Tables\Actions\Action::make('validate')
+                        ->label('Validate')
+                        ->action(function (Queue $record) {
+                            $record->update(['is_validated' => true]);
+                        })
+                        ->requiresConfirmation()
+                        ->icon('heroicon-o-check-circle')
+                        ->color('success')
+                        ->disabled(fn(Queue $record) => $record->is_validated || $record->status === 'batal'),
+                    // action selesai
+                    Tables\Actions\Action::make('selesai')
+                        ->label('Selesai')
+                        ->action(function (Queue $record) {
+                            $record->update(['status' => 'selesai']);
+                        })
+                        ->requiresConfirmation()
+                        ->icon('heroicon-o-check')
+                        ->color('success')
+                        ->disabled(fn(Queue $record) => $record->status === 'selesai' || $record->status === 'batal'),
+                    // action batalkan
+                    Tables\Actions\Action::make('batalkan')
+                        ->label('Batalkan')
+                        ->action(function (Queue $record) {
+                            $record->update(['status' => 'batal']);
+                        })
+                        ->requiresConfirmation()
+                        ->icon('heroicon-o-x-circle')
+                        ->color('danger')
+                        ->disabled(fn(Queue $record) => $record->status === 'batal'),
+                ])->label('Aksi Lain')->icon('heroicon-o-cog'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
