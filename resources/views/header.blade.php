@@ -17,30 +17,21 @@
 					</div>
 					<div class="de-flex-col header-col-mid">
 						<ul id="mainmenu">
-							<li><a class="menu-item" href="{{ route('services') }}">Services</a>
-								<ul>
-									<li><a class="menu-item" href="{{ route('services') }}">All Services</a></li>
-								</ul>
-							</li>
-							<li><a class="menu-item" href="{{ route('about') }}">About</a>
-								<ul>
-									<li><a class="menu-item" href="{{ route('about') }}">About Us</a></li>
-									<li><a class="menu-item" href="{{ route('team') }}">Our Team</a></li>
-								</ul>
-							</li>
-							<li><a class="menu-item" href="{{ route('book') }}">Book Now</a></li>
-							<li><a class="menu-item" href="#">Extras</a>
-								<ul>
-									<li><a class="menu-item" href="{{ route('contact') }}">Contact</a></li>
-									<li><a class="menu-item" href="{{ route('gallery') }}">Gallery</a></li>
-									<li><a class="menu-item" href="{{ route('pricing') }}">Pricing</a></li>
-								</ul>
-							</li>
+							<li><a class="menu-item" href="{{ route('services') }}">Produk</a></li>
+							<li><a class="menu-item" href="{{ route('about') }}">Tentang</a></li>
+							<li><a class="menu-item" href="{{ route('contact') }}">Kontak</a></li>
+							<li><a class="menu-item" href="{{ route('gallery') }}">Gallery</a></li>
+							<li><a class="menu-item" href="{{ route('pricing') }}">Pricing</a></li>
 						</ul>
 					</div>
 					<div class="de-flex-col">
 						<div class="menu_side_area">
-							<a href="{{ route('book') }}" class="btn-main">Book Now</a>
+							<a href="https://wa.me/6285942966128" class="btn-main" target="_blank" rel="noopener">
+								Kontak Kami
+							</a>
+							<a href="{{ url('customer') }}" class="btn-main" style="margin-left: 10px;">
+								Booking
+							</a>
 							<span id="menu-btn"></span>
 						</div>
 					</div>

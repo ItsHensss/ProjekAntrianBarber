@@ -19,6 +19,3 @@ Route::get('/gallery', function () {
 })->name('gallery');
 Route::get('/pricing', [pricing::class, 'index'])->name('pricing');
 Route::get('/services', [service::class, 'index'])->name('services');
-Route::get('/team', function () {
-    return view('team');
-})->name('team');

@@ -133,7 +133,7 @@
 				<div class="de-gradient-edge-bottom"></div>
 			</section>
 
-			<section aria-label="section" class="no-top">
+			{{-- <section aria-label="section" class="no-top">
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-12 text-center">
@@ -156,7 +156,7 @@
 					</div>
 					<div class="spacer-single"></div>
 				</div>
-			</section>
+			</section> --}}
 
 			<section class="jarallax no-top">
 				<div class="de-gradient-edge-top"></div>

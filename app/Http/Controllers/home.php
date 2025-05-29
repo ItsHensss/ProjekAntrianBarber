@@ -14,12 +14,9 @@ class home extends Controller
 
         $lokasiCabang = \App\Models\Lokasi::all();
 
-        $fotokategoris = \App\Models\Kategori::all();
-
         // Kirim data ke view 'home'
         return view('home', [
             'fotoPotongans' => $fotoPotongans,
-            'fotokategoris' => $fotokategoris,
             'jamOperational' => $jamOperational,
             'lokasiCabang' => $lokasiCabang,
         ]);
