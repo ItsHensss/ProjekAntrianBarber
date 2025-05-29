@@ -25,6 +25,8 @@ use App\Filament\Resources\QueueResource\Pages;
 use App\Filament\Resources\QueueResource\Pages\EditQueue;
 use App\Filament\Resources\QueueResource\Pages\ListQueues;
 use App\Filament\Resources\QueueResource\Pages\CreateQueue;
+use App\Models\User;
+use Filament\Forms\Get;
 
 class QueueResource extends Resource
 {
@@ -38,25 +40,73 @@ class QueueResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('produk_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Toggle::make('is_new_customer')
+                    ->label('Pelanggan Baru?')
+                    ->default(false),
+
+                Forms\Components\Select::make('user_id')
+                    ->label('Pilih Pelanggan')
+                    ->options(fn() => User::whereNull('current_team_id')->pluck('name', 'id'))
+                    ->visible(fn(Get $get) => !$get('is_new_customer'))
+                    ->required(fn(Get $get) => !$get('is_new_customer')),
+
+                Forms\Components\TextInput::make('name')
+                    ->label('Nama Pelanggan')
+                    ->required(fn(Get $get) => $get('is_new_customer'))
+                    ->visible(fn(Get $get) => $get('is_new_customer')),
+
+                Forms\Components\TextInput::make('email')
+                    ->label('Email Pelanggan')
+                    ->email()
+                    ->required(fn(Get $get) => $get('is_new_customer'))
+                    ->visible(fn(Get $get) => $get('is_new_customer')),
+
+                Forms\Components\Select::make('produk_id')
+                    ->label('Produk')
+                    ->options(\App\Models\Produk::pluck('nama', 'id'))
+                    ->required(),
+
                 Forms\Components\TextInput::make('nomor_antrian')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->default(function () {
+                        $today = now()->toDateString();
+                        $lastQueueToday = Queue::whereDate('booking_date', $today)
+                            ->orderByDesc('nomor_antrian')
+                            ->first();
+                        return $lastQueueToday ? $lastQueueToday->nomor_antrian + 1 : 1;
+                    }),
+
                 Forms\Components\TextInput::make('status')
+                    ->default('menunggu')
                     ->required(),
-                Forms\Components\Toggle::make('is_validated')
+
+                Forms\Components\Hidden::make('is_validated')
+                    ->default(true),
+
+                Forms\Components\Select::make('requested_chapster_id')
+                    ->label('Requested Chapster')
+                    ->options([
+                        'umum' => 'Umum',
+                        'dani' => 'Dani',
+                    ])
                     ->required(),
-                Forms\Components\TextInput::make('requested_chapster_id'),
+
                 Forms\Components\DatePicker::make('booking_date'),
+
                 Forms\Components\Hidden::make('tenant_id')
                     ->default(fn() => Auth::user()?->teams->first()?->id)
                     ->required(),
-            ]);
+            ])
+            ->afterCreate(function (Queue $record, array $data) {
+                if ($data['is_new_customer']) {
+                    $newUser = User::create([
+                        'name' => $data['name'],
+                        'email' => $data['email'],
+                    ]);
+                    $record->update(['user_id' => $newUser->id]);
+                }
+            });
     }
 
     public static function table(Table $table): Table
