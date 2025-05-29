@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Queue extends Model
 {
     protected $fillable = [
-        'user_id',
+        'customer_id',
         'produk_id',
         'nomor_antrian',
         'status',
@@ -17,14 +17,6 @@ class Queue extends Model
         'tenant_id',
         'booking_date',
     ];
-
-    /**
-     * Get the user that owns the queue.
-     */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     /**
      * Get the produk associated with the queue.
@@ -37,5 +29,11 @@ class Queue extends Model
     public function tenant(): BelongsTo
     {
         return $this->belongsTo(Tenant::class);
+    }
+
+    // relasi ke customer
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
     }
 }

@@ -14,9 +14,9 @@ class Customer extends Model
         'user_id',
     ];
 
-    // relasi ke table users
-    public function user()
+    // relasi ke queue
+    public function queues()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Queue::class);
     }
 }

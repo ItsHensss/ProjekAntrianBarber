@@ -54,13 +54,14 @@ class QueueResource extends Resource
                     ->visible(fn(Get $get) => !$get('is_new_customer'))
                     ->required(fn(Get $get) => !$get('is_new_customer')),
 
-                TextInput::make('name')
+                TextInput::make('nama')
                     ->label('Nama Pelanggan')
                     ->required(fn(Get $get) => $get('is_new_customer'))
                     ->visible(fn(Get $get) => $get('is_new_customer')),
 
                 TextInput::make('nomor')
                     ->label('Nomor Pelanggan')
+                    ->numeric()
                     ->required(fn(Get $get) => $get('is_new_customer'))
                     ->visible(fn(Get $get) => $get('is_new_customer')),
 
@@ -75,6 +76,7 @@ class QueueResource extends Resource
                 Forms\Components\TextInput::make('nomor_antrian')
                     ->required()
                     ->numeric()
+                    ->readOnly()
                     ->default(function () {
                         $today = now()->toDateString();
                         $lastQueueToday = Queue::whereDate('booking_date', $today)
@@ -84,6 +86,7 @@ class QueueResource extends Resource
                     }),
 
                 Forms\Components\TextInput::make('status')
+                    ->readOnly()
                     ->default('menunggu')
                     ->required(),
 
