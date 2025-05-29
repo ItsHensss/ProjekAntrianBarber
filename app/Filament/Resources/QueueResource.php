@@ -220,7 +220,7 @@ class QueueResource extends Resource
                         ->requiresConfirmation()
                         ->icon('heroicon-o-x-circle')
                         ->color('danger')
-                        ->disabled(fn(Queue $record) => $record->status === 'batal'),
+                        ->disabled(fn(Queue $record) => $record->status === 'batal' || $record->status === 'selesai'),
                 ])->label('Aksi Lain')->icon('heroicon-o-cog')->color('white'),
             ])
             ->bulkActions([
