@@ -56,8 +56,14 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->tenant(Tenant::class, slugAttribute: 'slug')
             // ->tenantRegistration(RegisterTeam::class)
+            ->tenantMiddleware([
+                \BezhanSalleh\FilamentShield\Middleware\SyncShieldTenant::class,
+            ], isPersistent: true)
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
             ]);
     }
 }
