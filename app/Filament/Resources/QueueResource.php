@@ -50,6 +50,9 @@ class QueueResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(function (Builder $query) {
+                return $query->whereDate('booking_date', now()->toDateString());
+            })
             ->columns([
                 Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
@@ -65,7 +68,7 @@ class QueueResource extends Resource
                     ->boolean(),
                 Tables\Columns\TextColumn::make('requested_chapster_id'),
                 Tables\Columns\TextColumn::make('booking_date')
-                    ->date()
+                    ->date('l, d F Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
