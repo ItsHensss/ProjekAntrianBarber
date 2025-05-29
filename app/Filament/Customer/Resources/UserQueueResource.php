@@ -32,79 +32,63 @@ class UserQueueResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(function (Builder $query) {
+                return $query->whereDate('booking_date', now()->toDateString());
+            })
             ->columns([
+                Tables\Columns\TextColumn::make('user_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('produk_id')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('nomor_antrian')
-                    ->label('Nomor Antrian')
+                    ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('Nama Pelanggan')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('barber_table.nama')
-                    ->label('Meja/Kursi')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('employee.full_name')
-                    ->label('Chapster')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\BadgeColumn::make('status')
-                    ->label('Status')
-                    ->formatStateUsing(fn($state) => match ($state) {
-                        'menunggu' => 'Menunggu',
-                        'dipanggil' => 'Dipanggil',
-                        'selesai' => 'Selesai',
-                        'batal' => 'Dibatalkan',
-                        default => ucfirst($state),
-                    })
-                    ->color(fn($state) => match ($state) {
-                        'menunggu' => 'primary',
-                        'dipanggil' => 'warning',
-                        'selesai' => 'success',
-                        'batal' => 'danger',
-                        default => 'secondary',
-                    })
-                    ->sortable(),
-
+                Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\IconColumn::make('is_validated')
-                    ->label('Validasi Admin')
-                    ->boolean()
+                    ->boolean(),
+                Tables\Columns\TextColumn::make('requested_chapster_id'),
+                Tables\Columns\TextColumn::make('booking_date')
+                    ->date('l, d F Y')
                     ->sortable(),
-
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Dibuat')
-                    ->dateTime('d M Y H:i')
-                    ->sortable(),
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
-            ->defaultSort('created_at', 'desc')
-            ->poll('5s')
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->label('Status')
                     ->options([
                         'menunggu' => 'Menunggu',
-                        'dipanggil' => 'Dipanggil',
                         'selesai' => 'Selesai',
+                        'batal' => 'Batal',
                     ]),
-
-                Tables\Filters\TernaryFilter::make('is_validated')
-                    ->label('Validasi Admin')
-                    ->trueLabel('Sudah divalidasi')
-                    ->falseLabel('Belum divalidasi'),
-
-                Tables\Filters\Filter::make('created_at')
-                    ->label('Tanggal Dibuat')
+                Tables\Filters\Filter::make('booking_date')
                     ->form([
-                        Forms\Components\DatePicker::make('created_from')->label('Dari'),
-                        Forms\Components\DatePicker::make('created_until')->label('Sampai'),
+                        Forms\Components\DatePicker::make('from')->label('Dari'),
+                        Forms\Components\DatePicker::make('until')->label('Sampai'),
                     ])
                     ->query(function (Builder $query, array $data) {
                         return $query
-                            ->when($data['created_from'], fn($q, $date) => $q->whereDate('created_at', '>=', $date))
-                            ->when($data['created_until'], fn($q, $date) => $q->whereDate('created_at', '<=', $date));
+                            ->when($data['from'], fn($q, $date) => $q->whereDate('booking_date', '>=', $date))
+                            ->when($data['until'], fn($q, $date) => $q->whereDate('booking_date', '<=', $date));
                     }),
             ])
-            ->actions([]);
+            ->actions([
+                Tables\Actions\Action::make('batalkan')
+                    ->label('Batalkan')
+                    ->action(function (Queue $record) {
+                        $record->update(['status' => 'batal']);
+                    })
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-x-circle'),
+            ]);
     }
 
 
