@@ -16,9 +16,4 @@ class Lokasi extends Model
         'telepon',
         'email',
     ];
-
-    public function teams(): BelongsToMany
-    {
-        return $this->belongsToMany(Tenant::class);
-    }
 }

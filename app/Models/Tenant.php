@@ -41,4 +41,10 @@ class Tenant extends Model
     {
         return $this->hasMany(Operational::class);
     }
+
+    // foto potongan
+    public function fotoPotongans()
+    {
+        return $this->hasMany(FotoPotongan::class);
+    }
 }
