@@ -207,77 +207,13 @@
 				<div class="de-gradient-edge-bottom"></div>
 			</section>
 
-			<section aria-label="section" class="no-top">
-				<div class="wow fadeInRight d-flex">
-					<div class="de-marquee-list wow">
-						<div class="d-item">
-							<span class="d-item-txt">Pelayanan</span>
-							<span class="d-item-display">
-								<i class="d-item-block"></i>
-							</span>
-							<span class="d-item-txt">Estetika</span>
-							<span class="d-item-display">
-								<i class="d-item-block"></i>
-							</span>
-							<span class="d-item-txt">Kepuasan</span>
-							<span class="d-item-display">
-								<i class="d-item-block"></i>
-							</span>
-							<span class="d-item-txt">Profesional</span>
-							<span class="d-item-display">
-								<i class="d-item-block"></i>
-							</span>
-							<span class="d-item-txt">Bersih</span>
-							<span class="d-item-display">
-								<i class="d-item-block"></i>
-							</span>
-							<span class="d-item-txt">Nyaman</span>
-							<span class="d-item-display">
-								<i class="d-item-block"></i>
-							</span>
-							<span class="d-item-txt">Modern</span>
-							<span class="d-item-display">
-								<i class="d-item-block"></i>
-							</span>
-							<span class="d-item-txt">Ramah</span>
-							<span class="d-item-display">
-								<i class="d-item-block"></i>
-							</span>
-							<span class="d-item-txt">Berpengalaman</span>
-							<span class="d-item-display">
-								<i class="d-item-block"></i>
-							</span>
-						</div>
-					</div>
-				</div>
-			</section>
+			@include('textrun')
 
 		</div>
 		<!-- content close -->
 		<a href="#" id="back-to-top"></a>
 		<!-- footer begin -->
-		<footer>
-			<div class="container">
-				<div class="row g-4">
-
-					<div class="col-lg-4 text-lg-start text-center">
-						{{-- <div class="social-icons">
-							<a href="#"><i class="fa fa-facebook fa-lg"></i></a>
-							<a href="#"><i class="fa fa-twitter fa-lg"></i></a>
-							<a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
-							<a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
-							<a href="#"><i class="fa fa-rss fa-lg"></i></a>
-						</div> --}}
-					</div>
-					<div class="col-lg-4 text-lg-center text-center">
-						<img src="images/logo.png" class="" alt="">
-					</div>
-					{{-- <div class="col-lg-4 text-lg-end text-center">
-						Copyright 2025 - Blaxcut by Designesia
-					</div> --}}
-				</div>
-			</div>
-		</footer>
+		@include('footer')
 		<!-- footer close -->
 	</div>
 	@include('script')
