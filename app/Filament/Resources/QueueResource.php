@@ -163,6 +163,16 @@ class QueueResource extends Resource
                     ->query(function (Builder $query) {
                         return $query->whereDate('booking_date', now()->toDateString());
                     }),
+                //filter chapster
+                Filter::make('chapster')
+                    ->label('Chapster')
+                    ->query(function (Builder $query) {
+                        return $query->whereIn('requested_chapster_id', ['umum', 'dani']);
+                    })
+                    ->options([
+                        'umum' => 'Umum',
+                        'dani' => 'Dani',
+                    ]),
                 // Filter untuk status antrian
                 Tables\Filters\SelectFilter::make('status')
                     ->label('Status')

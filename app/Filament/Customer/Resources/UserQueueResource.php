@@ -34,20 +34,33 @@ class UserQueueResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('produk_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('customer.nama')
+                    ->label('Pelanggan')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('produk.judul')
+                    ->label('Produk')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nomor_antrian')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status'),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn(string $state) => match ($state) {
+                        'menunggu' => 'warning',
+                        'selesai' => 'success',
+                        'batal' => 'danger',
+                        default => 'secondary',
+                    }),
                 Tables\Columns\IconColumn::make('is_validated')
+                    ->label('Validated')
+                    ->sortable()
                     ->boolean(),
-                Tables\Columns\TextColumn::make('requested_chapster_id'),
+                Tables\Columns\TextColumn::make('requested_chapster_id')
+                    ->label('Chapster')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('booking_date')
+                    ->label('Tanggal Booking')
                     ->date('l, d F Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
