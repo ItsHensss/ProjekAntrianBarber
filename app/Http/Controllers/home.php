@@ -14,8 +14,12 @@ class home extends Controller
 
         $lokasiCabang = \App\Models\Lokasi::all();
 
+        // ambil data seluruh cabang di table tenant
+        $cabang = \App\Models\Tenant::all();
+
         // Kirim data ke view 'home'
         return view('home', [
+            'cabang' => $cabang,
             'fotoPotongans' => $fotoPotongans,
             'jamOperational' => $jamOperational,
             'lokasiCabang' => $lokasiCabang,

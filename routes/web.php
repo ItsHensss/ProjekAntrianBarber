@@ -18,7 +18,6 @@ Route::get('/contact', function () {
 Route::get('/gallery', function () {
     return view('gallery');
 })->name('gallery');
-Route::get('/pricing', [pricing::class, 'index'])->name('pricing');
 Route::get('/services', [service::class, 'index'])->name('services');
 Route::get('/antrian', [nomorAntrian::class, 'index'])->name('antrian');
 Route::get('/antrian/today/json', [nomorAntrian::class, 'jsonToday'])->name('antrian.today.json');

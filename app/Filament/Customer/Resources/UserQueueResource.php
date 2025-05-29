@@ -140,4 +140,14 @@ class UserQueueResource extends Resource
             'index' => Pages\ListUserQueues::route('/'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        return true;
+    }
+
+    public static function canView($record): bool
+    {
+        return true;
+    }
 }

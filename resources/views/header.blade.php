@@ -21,7 +21,6 @@
 							<li><a class="menu-item" href="{{ route('about') }}">Tentang</a></li>
 							<li><a class="menu-item" href="{{ route('contact') }}">Kontak</a></li>
 							<li><a class="menu-item" href="{{ route('gallery') }}">Gallery</a></li>
-							<li><a class="menu-item" href="{{ route('pricing') }}">Pricing</a></li>
 						</ul>
 					</div>
 					<div class="de-flex-col">
