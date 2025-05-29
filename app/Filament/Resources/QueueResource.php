@@ -81,6 +81,30 @@ class QueueResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                //action to validate the queue
+                Tables\Actions\Action::make('validate')
+                    ->label('Validate')
+                    ->action(function (Queue $record) {
+                        $record->update(['is_validated' => true]);
+                    })
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-check-circle'),
+                // action selesai
+                Tables\Actions\Action::make('selesai')
+                    ->label('Selesai')
+                    ->action(function (Queue $record) {
+                        $record->update(['status' => 'selesai']);
+                    })
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-check'),
+                // action batalkan
+                Tables\Actions\Action::make('batalkan')
+                    ->label('Batalkan')
+                    ->action(function (Queue $record) {
+                        $record->update(['status' => 'batal']);
+                    })
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-x-circle'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

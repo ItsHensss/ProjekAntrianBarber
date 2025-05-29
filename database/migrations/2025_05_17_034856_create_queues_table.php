@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('produk_id')->constrained()->onDelete('cascade');
             $table->unsignedBigInteger('tenant_id')->nullable();
             $table->integer('nomor_antrian');
-            $table->enum('status', ['menunggu', 'selesai'])->default('menunggu');
+            $table->enum('status', ['menunggu', 'selesai', 'batal'])->default('menunggu');
             $table->boolean('is_validated')->default(false);
             $table->enum('requested_chapster_id', ['dani', 'umum'])->nullable();
             $table->date('booking_date')->nullable();
