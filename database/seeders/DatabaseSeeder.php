@@ -106,5 +106,39 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
         ]);
+
+        //seeder produk
+        DB::table('produks')->insert([
+            [
+                'id' => 1,
+                'image' => '01JWD7CAHWB24JMDY0TVQ1F14Y.jpg',
+                'judul' => 'Potong',
+                'harga' => 35000,
+                'deskripsi' => null,
+                'tenant_id' => 1,
+                'created_at' => '2025-05-29 05:14:01',
+                'updated_at' => '2025-05-29 05:14:01',
+            ],
+            [
+                'id' => 2,
+                'image' => '01JWD7D29ATVEZJ6S2W67VS9TQ.jpg',
+                'judul' => 'Potong + Keramas',
+                'harga' => 60000,
+                'deskripsi' => null,
+                'tenant_id' => 1,
+                'created_at' => '2025-05-29 05:14:25',
+                'updated_at' => '2025-05-29 05:14:25',
+            ],
+            [
+                'id' => 3,
+                'image' => '01JWD7DWQ90Q78BDP5M4MS05EZ.jpg',
+                'judul' => 'Keramas',
+                'harga' => 25000,
+                'deskripsi' => null,
+                'tenant_id' => 1,
+                'created_at' => '2025-05-29 05:14:52',
+                'updated_at' => '2025-05-29 05:14:52',
+            ],
+        ]);
     }
 }
