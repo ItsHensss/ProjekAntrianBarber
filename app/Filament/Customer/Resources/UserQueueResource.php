@@ -25,11 +25,6 @@ class UserQueueResource extends Resource
     protected static ?string $modelLabel = 'Antrian';
     protected static ?string $pluralModelLabel = 'Antrian';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::count();
-    }
-
     public static function table(Table $table): Table
     {
         return $table
@@ -116,7 +111,18 @@ class UserQueueResource extends Resource
                         $record->update(['status' => 'batal']);
                     })
                     ->requiresConfirmation()
-                    ->icon('heroicon-o-x-circle'),
+                    ->icon('heroicon-o-x-circle')
+                    ->visible(function (Queue $record) {
+                        $customer = optional(Auth::user())->customer;
+                        if (!$customer) {
+                            return false;
+                        }
+                        // Sembunyikan jika status sudah selesai atau is_validated belum true
+                        if ($record->status === 'batal' || $record->status === 'selesai' || !$record->is_validated) {
+                            return false;
+                        }
+                        return $record->customer_id === $customer->id;
+                    }),
             ]);
     }
 
