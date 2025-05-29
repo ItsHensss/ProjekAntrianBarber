@@ -68,9 +68,9 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-12" data-jarallax-element="-50">
-							<p class="lead big wow fadeInUp">Established with a passion for the art of barbering, we take great pride in our craft and strive to create an
-								atmosphere that feels like home. From the moment you walk through our doors, you'll be greeted by friendly smiles and a warm ambiance that
-								instantly puts you at ease.
+							<p class="lead big wow fadeInUp">
+								Didirikan dengan semangat tinggi terhadap seni barber, kami sangat menjunjung profesionalisme dan dedikasi dalam memberikan layanan terbaik.
+								Sejak Anda melangkah masuk, Anda akan disambut dengan keramahan dan suasana hangat yang membuat Anda merasa nyaman seperti di rumah sendiri.
 							</p>
 						</div>
 					</div>
@@ -122,11 +122,13 @@
 							<img src="images/misc/man-2.png" class="img-fluid wow fadeInRight" alt="">
 						</div>
 						<div class="col-lg-6" data-jarallax-element="-60">
-							<h2 class="wow fadeInRight" data-wow-delay=".3s">We’ll Crafting <span class="id-color">Confidence</span> Through Sharp Style</h2>
-							<p class="wow fadeInRight" data-wow-delay=".4s">We take pride in providing top-notch grooming services that blend classic techniques with
-								modern trends. Step into our warm and inviting space, where you'll find a team of skilled barbers dedicated to enhancing your style and
-								confidence.</p>
-							<a href="book.html" class="btn-main wow fadeInRight" data-wow-delay=".5s">Book Now</a>
+							<h2 class="wow fadeInRight" data-wow-delay=".3s">Kami Hadir untuk Meningkatkan <span class="id-color">Kepercayaan Diri</span> Anda Lewat Gaya
+								Terbaik</h2>
+							<p class="wow fadeInRight" data-wow-delay=".4s">Kami berkomitmen memberikan layanan grooming terbaik dengan perpaduan teknik klasik dan tren
+								modern. Rasakan suasana hangat dan profesional, serta tim barber berpengalaman yang siap membantu Anda tampil percaya diri dan berkelas.</p>
+							<a href="{{ url('customer') }}" class="btn-main wow fadeInRight" data-wow-delay=".5s" style="margin-left: 10px;">
+								Booking Sekarang
+							</a>
 						</div>
 					</div>
 				</div>
@@ -209,39 +211,39 @@
 				<div class="wow fadeInRight d-flex">
 					<div class="de-marquee-list wow">
 						<div class="d-item">
-							<span class="d-item-txt">Haircut</span>
+							<span class="d-item-txt">Pelayanan</span>
 							<span class="d-item-display">
 								<i class="d-item-block"></i>
 							</span>
-							<span class="d-item-txt">Shave</span>
+							<span class="d-item-txt">Estetika</span>
 							<span class="d-item-display">
 								<i class="d-item-block"></i>
 							</span>
-							<span class="d-item-txt">Faded</span>
+							<span class="d-item-txt">Kepuasan</span>
 							<span class="d-item-display">
 								<i class="d-item-block"></i>
 							</span>
-							<span class="d-item-txt">Hair Dye</span>
+							<span class="d-item-txt">Profesional</span>
 							<span class="d-item-display">
 								<i class="d-item-block"></i>
 							</span>
-							<span class="d-item-txt">Beard Trim</span>
+							<span class="d-item-txt">Bersih</span>
 							<span class="d-item-display">
 								<i class="d-item-block"></i>
 							</span>
-							<span class="d-item-txt">Hair Color</span>
+							<span class="d-item-txt">Nyaman</span>
 							<span class="d-item-display">
 								<i class="d-item-block"></i>
 							</span>
-							<span class="d-item-txt">Facial</span>
+							<span class="d-item-txt">Modern</span>
 							<span class="d-item-display">
 								<i class="d-item-block"></i>
 							</span>
-							<span class="d-item-txt">Masage</span>
+							<span class="d-item-txt">Ramah</span>
 							<span class="d-item-display">
 								<i class="d-item-block"></i>
 							</span>
-							<span class="d-item-txt">Hair Wash</span>
+							<span class="d-item-txt">Berpengalaman</span>
 							<span class="d-item-display">
 								<i class="d-item-block"></i>
 							</span>
@@ -259,20 +261,20 @@
 				<div class="row g-4">
 
 					<div class="col-lg-4 text-lg-start text-center">
-						<div class="social-icons">
+						{{-- <div class="social-icons">
 							<a href="#"><i class="fa fa-facebook fa-lg"></i></a>
 							<a href="#"><i class="fa fa-twitter fa-lg"></i></a>
 							<a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
 							<a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
 							<a href="#"><i class="fa fa-rss fa-lg"></i></a>
-						</div>
+						</div> --}}
 					</div>
 					<div class="col-lg-4 text-lg-center text-center">
 						<img src="images/logo.png" class="" alt="">
 					</div>
-					<div class="col-lg-4 text-lg-end text-center">
+					{{-- <div class="col-lg-4 text-lg-end text-center">
 						Copyright 2025 - Blaxcut by Designesia
-					</div>
+					</div> --}}
 				</div>
 			</div>
 		</footer>
