@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -18,7 +19,7 @@ class TransaksiResource extends Resource
 {
     protected static ?string $model = Queue::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cash';
+    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
     protected static ?string $tenantOwnershipRelationshipName = 'tenant';
     protected static ?string $label = 'Transaksi';
     protected static ?string $pluralLabel = 'Transaksi';
@@ -32,28 +33,27 @@ class TransaksiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->label('ID'),
-                Tables\Columns\TextColumn::make('customer_name')->label('Nama Pelanggan'),
-                Tables\Columns\TextColumn::make('produk')
+                TextColumn::make('id')
+                    ->label('ID')
+                    ->searchable(),
+
+                TextColumn::make('customer.nama')
+                    ->label('Nama Pelanggan')
+                    ->searchable(),
+
+                TextColumn::make('produk.judul')
                     ->label('Produk')
-                    ->formatStateUsing(function ($state, $record) {
-                        // Asumsikan ada relasi produk di model Queue
-                        if (method_exists($record, 'produk')) {
-                            return $record->produk->pluck('nama')->join(', ');
-                        }
-                        return '-';
-                    }),
-                Tables\Columns\TextColumn::make('total_harga')
-                    ->label('Total Harga')
-                    ->formatStateUsing(function ($state, $record) {
-                        // Kalkulasi total harga produk yang diambil
-                        if (method_exists($record, 'produk')) {
-                            return 'Rp ' . number_format($record->produk->sum('harga'), 0, ',', '.');
-                        }
-                        return 'Rp 0';
-                    }),
-                Tables\Columns\TextColumn::make('created_at')->label('Tanggal')->dateTime('d-m-Y H:i'),
-            ]);
+                    ->searchable(),
+
+                TextColumn::make('produk.harga')
+                    ->label('Harga Produk')
+                    ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
+
+                TextColumn::make('booking_date')
+                    ->label('Tanggal Booking')
+                    ->date('d-m-Y'),
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getRelations(): array
@@ -67,8 +67,6 @@ class TransaksiResource extends Resource
     {
         return [
             'index' => Pages\ListTransaksis::route('/'),
-            'create' => Pages\CreateTransaksi::route('/create'),
-            'edit' => Pages\EditTransaksi::route('/{record}/edit'),
         ];
     }
 }
