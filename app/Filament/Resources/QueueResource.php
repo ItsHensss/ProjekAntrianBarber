@@ -206,7 +206,7 @@ class QueueResource extends Resource
                         })
                         ->requiresConfirmation()
                         ->icon('heroicon-o-check-circle')
-                        ->color('blue')
+                        ->color('success')
                         ->disabled(fn(Queue $record) => $record->is_validated || $record->status === 'batal'),
                     // action selesai
                     Tables\Actions\Action::make('selesai')
@@ -217,7 +217,12 @@ class QueueResource extends Resource
                         ->requiresConfirmation()
                         ->icon('heroicon-o-check')
                         ->color('success')
-                        ->disabled(fn(Queue $record) => $record->status === 'selesai' || $record->status === 'batal'),
+                        ->disabled(
+                            fn(Queue $record) =>
+                            !$record->is_validated ||
+                                $record->status === 'selesai' ||
+                                $record->status === 'batal'
+                        ),
                     // action batalkan
                     Tables\Actions\Action::make('batalkan')
                         ->label('Batalkan')
@@ -227,7 +232,12 @@ class QueueResource extends Resource
                         ->requiresConfirmation()
                         ->icon('heroicon-o-x-circle')
                         ->color('danger')
-                        ->disabled(fn(Queue $record) => $record->status === 'batal' || $record->status === 'selesai'),
+                        ->disabled(
+                            fn(Queue $record) =>
+                            !$record->is_validated ||
+                                $record->status === 'batal' ||
+                                $record->status === 'selesai'
+                        ),
                 ])->label('Aksi Lain')->icon('heroicon-o-cog')->color('white'),
             ])
             ->bulkActions([

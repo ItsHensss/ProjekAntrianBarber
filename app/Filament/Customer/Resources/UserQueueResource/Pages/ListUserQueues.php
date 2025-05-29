@@ -3,6 +3,7 @@
 namespace App\Filament\Customer\Resources\UserQueueResource\Pages;
 
 use App\Filament\Customer\Resources\UserQueueResource;
+use App\Models\Customer;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Forms\Components\Select;
@@ -58,13 +59,26 @@ class ListUserQueues extends ListRecords
                     DatePicker::make('booking_date')
                         ->label('Tanggal Booking')
                         ->required()
-                        ->minDate(now()),
+                        ->minDate(now())
+                        ->default(now()),
                 ])
                 ->action(function (array $data) {
                     $user = Auth::user();
 
-                    // Cek antrian yang masih aktif
-                    $existingQueue = Queue::where('user_id', $user->id)
+                    // ✅ Cek apakah customer sudah ada
+                    $customer = Customer::where('user_id', $user->id)->first();
+
+                    // ✅ Jika belum ada, buat customer baru
+                    if (!$customer) {
+                        $customer = Customer::create([
+                            'user_id' => $user->id,
+                            'nama' => $user->name,
+                            // Tambahkan kolom lain jika diperlukan, misal 'alamat' => '', dll
+                        ]);
+                    }
+
+                    // ❗ Cek antrian aktif
+                    $existingQueue = Queue::where('customer_id', $user->customer->id)
                         ->whereNotIn('status', ['selesai', 'batal'])
                         ->first();
 
@@ -77,18 +91,21 @@ class ListUserQueues extends ListRecords
                         return;
                     }
 
-                    $today = now()->toDateString();
-                    $lastQueueToday = Queue::whereDate('booking_date', $today)
+                    // ✅ Hitung nomor antrian berdasarkan tanggal booking
+                    $bookingDate = $data['booking_date'];
+                    $lastQueue = Queue::whereDate('booking_date', $bookingDate)
                         ->orderByDesc('nomor_antrian')
                         ->first();
-                    $nextNomorAntrian = $lastQueueToday ? $lastQueueToday->nomor_antrian + 1 : 1;
+                    $nextNomorAntrian = $lastQueue ? $lastQueue->nomor_antrian + 1 : 1;
 
+                    // ✅ Buat data antrian
                     Queue::create([
+                        'customer_id' => $customer->id,
                         'user_id' => $user->id,
                         'tenant_id' => $data['tenant_id'],
                         'produk_id' => $data['produk_id'],
                         'requested_chapster_id' => $data['requested_chapster_id'],
-                        'booking_date' => $data['booking_date'],
+                        'booking_date' => $bookingDate,
                         'nomor_antrian' => $nextNomorAntrian,
                         'status' => 'menunggu',
                         'is_validated' => false,
@@ -100,9 +117,6 @@ class ListUserQueues extends ListRecords
                         ->success()
                         ->send();
                 })
-                ->modalHeading('Pendaftaran Antrian Barber')
-                ->modalSubmitActionLabel('Daftar')
-                ->color('primary'),
         ];
     }
 }

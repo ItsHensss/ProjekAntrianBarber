@@ -77,7 +77,13 @@ class UserQueueResource extends Resource
                 Filter::make('my_queue')
                     ->label('Antrian Saya')
                     ->query(function (Builder $query) {
-                        return $query->where('user_id', Auth::id());
+                        // Ambil customer_id dari user yang sedang login
+                        $customerId = optional(Auth::user()->customer)->id;
+                        if ($customerId) {
+                            return $query->where('customer_id', $customerId);
+                        }
+                        // Jika user tidak punya customer, kembalikan query tanpa filter
+                        return $query;
                     }),
                 Filter::make('today')
                     ->label('Antrian Hari Ini')
