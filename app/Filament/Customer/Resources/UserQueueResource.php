@@ -7,6 +7,7 @@ use App\Models\Queue;
 use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
@@ -32,9 +33,6 @@ class UserQueueResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(function (Builder $query) {
-                return $query->whereDate('booking_date', now()->toDateString());
-            })
             ->columns([
                 Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
@@ -62,6 +60,18 @@ class UserQueueResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                //antrian saya
+                Filter::make('my_queue')
+                    ->label('Antrian Saya')
+                    ->query(function (Builder $query) {
+                        return $query->where('user_id', Auth::id());
+                    }),
+                Filter::make('today')
+                    ->label('Antrian Hari Ini')
+                    ->default(true)
+                    ->query(function (Builder $query) {
+                        return $query->whereDate('booking_date', now()->toDateString());
+                    }),
                 Tables\Filters\SelectFilter::make('status')
                     ->label('Status')
                     ->options([

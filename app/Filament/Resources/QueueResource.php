@@ -2,15 +2,29 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\QueueResource\Pages;
-use App\Models\Queue;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Queue;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Resource;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Toggle;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\DatePicker;
+use Filament\GlobalSearch\Actions\Action;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\QueueResource\Pages;
+use App\Filament\Resources\QueueResource\Pages\EditQueue;
+use App\Filament\Resources\QueueResource\Pages\ListQueues;
+use App\Filament\Resources\QueueResource\Pages\CreateQueue;
 
 class QueueResource extends Resource
 {
@@ -48,9 +62,6 @@ class QueueResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->query(function (Builder $query) {
-                return $query->whereDate('booking_date', now()->toDateString());
-            })
             ->columns([
                 Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
@@ -78,7 +89,37 @@ class QueueResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                // filter antrian hari ini
+                Filter::make('today')
+                    ->label('Antrian Hari Ini')
+                    ->default(true)
+                    ->query(function (Builder $query) {
+                        return $query->whereDate('booking_date', now()->toDateString());
+                    }),
+                // Filter untuk status antrian
+                Tables\Filters\SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'menunggu' => 'Menunggu',
+                        'selesai' => 'Selesai',
+                        'batal' => 'Batal',
+                    ]),
+                // Filter tanggal booking
+                Filter::make('booking_date')
+                    ->form([
+                        DatePicker::make('date'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['date'])) {
+                            return $query->whereDate('booking_date', $data['date']);
+                        }
+                        return $query;
+                    }),
+
+                // Filter untuk menampilkan semua data (tidak difilter tanggal)
+                Filter::make('Semua Antrian')
+                    ->label('Tampilkan Semua Antrian')
+                    ->query(fn(Builder $query) => $query),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

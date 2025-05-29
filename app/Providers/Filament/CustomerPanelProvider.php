@@ -29,7 +29,11 @@ class CustomerPanelProvider extends PanelProvider
             ->login()
             ->registration()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
+                'secondary' => Color::Emerald,
+                'danger' => Color::Rose,
+                'success' => Color::Green,
+                'warning' => Color::Yellow,
             ])
             ->discoverResources(in: app_path('Filament/Customer/Resources'), for: 'App\\Filament\\Customer\\Resources')
             ->discoverPages(in: app_path('Filament/Customer/Pages'), for: 'App\\Filament\\Customer\\Pages')

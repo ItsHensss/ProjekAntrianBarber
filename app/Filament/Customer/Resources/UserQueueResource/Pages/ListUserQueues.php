@@ -100,7 +100,7 @@ class ListUserQueues extends ListRecords
                         ->success()
                         ->send();
                 })
-                ->modalHeading('Pendaftaran Antrian Cepat')
+                ->modalHeading('Pendaftaran Antrian Barber')
                 ->modalSubmitActionLabel('Daftar')
                 ->color('primary'),
         ];
