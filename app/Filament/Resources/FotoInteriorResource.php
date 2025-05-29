@@ -18,8 +18,15 @@ class FotoInteriorResource extends Resource
 {
     protected static ?string $model = FotoInterior::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-camera';
     protected static null|string $tenantOwnershipRelationshipName = 'tenant';
+    protected static ?string $label = 'Foto Interior';
+    protected static ?string $pluralLabel = 'Foto Interior';
+    protected static ?string $slug = 'foto-interior';
+    protected static ?string $navigationLabel = 'Foto Interior';
+    protected static ?string $recordTitleAttribute = 'judul';
+    protected static ?string $modelLabel = 'Foto Interior';
+    protected static ?string $pluralModelLabel = 'Foto Interior';
 
     public static function form(Form $form): Form
     {

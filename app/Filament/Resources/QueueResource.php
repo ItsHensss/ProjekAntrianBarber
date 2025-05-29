@@ -34,7 +34,14 @@ class QueueResource extends Resource
 {
     protected static ?string $model = Queue::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-queue-list';
+    protected static ?string $label = 'Antrian';
+    protected static ?string $pluralLabel = 'Antrian';
+    protected static ?string $slug = 'antrian';
+    protected static ?string $navigationLabel = 'Antrian';
+    protected static ?string $recordTitleAttribute = 'nomor_antrian';
+    protected static ?string $modelLabel = 'Antrian';
+    protected static ?string $pluralModelLabel = 'Antrian';
     protected static null|string $tenantOwnershipRelationshipName = 'tenant';
 
 

@@ -20,7 +20,14 @@ class OperationalResource extends Resource
     protected static null|string $tenantOwnershipRelationshipName = 'tenant';
 
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-clock';
+    protected static ?string $label = 'Operational';
+    protected static ?string $pluralLabel = 'Operational';
+    protected static ?string $slug = 'operational';
+    protected static ?string $navigationLabel = 'Operational';
+    protected static ?string $recordTitleAttribute = 'day';
+    protected static ?string $modelLabel = 'Operational';
+    protected static ?string $pluralModelLabel = 'Operational';
 
     public static function form(Form $form): Form
     {

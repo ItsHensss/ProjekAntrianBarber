@@ -18,8 +18,14 @@ class LokasiResource extends Resource
 {
     protected static ?string $model = Lokasi::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map-pin';
     protected static ?string $tenantOwnershipRelationshipName = 'tenant';
+    protected static ?string $label = 'Lokasi';
+    protected static ?string $pluralLabel = 'Lokasi';
+    protected static ?string $recordTitleAttribute = 'nama_cabang';
+    protected static ?string $modelLabel = 'Lokasi';
+    protected static ?string $pluralModelLabel = 'Lokasi';
+
 
     protected static ?string $slug = 'lokasi';
     protected static ?string $navigationLabel = 'Lokasi';

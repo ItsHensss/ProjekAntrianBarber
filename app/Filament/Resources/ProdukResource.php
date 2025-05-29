@@ -18,7 +18,15 @@ class ProdukResource extends Resource
 {
     protected static ?string $model = Produk::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
+    protected static ?string $label = 'Produk';
+    protected static ?string $pluralLabel = 'Produk';
+    protected static ?string $slug = 'produk';
+    protected static ?string $navigationLabel = 'Produk';
+    protected static ?string $recordTitleAttribute = 'judul';
+    protected static ?string $modelLabel = 'Produk';
+    protected static ?string $pluralModelLabel = 'Produk';
+
     protected static null|string $tenantOwnershipRelationshipName = 'tenant';
 
 
