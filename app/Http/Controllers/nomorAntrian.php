@@ -11,7 +11,7 @@ class nomorAntrian extends Controller
 
     public function index($id)
     {
-        $cabang = Tenant::findOrFail($id);
+        $cabang = Tenant::with('lokasi')->findOrFail($id);
         return view('nomorAntrian', compact('cabang'));
     }
 
@@ -19,9 +19,13 @@ class nomorAntrian extends Controller
     {
         $queues = Queue::with(['customer', 'produk'])
             ->whereDate('booking_date', today())
-            ->where('cabang_id', $id)
+            ->where('tenant_id', $id)
             ->orderBy('nomor_antrian')
             ->get();
+
+        if ($queues->isEmpty()) {
+            return response()->json(0);
+        }
 
         return response()->json($queues);
     }

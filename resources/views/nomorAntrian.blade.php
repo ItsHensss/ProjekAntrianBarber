@@ -46,7 +46,7 @@
 			margin-top: 1vw;
 		}
 
-		.kode-proyek {
+		.alamat {
 			font-size: clamp(12px, 2vw, 22px);
 			margin-top: 1vw;
 			color: #ccc;
@@ -59,7 +59,9 @@
 		<div class="judul">Nomor Antrian {{ $cabang->name }}</div>
 		<div id="nomor-antrian" class="nomor-antrian">-</div>
 		<div class="tanggal" id="tanggal"></div>
-		<div class="kode-proyek">Kode Proyek: FLV-QUEUE-DISPLAY</div>
+		<div class="alamat">
+			{{ $cabang->lokasi->first()->alamat ?? '-' }}
+		</div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
