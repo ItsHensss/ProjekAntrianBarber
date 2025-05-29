@@ -20,5 +20,5 @@ Route::get('/gallery', function () {
 })->name('gallery');
 Route::get('/pricing', [pricing::class, 'index'])->name('pricing');
 Route::get('/services', [service::class, 'index'])->name('services');
-Route::get('/queues/today', [nomorAntrian::class, 'index'])->name('queues.today');
-Route::get('/queues/today/json', [nomorAntrian::class, 'jsonToday'])->name('queues.today.json');
+Route::get('/antrian', [nomorAntrian::class, 'index'])->name('antrian');
+Route::get('/antrian/today/json', [nomorAntrian::class, 'jsonToday'])->name('antrian.today.json');
