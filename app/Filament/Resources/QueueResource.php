@@ -164,11 +164,8 @@ class QueueResource extends Resource
                         return $query->whereDate('booking_date', now()->toDateString());
                     }),
                 //filter chapster
-                Filter::make('chapster')
+                Tables\Filters\SelectFilter::make('requested_chapster_id')
                     ->label('Chapster')
-                    ->query(function (Builder $query) {
-                        return $query->whereIn('requested_chapster_id', ['umum', 'dani']);
-                    })
                     ->options([
                         'umum' => 'Umum',
                         'dani' => 'Dani',
