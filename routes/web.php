@@ -5,6 +5,7 @@ use App\Http\Controllers\pricing;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\service;
 use App\Http\Controllers\booking;
+use App\Http\Controllers\nomorAntrian;
 
 Route::get('/', [home::class, 'index'])->name('home');
 Route::get('/about', function () {
@@ -19,3 +20,5 @@ Route::get('/gallery', function () {
 })->name('gallery');
 Route::get('/pricing', [pricing::class, 'index'])->name('pricing');
 Route::get('/services', [service::class, 'index'])->name('services');
+Route::get('/queues/today', [nomorAntrian::class, 'index'])->name('queues.today');
+Route::get('/queues/today/json', [nomorAntrian::class, 'jsonToday'])->name('queues.today.json');
