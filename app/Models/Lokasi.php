@@ -16,4 +16,9 @@ class Lokasi extends Model
         'telepon',
         'email',
     ];
+
+    public function tenant(): BelongsTo
+    {
+        return $this->belongsTo(Tenant::class);
+    }
 }

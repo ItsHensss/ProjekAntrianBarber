@@ -47,4 +47,10 @@ class Tenant extends Model
     {
         return $this->hasMany(FotoPotongan::class);
     }
+
+    // relasi ke table lokasi
+    public function lokasi()
+    {
+        return $this->hasMany(Lokasi::class);
+    }
 }

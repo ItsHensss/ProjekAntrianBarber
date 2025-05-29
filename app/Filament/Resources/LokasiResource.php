@@ -12,12 +12,14 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class LokasiResource extends Resource
 {
     protected static ?string $model = Lokasi::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $tenantOwnershipRelationshipName = 'tenant';
 
     protected static ?string $slug = 'lokasi';
     protected static ?string $navigationLabel = 'Lokasi';
@@ -43,6 +45,9 @@ class LokasiResource extends Resource
                     ->email()
                     ->maxLength(255)
                     ->default(null),
+                Forms\Components\Hidden::make('tenant_id')
+                    ->default(fn() => Auth::user()?->teams->first()?->id)
+                    ->required(),
             ]);
     }
 

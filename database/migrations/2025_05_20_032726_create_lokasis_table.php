@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('kota');
             $table->string('telepon');
             $table->string('email')->nullable();
+            $table->unsignedBigInteger('tenant_id')->nullable();
             $table->timestamps();
         });
     }
