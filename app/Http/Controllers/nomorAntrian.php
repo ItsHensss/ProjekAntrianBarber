@@ -8,16 +8,17 @@ use Illuminate\Http\Request;
 class nomorAntrian extends Controller
 {
 
-    public function index()
+    public function index($id)
     {
-        return view('nomorAntrian');
+        $cabang = Cabang::findOrFail($id);
+        return view('nomorAntrian', compact('cabang'));
     }
 
-    // Ambil data antrian hari ini sebagai JSON untuk AJAX
-    public function jsonToday()
+    public function jsonToday($id)
     {
         $queues = Queue::with(['customer', 'produk'])
             ->whereDate('booking_date', today())
+            ->where('cabang_id', $id)
             ->orderBy('nomor_antrian')
             ->get();
 

@@ -17,6 +17,7 @@ class home extends Controller
         // ambil data seluruh cabang di table tenant
         $cabang = \App\Models\Tenant::all();
 
+
         // Kirim data ke view 'home'
         return view('home', [
             'cabang' => $cabang,

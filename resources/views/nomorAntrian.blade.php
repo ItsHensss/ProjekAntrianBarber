@@ -3,47 +3,42 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Tampilan Nomor Antrian</title>
+	<title>Nomor Antrian {{ $cabang->name }}</title>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
+		/* Sama seperti sebelumnya */
 		html,
 		body {
 			height: 100%;
 			margin: 0;
 			padding: 0;
-		}
-
-		body {
-			background-color: #000;
+			background: #000;
 			color: #fff;
-			font-family: Arial, sans-serif;
-			min-height: 100vh;
-			display: flex;
-			align-items: center;
-			justify-content: center;
+			font-family: Arial;
 		}
 
 		.center-container {
 			width: 100%;
 			max-width: 700px;
+			margin: auto;
+			text-align: center;
 			display: flex;
 			flex-direction: column;
-			align-items: center;
 			justify-content: center;
-		}
-
-		.nomor-antrian {
-			font-size: clamp(48px, 22vw, 180px);
-			font-weight: bold;
-			margin: 3vw 0 2vw;
-			line-height: 1;
+			height: 100vh;
 		}
 
 		.judul {
 			font-size: clamp(24px, 6vw, 56px);
 			font-weight: 600;
+		}
+
+		.nomor-antrian {
+			font-size: clamp(48px, 22vw, 180px);
+			font-weight: bold;
+			margin: 3vw 0;
 		}
 
 		.tanggal {
@@ -61,7 +56,7 @@
 
 <body>
 	<div class="center-container">
-		<div class="judul">Nomor Antrian</div>
+		<div class="judul">Nomor Antrian {{ $cabang->name }}</div>
 		<div id="nomor-antrian" class="nomor-antrian">-</div>
 		<div class="tanggal" id="tanggal"></div>
 		<div class="kode-proyek">Kode Proyek: FLV-QUEUE-DISPLAY</div>
@@ -79,7 +74,7 @@
 
 		function ambilNomorAntrian() {
 			$.ajax({
-				url: "{{ route('antrian.today.json') }}",
+				url: "{{ route('antrian.today.json', ['id' => $cabang->id]) }}",
 				method: "GET",
 				success: function(data) {
 					if (data.length > 0) {

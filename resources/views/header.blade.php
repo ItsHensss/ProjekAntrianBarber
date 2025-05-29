@@ -21,6 +21,18 @@
 							<li><a class="menu-item" href="{{ route('about') }}">Tentang</a></li>
 							<li><a class="menu-item" href="{{ route('contact') }}">Kontak</a></li>
 							<li><a class="menu-item" href="{{ route('gallery') }}">Gallery</a></li>
+							<li class="menu-item-has-children">
+								<a href="#">Antrian Cabang</a>
+								<ul>
+									@foreach ($cabang as $item)
+										<li>
+											<a href="{{ route('antrian.cabang', ['id' => $item->id]) }}">
+												Antrian {{ $item->name }}
+											</a>
+										</li>
+									@endforeach
+								</ul>
+							</li>
 						</ul>
 					</div>
 					<div class="de-flex-col">
