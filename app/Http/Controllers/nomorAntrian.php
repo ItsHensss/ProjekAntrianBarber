@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Queue;
+use App\Models\Tenant;
 use Illuminate\Http\Request;
 
 class nomorAntrian extends Controller
@@ -10,7 +11,7 @@ class nomorAntrian extends Controller
 
     public function index($id)
     {
-        $cabang = Cabang::findOrFail($id);
+        $cabang = Tenant::findOrFail($id);
         return view('nomorAntrian', compact('cabang'));
     }
 

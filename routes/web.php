@@ -11,7 +11,6 @@ Route::get('/', [home::class, 'index'])->name('home');
 Route::get('/about', function () {
     return view('about');
 })->name('about');
-Route::get('/book', [booking::class, 'index'])->name('book');
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
