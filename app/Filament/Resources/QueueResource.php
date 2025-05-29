@@ -27,6 +27,7 @@ use App\Filament\Resources\QueueResource\Pages\ListQueues;
 use App\Filament\Resources\QueueResource\Pages\CreateQueue;
 use App\Models\Customer;
 use App\Models\User;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Get;
 
 class QueueResource extends Resource
@@ -41,30 +42,34 @@ class QueueResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Toggle::make('is_new_customer')
+                Toggle::make('is_new_customer')
                     ->label('Pelanggan Baru?')
-                    ->default(false),
+                    ->default(false)
+                    ->reactive(),
 
-                Forms\Components\Select::make('customer_id')
+                Select::make('customer_id')
                     ->label('Pilih Pelanggan')
-                    ->options(fn() => Customer::pluck('nama', 'id')) // di sini diperbaiki
+                    ->searchable()
+                    ->options(fn() => Customer::pluck('nama', 'id'))
                     ->visible(fn(Get $get) => !$get('is_new_customer'))
                     ->required(fn(Get $get) => !$get('is_new_customer')),
 
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->label('Nama Pelanggan')
                     ->required(fn(Get $get) => $get('is_new_customer'))
                     ->visible(fn(Get $get) => $get('is_new_customer')),
 
-                Forms\Components\TextInput::make('email')
-                    ->label('Email Pelanggan')
-                    ->email()
+                TextInput::make('nomor')
+                    ->label('Nomor Pelanggan')
                     ->required(fn(Get $get) => $get('is_new_customer'))
                     ->visible(fn(Get $get) => $get('is_new_customer')),
 
                 Forms\Components\Select::make('produk_id')
                     ->label('Produk')
-                    ->options(\App\Models\Produk::pluck('judul', 'id'))
+                    ->options(function () {
+                        $tenantId = Auth::user()?->teams->first()?->id;
+                        return \App\Models\Produk::where('tenant_id', $tenantId)->pluck('judul', 'id');
+                    })
                     ->required(),
 
                 Forms\Components\TextInput::make('nomor_antrian')
@@ -95,9 +100,8 @@ class QueueResource extends Resource
 
                 Forms\Components\DatePicker::make('booking_date'),
 
-                Forms\Components\Select::make('tenant_id')
-                    ->label('Tenant')
-                    ->options(fn() => Auth::user()?->teams->pluck('name', 'id') ?? [])
+                Forms\Components\Hidden::make('tenant_id')
+                    ->default(fn() => Auth::user()?->teams->first()?->id)
                     ->required(),
             ]);
     }

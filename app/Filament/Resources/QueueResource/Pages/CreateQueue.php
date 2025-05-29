@@ -18,15 +18,15 @@ class CreateQueue extends CreateRecord
             // Buat user baru
             $newUser = Customer::create([
                 'name' => $data['name'],
-                'email' => $data['email'],
+                'nomor' => $data['nomor'],
             ]);
 
             // Ganti customer_id dengan ID dari user baru
             $data['customer_id'] = $newUser->id;
         }
 
-        // Pastikan field name dan email tidak ikut dimasukkan ke table queue
-        unset($data['name'], $data['email'], $data['is_new_customer']);
+        // Pastikan field name dan nomor tidak ikut dimasukkan ke table queue
+        unset($data['name'], $data['nomor'], $data['is_new_customer']);
 
         return $data;
     }
