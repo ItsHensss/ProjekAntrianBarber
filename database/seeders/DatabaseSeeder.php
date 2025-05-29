@@ -16,12 +16,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-
-        // Jalankan seeder operationalSeeder
-        $this->call([
-            lokasiSeeder::class,
-        ]);
-
         $names = [
             'Budi Santoso',
             'Siti Aminah',
@@ -88,5 +82,29 @@ class DatabaseSeeder extends Seeder
                 'is_open' => true,
             ]);
         }
+
+        // seeder lokasi
+        DB::table('lokasis')->insert([
+            [
+                'nama_cabang' => 'Barber Sidoarjo Pahlawan',
+                'alamat' => 'Jl. Pahlawan No. 1, Sidoarjo',
+                'kota' => 'Sidoarjo',
+                'telepon' => '031-1234567',
+                'email' => 'sidoarjopahlawan@barber.com',
+                'tenant_id' => $tenant->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nama_cabang' => 'Barber Sidoarjo Diponegoro',
+                'alamat' => 'Jl. Diponegoro No. 10, Sidoarjo',
+                'kota' => 'Sidoarjo',
+                'telepon' => '031-2345678',
+                'email' => 'sidoarjodiponegoro@barber.com',
+                'tenant_id' => $tenant2->id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
     }
 }
