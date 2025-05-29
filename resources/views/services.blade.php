@@ -27,7 +27,7 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-6 offset-lg-3 text-center">
-							<h1>Services</h1>
+							<h1>Produk Kami</h1>
 							<div class="de-separator"></div>
 						</div>
 					</div>
@@ -40,10 +40,9 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-12" data-jarallax-element="-20">
-							<p class="lead big wow fadeInUp">Step into our stylish and comfortable space, where the blend of vintage and contemporary decor sets the
-								perfect backdrop for your grooming journey. We pay attention to every detail, from the moment you walk through our doors until you leave with
-								a fresh, confident look.
-
+							<p class="lead big wow fadeInUp">
+								Yuk, rasain vibes kekinian di tempat kami! Gabungan nuansa vintage & modern bikin suasana makin cozy buat kamu yang mau tampil kece. Dari
+								masuk sampai pulang, detail pelayanan kami siap bikin kamu makin percaya diri. #GlowUpBarengKita
 							</p>
 						</div>
 					</div>
@@ -53,51 +52,24 @@
 			<section id="section-pricing" aria-label="section">
 				<div class="container">
 					<div class="row g-5" id="gallery">
-						@foreach ($fotokategoris as $kategori)
-							<div class="col-lg-6 item">
-								<div class="sc-wrap">
-									<h3>{{ $kategori->judul }}</h3>
-									<div class="def-list-dots">
-										@forelse ($kategori->produks as $produk)
-											<dl>
-												<dt>
-													<span>{{ $produk->judul }}</span>
-												</dt>
-												<dd>Rp{{ number_format($produk->harga, 0, ',', '.') }}</dd>
-											</dl>
-										@empty
-											<p class="text-muted">Belum ada produk.</p>
-										@endforelse
-									</div>
+						<div class="col-lg-12 item">
+							<div class="sc-wrap">
+								<h3>Produk Kami</h3>
+								<div class="def-list-dots">
+									@forelse ($produk as $item)
+										<dl>
+											<dt>
+												<span>{{ $item->judul }}</span>
+											</dt>
+											<dd>Rp{{ number_format($item->harga, 0, ',', '.') }}</dd>
+										</dl>
+									@empty
+										<p class="text-muted">Belum ada produk.</p>
+									@endforelse
 								</div>
 							</div>
-						@endforeach
-					</div>
-				</div>
-			</section>
-
-			<section aria-label="section" class="no-top">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-12 text-center">
-							<h2 class="wow fadeIn">Kategori</h2>
-							<div class="de-separator"></div>
 						</div>
-						@foreach ($fotokategoris as $kategori)
-							<div class="col-lg-3 mb-4 text-center" data-jarallax-element="-20">
-								<div class="de-box-a">
-									<div class="d-image">
-										<img src="{{ asset('storage/' . $kategori->image) }}" alt="{{ $kategori->judul }}">
-									</div>
-									<div class="d-deco-1"></div>
-									<div class="d-deco-2"></div>
-								</div>
-								<div class="spacer-20"></div>
-								<h4>{{ $kategori->judul }}</h4>
-							</div>
-						@endforeach
 					</div>
-					<div class="spacer-single"></div>
 				</div>
 			</section>
 
@@ -151,28 +123,7 @@
 		<!-- content close -->
 		<a href="#" id="back-to-top"></a>
 		<!-- footer begin -->
-		<footer>
-			<div class="container">
-				<div class="row g-4">
-
-					<div class="col-lg-4 text-lg-start text-center">
-						<div class="social-icons">
-							<a href="#"><i class="fa fa-facebook fa-lg"></i></a>
-							<a href="#"><i class="fa fa-twitter fa-lg"></i></a>
-							<a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
-							<a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
-							<a href="#"><i class="fa fa-rss fa-lg"></i></a>
-						</div>
-					</div>
-					<div class="col-lg-4 text-lg-center text-center">
-						<img src="images/logo.png" class="" alt="">
-					</div>
-					<div class="col-lg-4 text-lg-end text-center">
-						Copyright 2025 - Blaxcut by Designesia
-					</div>
-				</div>
-			</div>
-		</footer>
+		@include('footer')
 		<!-- footer close -->
 	</div>
 

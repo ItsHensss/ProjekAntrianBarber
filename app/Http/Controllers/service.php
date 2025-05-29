@@ -13,11 +13,12 @@ class service extends Controller
 
         $lokasiCabang = \App\Models\Lokasi::all();
 
-        $fotokategoris = \App\Models\Kategori::with('produks')->get();
+        // ambil data produk
+        $produk = \App\Models\Produk::where('tenant_id', 1)->get();
 
         // Kirim data ke view 'home'
         return view('services', [
-            'fotokategoris' => $fotokategoris,
+            'produk' => $produk,
             'jamOperational' => $jamOperational,
             'lokasiCabang' => $lokasiCabang,
         ]);
