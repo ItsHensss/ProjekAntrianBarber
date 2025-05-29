@@ -143,7 +143,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('produks')->insert([
             [
-                'id' => 1,
+                'id' => 4,
                 'image' => '01JWD7CAHWB24JMDY0TVQ1F14Y.jpg',
                 'judul' => 'Potong',
                 'harga' => 35000,
@@ -153,7 +153,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => '2025-05-29 05:14:01',
             ],
             [
-                'id' => 2,
+                'id' => 5,
                 'image' => '01JWD7D29ATVEZJ6S2W67VS9TQ.jpg',
                 'judul' => 'Potong + Keramas',
                 'harga' => 60000,
@@ -163,7 +163,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => '2025-05-29 05:14:25',
             ],
             [
-                'id' => 3,
+                'id' => 6,
                 'image' => '01JWD7DWQ90Q78BDP5M4MS05EZ.jpg',
                 'judul' => 'Keramas',
                 'harga' => 25000,

@@ -25,6 +25,7 @@ use App\Filament\Resources\QueueResource\Pages;
 use App\Filament\Resources\QueueResource\Pages\EditQueue;
 use App\Filament\Resources\QueueResource\Pages\ListQueues;
 use App\Filament\Resources\QueueResource\Pages\CreateQueue;
+use App\Models\Customer;
 use App\Models\User;
 use Filament\Forms\Get;
 
@@ -44,9 +45,9 @@ class QueueResource extends Resource
                     ->label('Pelanggan Baru?')
                     ->default(false),
 
-                Forms\Components\Select::make('user_id')
+                Forms\Components\Select::make('customer_id')
                     ->label('Pilih Pelanggan')
-                    ->options(fn() => User::whereNull('current_team_id')->pluck('name', 'id'))
+                    ->options(fn() => Customer::pluck('nama', 'id')) // di sini diperbaiki
                     ->visible(fn(Get $get) => !$get('is_new_customer'))
                     ->required(fn(Get $get) => !$get('is_new_customer')),
 
@@ -63,7 +64,7 @@ class QueueResource extends Resource
 
                 Forms\Components\Select::make('produk_id')
                     ->label('Produk')
-                    ->options(\App\Models\Produk::pluck('nama', 'id'))
+                    ->options(\App\Models\Produk::pluck('judul', 'id'))
                     ->required(),
 
                 Forms\Components\TextInput::make('nomor_antrian')
@@ -94,19 +95,11 @@ class QueueResource extends Resource
 
                 Forms\Components\DatePicker::make('booking_date'),
 
-                Forms\Components\Hidden::make('tenant_id')
-                    ->default(fn() => Auth::user()?->teams->first()?->id)
+                Forms\Components\Select::make('tenant_id')
+                    ->label('Tenant')
+                    ->options(fn() => Auth::user()?->teams->pluck('name', 'id') ?? [])
                     ->required(),
-            ])
-            ->afterCreate(function (Queue $record, array $data) {
-                if ($data['is_new_customer']) {
-                    $newUser = User::create([
-                        'name' => $data['name'],
-                        'email' => $data['email'],
-                    ]);
-                    $record->update(['user_id' => $newUser->id]);
-                }
-            });
+            ]);
     }
 
     public static function table(Table $table): Table

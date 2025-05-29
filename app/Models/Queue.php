@@ -23,7 +23,7 @@ class Queue extends Model
      */
     public function user()
     {
-        return $this->belongsTo(Tenant::class);
+        return $this->belongsTo(User::class);
     }
 
     /**

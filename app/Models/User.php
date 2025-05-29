@@ -73,4 +73,16 @@ class User extends Authenticatable implements FilamentUser, HasTenants
         // return $this->canAccessTenant($panel->getTenant());
         return true;
     }
+
+    // relasi ke queue
+    public function queues()
+    {
+        return $this->hasMany(Queue::class);
+    }
+
+    // relasi ke customer
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
 }
