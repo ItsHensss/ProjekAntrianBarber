@@ -205,6 +205,14 @@ class QueueResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\ActionGroup::make([
+                    //action untuk print struk
+                    Tables\Actions\Action::make('print_struk')
+                        ->label('Print Struk')
+                        ->action(function (Queue $record) {
+                            return redirect()->route('antrian.print', ['queue' => $record->id]);
+                        })
+                        ->icon('heroicon-o-printer')
+                        ->color('primary'),
                     // action to validate the queue
                     Tables\Actions\Action::make('validate')
                         ->label('Validate')
