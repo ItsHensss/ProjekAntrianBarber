@@ -29,6 +29,7 @@ class CustomerPanelProvider extends PanelProvider
             ->topNavigation()
             ->login()
             ->registration()
+            ->spa()
             ->colors([
                 'primary' => Color::Blue,
                 'secondary' => Color::Emerald,

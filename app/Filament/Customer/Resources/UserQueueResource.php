@@ -51,6 +51,11 @@ class UserQueueResource extends Resource
                     ->label('Validated')
                     ->sortable()
                     ->boolean(),
+                // tampilkan cabang
+                Tables\Columns\TextColumn::make('tenant.name')
+                    ->label('Cabang')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('requested_chapster_id')
                     ->label('Chapster')
                     ->sortable(),
