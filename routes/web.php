@@ -12,7 +12,6 @@ use App\Http\Controllers\nomorAntrian;
 
 Route::get('/', [home::class, 'index'])->name('home');
 Route::get('/about', [aboutController::class, 'index'])->name('about');
-Route::get('/contact', [contactController::class, 'index'])->name('contact');
 Route::get('/gallery', [galleryController::class, 'index'])->name('gallery');
 Route::get('/services', [service::class, 'index'])->name('services');
 Route::get('/antrian/cabang/{id}', [NomorAntrian::class, 'index'])->name('antrian.cabang');

@@ -59,8 +59,8 @@ class ListUserQueues extends ListRecords
                     DatePicker::make('booking_date')
                         ->label('Tanggal Booking')
                         ->required()
-                        ->minDate(today())
-                        ->default(now()),
+                        ->minDate(now()->startOfDay())
+                        ->default(now()->startOfDay()),
                 ])
                 ->action(function (array $data) {
                     $user = Auth::user();

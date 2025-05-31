@@ -7,7 +7,7 @@
 						<div class="de-flex-col">
 							<!-- logo begin -->
 							<div id="logo">
-								<a href="{{ route('services') }}">
+								<a href="{{ route('home') }}">
 									<img class="logo-main" src="images/logo.png" alt="">
 									<img class="logo-mobile" src="images/logo-mobile.png" alt="">
 								</a>
@@ -19,7 +19,6 @@
 						<ul id="mainmenu">
 							<li><a class="menu-item" href="{{ route('services') }}">Produk</a></li>
 							<li><a class="menu-item" href="{{ route('about') }}">Tentang</a></li>
-							<li><a class="menu-item" href="{{ route('contact') }}">Kontak</a></li>
 							<li><a class="menu-item" href="{{ route('gallery') }}">Gallery</a></li>
 							<li class="menu-item-has-children">
 								<a href="#">Antrian Cabang</a>

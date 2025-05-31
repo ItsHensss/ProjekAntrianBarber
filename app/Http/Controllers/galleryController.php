@@ -9,6 +9,7 @@ class galleryController extends Controller
     public function index()
     {
         $cabang = \App\Models\Tenant::all();
-        return view('gallery', compact('cabang'));
+        $foto_interior = \App\Models\FotoInterior::all();
+        return view('gallery', compact('cabang', 'foto_interior'));
     }
 }

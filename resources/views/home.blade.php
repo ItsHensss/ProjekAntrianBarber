@@ -193,10 +193,11 @@
 								<div class="de-separator"></div>
 								@foreach ($lokasiCabang as $lokasi)
 									<div class="d-col mb-3">
-										<div class="d-title">{{ $lokasi->nama_cabang }}</div>
-										<div class="d-content id-color">{{ $lokasi->alamat }}, {{ $lokasi->kota }}</div>
-										<div class="d-content id-color">Telp: {{ $lokasi->telepon }}</div>
-										<div class="d-content id-color">Email: {{ $lokasi->email }}</div>
+										<div class="d-title text-truncate" style="max-width: 100%; white-space: normal; word-break: break-word;">{{ $lokasi->nama_cabang }}</div>
+										<div class="d-content id-color" style="max-width: 100%; white-space: normal; word-break: break-word;">{{ $lokasi->alamat }},
+											{{ $lokasi->kota }}</div>
+										<div class="d-content id-color" style="max-width: 100%; white-space: normal; word-break: break-word;">Telp: {{ $lokasi->telepon }}</div>
+										<div class="d-content id-color" style="max-width: 100%; white-space: normal; word-break: break-word;">Email: {{ $lokasi->email }}</div>
 									</div>
 								@endforeach
 								<div class="d-deco"></div>

@@ -37,92 +37,45 @@
 
 			<section class="no-top no-bottom" aria-label="section">
 				<div class="container-fluid">
-					<div id="gallery" class="row g-3">
-
-						<div class="col-md-4 item">
-							<div class="de-image-hover rounded">
-								<a href="images/gallery/gallery-item-1.jpg" class="image-popup">
-									<span class="dih-title-wrap">
-										<span class="dih-title">Blaxcut Barbershop</span>
-									</span>
-									<span class="dih-overlay"></span>
-									<img src="images/gallery/gallery-item-1.jpg" class="lazy img-fluid" alt="">
-								</a>
+					@if ($foto_interior->isEmpty())
+						<div class="row justify-content-center">
+							<div class="col-md-6 text-center">
+								<div class="alert alert-warning mt-5">
+									Belum ada data foto interior.
+								</div>
 							</div>
 						</div>
-
-						<div class="col-md-4 item">
-							<div class="de-image-hover rounded">
-								<a href="images/gallery/gallery-item-2.jpg" class="image-popup">
-									<span class="dih-title-wrap">
-										<span class="dih-title">Blaxcut Barbershop</span>
-									</span>
-									<span class="dih-overlay"></span>
-									<img src="images/gallery/gallery-item-2.jpg" class="lazy img-fluid" alt="">
-								</a>
-							</div>
+					@else
+						<div id="gallery" class="row g-3">
+							@foreach ($foto_interior as $index => $foto)
+								@php
+									// Variasi layout: besar di awal, lalu 2 kecil, lalu 1 besar, dst
+									$layout = $index % 4 == 0 ? 'col-md-8' : 'col-md-4';
+								@endphp
+								<div class="{{ $layout }} item">
+									<div class="de-image-hover rounded">
+										<a href="{{ asset('storage/' . $foto->image) }}" class="image-popup">
+											<span class="dih-title-wrap">
+												<span class="dih-title">{{ $foto->judul ?? 'Foto Interior' }}</span>
+											</span>
+											<span class="dih-overlay"></span>
+											<img src="{{ asset('storage/' . $foto->image) }}" class="lazy img-fluid" alt="{{ $foto->judul }}">
+										</a>
+										@if ($foto->deskripsi)
+											<div class="small mt-2 px-2 text-white">
+												{{ $foto->deskripsi }}
+											</div>
+										@endif
+										@if ($foto->tenant)
+											<div class="text-muted small px-2">
+												<i class="fa fa-map-marker"></i> {{ $foto->tenant->nama ?? '' }}
+											</div>
+										@endif
+									</div>
+								</div>
+							@endforeach
 						</div>
-
-						<div class="col-md-4 item">
-							<div class="de-image-hover rounded">
-								<a href="images/gallery/gallery-item-3.jpg" class="image-popup">
-									<span class="dih-title-wrap">
-										<span class="dih-title">Blaxcut Barbershop</span>
-									</span>
-									<span class="dih-overlay"></span>
-									<img src="images/gallery/gallery-item-3.jpg" class="lazy img-fluid" alt="">
-								</a>
-							</div>
-						</div>
-
-						<div class="col-md-8 item">
-							<div class="de-image-hover rounded">
-								<a href="images/gallery/gallery-item-4.jpg" class="image-popup">
-									<span class="dih-title-wrap">
-										<span class="dih-title">Blaxcut Barbershop</span>
-									</span>
-									<span class="dih-overlay"></span>
-									<img src="images/gallery/gallery-item-4.jpg" class="lazy img-fluid" alt="">
-								</a>
-							</div>
-						</div>
-
-						<div class="col-md-4 item">
-							<div class="de-image-hover rounded">
-								<a href="images/gallery/gallery-item-5.jpg" class="image-popup">
-									<span class="dih-title-wrap">
-										<span class="dih-title">Blaxcut Barbershop</span>
-									</span>
-									<span class="dih-overlay"></span>
-									<img src="images/gallery/gallery-item-5.jpg" class="lazy img-fluid" alt="">
-								</a>
-							</div>
-						</div>
-
-						<div class="col-md-4 item">
-							<div class="de-image-hover rounded">
-								<a href="images/gallery/gallery-item-6.jpg" class="image-popup">
-									<span class="dih-title-wrap">
-										<span class="dih-title">Blaxcut Barbershop</span>
-									</span>
-									<span class="dih-overlay"></span>
-									<img src="images/gallery/gallery-item-6.jpg" class="lazy img-fluid" alt="">
-								</a>
-							</div>
-						</div>
-
-						<div class="col-md-4 item">
-							<div class="de-image-hover rounded">
-								<a href="images/gallery/gallery-item-7.jpg" class="image-popup">
-									<span class="dih-title-wrap">
-										<span class="dih-title">Blaxcut Barbershop</span>
-									</span>
-									<span class="dih-overlay"></span>
-									<img src="images/gallery/gallery-item-7.jpg" class="lazy img-fluid" alt="">
-								</a>
-							</div>
-						</div>
-					</div>
+					@endif
 				</div>
 			</section>
 
@@ -130,28 +83,7 @@
 		<!-- content close -->
 		<a href="#" id="back-to-top"></a>
 		<!-- footer begin -->
-		<footer>
-			<div class="container">
-				<div class="row g-4">
-
-					<div class="col-lg-4 text-lg-start text-center">
-						<div class="social-icons">
-							<a href="#"><i class="fa fa-facebook fa-lg"></i></a>
-							<a href="#"><i class="fa fa-twitter fa-lg"></i></a>
-							<a href="#"><i class="fa fa-linkedin fa-lg"></i></a>
-							<a href="#"><i class="fa fa-pinterest fa-lg"></i></a>
-							<a href="#"><i class="fa fa-rss fa-lg"></i></a>
-						</div>
-					</div>
-					<div class="col-lg-4 text-lg-center text-center">
-						<img src="images/logo.png" class="" alt="">
-					</div>
-					<div class="col-lg-4 text-lg-end text-center">
-						Copyright 2025 - Blaxcut by Designesia
-					</div>
-				</div>
-			</div>
-		</footer>
+		@include('footer')
 		<!-- footer close -->
 	</div>
 	@include('script')
