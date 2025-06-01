@@ -66,7 +66,8 @@ class ProdukResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('harga')
                     ->label('Harga')
-                    ->searchable(),
+                    ->searchable()
+                    ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Dibuat Pada')
                     ->dateTime()

@@ -51,7 +51,7 @@ class TransaksiResource extends Resource
 
                 TextColumn::make('booking_date')
                     ->label('Tanggal Booking')
-                    ->date('d-m-Y'),
+                    ->date('l, d F Y'),
             ])
             ->defaultSort('created_at', 'desc');
     }

@@ -81,6 +81,7 @@ class QueueResource extends Resource
                     ->required(),
 
                 Forms\Components\TextInput::make('status')
+                    ->label('Status Antrian')
                     ->readOnly()
                     ->default('menunggu')
                     ->required(),
@@ -89,7 +90,7 @@ class QueueResource extends Resource
                     ->default(true),
 
                 Forms\Components\Select::make('requested_chapster_id')
-                    ->label('Requested Chapster')
+                    ->label('Chapster yang Diminta')
                     ->options([
                         'umum' => 'Umum',
                         'dani' => 'Dani',
@@ -97,6 +98,7 @@ class QueueResource extends Resource
                     ->required(),
 
                 DatePicker::make('booking_date')
+                    ->label('Tanggal Booking')
                     ->reactive()
                     ->afterStateUpdated(function ($state, callable $set) {
                         $lastQueue = \App\Models\Queue::whereDate('booking_date', $state)
@@ -109,6 +111,7 @@ class QueueResource extends Resource
                     }),
 
                 TextInput::make('nomor_antrian')
+                    ->label('Nomor Antrian')
                     ->required()
                     ->numeric()
                     ->readOnly()
@@ -132,9 +135,11 @@ class QueueResource extends Resource
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nomor_antrian')
+                    ->label('Nomor Antrian')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->label('Status')
                     ->badge()
                     ->color(fn(string $state) => match ($state) {
                         'menunggu' => 'warning',
@@ -143,7 +148,7 @@ class QueueResource extends Resource
                         default => 'secondary',
                     }),
                 Tables\Columns\IconColumn::make('is_validated')
-                    ->label('Validated')
+                    ->label('Tervalidasi')
                     ->sortable()
                     ->boolean(),
                 Tables\Columns\TextColumn::make('requested_chapster_id')
@@ -154,10 +159,12 @@ class QueueResource extends Resource
                     ->date('l, d F Y')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Dibuat Pada')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Diperbarui Pada')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
