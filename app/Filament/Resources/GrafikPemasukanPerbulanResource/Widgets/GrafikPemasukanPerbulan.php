@@ -22,7 +22,6 @@ class GrafikPemasukanPerbulan extends ChartWidget
     protected function getData(): array
     {
         $filters = $this->filters ?? [];
-
         $query = Queue::query()
             ->join('produks', 'queues.produk_id', '=', 'produks.id')
             ->where('queues.status', 'selesai');
@@ -32,29 +31,35 @@ class GrafikPemasukanPerbulan extends ChartWidget
             $query->where('queues.tenant_id', $filters['tenant_id']);
         }
 
-        // Filter tanggal jika ada
+        // Jika ada filter tanggal
         if (!empty($filters['startDate']) && !empty($filters['endDate'])) {
-            $query->whereBetween('queues.booking_date', [$filters['startDate'], $filters['endDate']]);
-        } elseif (!empty($filters['startDate'])) {
-            $query->whereDate('queues.booking_date', '>=', $filters['startDate']);
-        } elseif (!empty($filters['endDate'])) {
-            $query->whereDate('queues.booking_date', '<=', $filters['endDate']);
+            $startDate = Carbon::parse($filters['startDate']);
+            $endDate = Carbon::parse($filters['endDate']);
+            $query->whereBetween('queues.booking_date', [$startDate->toDateString(), $endDate->toDateString()]);
         } else {
-            // Default: tahun ini
-            $currentYear = now()->year;
-            $query->whereYear('queues.booking_date', $currentYear);
+            // Default: bulan ini, per hari
+            $startDate = now()->startOfMonth();
+            $endDate = now()->endOfMonth();
+            $query->whereBetween('queues.booking_date', [$startDate->toDateString(), $endDate->toDateString()]);
         }
 
-        $pemasukanPerBulan = $query
-            ->selectRaw('MONTH(queues.booking_date) as bulan, SUM(produks.harga) as total')
-            ->groupBy(DB::raw('MONTH(queues.booking_date)'))
-            ->orderBy(DB::raw('MONTH(queues.booking_date)'))
-            ->pluck('total', 'bulan')
+        // Ambil pemasukan per hari
+        $pemasukanPerHari = $query
+            ->selectRaw('DAY(queues.booking_date) as hari, SUM(produks.harga) as total')
+            ->groupBy(DB::raw('DAY(queues.booking_date)'))
+            ->orderBy(DB::raw('DAY(queues.booking_date)'))
+            ->pluck('total', 'hari')
             ->toArray();
 
+        // Buat data chart per hari
+        $days = $startDate->diffInDays($endDate) + 1;
         $dataChart = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $dataChart[] = $pemasukanPerBulan[$i] ?? 0;
+        $labels = [];
+        for ($i = 1; $i <= $days; $i++) {
+            $tanggal = $startDate->copy()->addDays($i - 1);
+            $hari = (int)$tanggal->format('j');
+            $dataChart[] = $pemasukanPerHari[$hari] ?? 0;
+            $labels[] = $tanggal->format('d M');
         }
 
         return [
@@ -68,20 +73,7 @@ class GrafikPemasukanPerbulan extends ChartWidget
                     'tension' => 0.4,
                 ],
             ],
-            'labels' => [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'Mei',
-                'Jun',
-                'Jul',
-                'Agu',
-                'Sep',
-                'Okt',
-                'Nov',
-                'Des'
-            ],
+            'labels' => $labels,
         ];
     }
 }
