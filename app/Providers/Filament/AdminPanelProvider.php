@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Tenancy\RegisterTeam;
+use App\Filament\Resources\GrafikAntrianPerbulanResource\Widgets\GrafikAntrianPerbulan;
 use App\Models\Team;
 use App\Models\Tenant;
 use Filament\Http\Middleware\Authenticate;
@@ -42,8 +43,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+                GrafikAntrianPerbulan::class,
             ])
             ->middleware([
                 EncryptCookies::class,
