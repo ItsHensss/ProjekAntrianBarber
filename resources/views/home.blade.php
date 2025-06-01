@@ -28,7 +28,7 @@
 						<img src="images/background/7.jpg" class="jarallax-img" alt="">
 						<div class="d-content z1000 relative">
 							<div class="wm wm-carousel mt-30" data-jarallax-element="-50">
-								<div class="wow fadeInRight">blaxcut <span class="t2">barbershop</span></div>
+								<div class="wow fadeInRight">Demine <span class="t2">barbershop</span></div>
 							</div>
 							<div class="top-center">
 								<div class="wow fadeInRight">
