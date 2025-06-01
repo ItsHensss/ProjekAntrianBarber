@@ -39,7 +39,7 @@ class nomorAntrian extends Controller
             'queue' => $queue,
             'produk' => $queue->produk,
             'cabang' => $queue->tenant,
-        ]);
+        ])->setOptions(['chroot' => public_path()]);
 
         $pdf->setPaper([0, 0, 283.46, 708.66]); // ukuran 100mm x 180mm (1 mm = 2.8346 point)
 
