@@ -11,6 +11,11 @@ class GrafikPemasukanPerbulan extends ChartWidget
 {
     protected static ?string $heading = 'Grafik Pemasukan per Bulan';
 
+    protected function getType(): string
+    {
+        return 'bar';
+    }
+
     protected function getData(): array
     {
         $currentYear = Carbon::now()->year;
@@ -57,10 +62,5 @@ class GrafikPemasukanPerbulan extends ChartWidget
                 'Des'
             ],
         ];
-    }
-
-    protected function getType(): string
-    {
-        return 'line';
     }
 }
