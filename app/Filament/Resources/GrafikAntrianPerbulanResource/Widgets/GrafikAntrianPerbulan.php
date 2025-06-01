@@ -6,19 +6,41 @@ use App\Models\Queue;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 
 class GrafikAntrianPerbulan extends ChartWidget
 {
+    use InteractsWithPageFilters;
+
     protected static ?string $heading = 'Grafik Antrian per Bulan';
 
     protected function getData(): array
     {
-        // Ambil tahun sekarang
-        $currentYear = Carbon::now()->year;
+        $filters = $this->filters ?? [];
 
-        // Ambil data jumlah antrian per bulan di tahun ini
-        $antrianPerBulan = Queue::selectRaw('MONTH(booking_date) as bulan, COUNT(*) as total')
-            ->whereYear('booking_date', $currentYear)
+        $query = Queue::query();
+
+        // Terapkan filter tenant jika ada
+        if (!empty($filters['tenant_id'])) {
+            $query->where('queues.tenant_id', $filters['tenant_id']);
+        }
+
+        // Terapkan filter tanggal jika ada
+        if (!empty($filters['startDate']) && !empty($filters['endDate'])) {
+            $query->whereBetween('queues.booking_date', [$filters['startDate'], $filters['endDate']]);
+        } elseif (!empty($filters['startDate'])) {
+            $query->whereDate('queues.booking_date', '>=', $filters['startDate']);
+        } elseif (!empty($filters['endDate'])) {
+            $query->whereDate('queues.booking_date', '<=', $filters['endDate']);
+        } else {
+            // Default: tahun berjalan
+            $currentYear = Carbon::now()->year;
+            $query->whereYear('queues.booking_date', $currentYear);
+        }
+
+        // Ambil data jumlah antrian per bulan
+        $antrianPerBulan = $query
+            ->selectRaw('MONTH(booking_date) as bulan, COUNT(*) as total')
             ->groupBy(DB::raw('MONTH(booking_date)'))
             ->orderBy(DB::raw('MONTH(booking_date)'))
             ->pluck('total', 'bulan')

@@ -6,9 +6,12 @@ use App\Models\Queue;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
+use Filament\Widgets\Concerns\InteractsWithPageFilters;
 
 class GrafikPemasukanPerbulan extends ChartWidget
 {
+    use InteractsWithPageFilters;
+
     protected static ?string $heading = 'Grafik Pemasukan per Bulan';
 
     protected function getType(): string
