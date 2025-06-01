@@ -22,11 +22,11 @@ class StatsHarian extends BaseWidget
             $query->where('queues.tenant_id', $filters['tenant_id']);
         }
 
-        if (!empty($filters['startDate'])) {
+        if (!empty($filters['startDate']) && !empty($filters['endDate'])) {
+            $query->whereBetween('queues.booking_date', [$filters['startDate'], $filters['endDate']]);
+        } elseif (!empty($filters['startDate'])) {
             $query->whereDate('queues.booking_date', '>=', $filters['startDate']);
-        }
-
-        if (!empty($filters['endDate'])) {
+        } elseif (!empty($filters['endDate'])) {
             $query->whereDate('queues.booking_date', '<=', $filters['endDate']);
         }
 
@@ -41,15 +41,12 @@ class StatsHarian extends BaseWidget
         // dd($jumlahAntrian);
 
         return [
-            Stat::make('<span style="color:#007bff;">Total Antrian</span>', $jumlahAntrian)
-                ->description('Seluruh antrian')
-                ->html(),
-            Stat::make('<span style="color:#28a745;">Antrian Selesai</span>', $jumlahSelesai)
-                ->description('Status selesai')
-                ->html(),
-            Stat::make('<span style="color:#ffc107;">Pendapatan</span>', 'Rp ' . number_format($pendapatan, 0, ',', '.'))
-                ->description('Dari antrian selesai/filter')
-                ->html(),
+            Stat::make('Total Antrian', $jumlahAntrian)
+                ->description('Seluruh antrian'),
+            Stat::make('Antrian Selesai', $jumlahSelesai)
+                ->description('Status selesai'),
+            Stat::make('Pendapatan', 'Rp ' . number_format($pendapatan, 0, ',', '.'))
+                ->description('Dari antrian selesai/filter'),
         ];
     }
 }
