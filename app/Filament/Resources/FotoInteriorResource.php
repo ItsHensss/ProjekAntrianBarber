@@ -33,6 +33,7 @@ class FotoInteriorResource extends Resource
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('image')
+                    ->label('Foto Interior')
                     ->image()
                     ->required(),
                 Forms\Components\TextInput::make('judul')
@@ -50,7 +51,10 @@ class FotoInteriorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Foto Interior')
+                    ->circular()
+                    ->size(50),
                 Tables\Columns\TextColumn::make('judul')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
