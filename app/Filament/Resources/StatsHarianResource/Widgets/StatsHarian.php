@@ -11,14 +11,27 @@ class StatsHarian extends BaseWidget
 {
     protected function getStats(): array
     {
-        $today = Carbon::today();
+        $filters = $this->filters ?? [];
 
-        $jumlahAntrian = Queue::count();
+        $query = Queue::query();
 
-        $jumlahSelesai = Queue::where('status', 'selesai')->count();
+        if (!empty($filters['tenant_id'])) {
+            $query->where('tenant_id', $filters['tenant_id']);
+        }
 
-        $pendapatanHariIni = Queue::where('status', 'selesai')
-            ->whereDate('booking_date', $today)
+        if (!empty($filters['startDate'])) {
+            $query->whereDate('booking_date', '>=', $filters['startDate']);
+        }
+
+        if (!empty($filters['endDate'])) {
+            $query->whereDate('booking_date', '<=', $filters['endDate']);
+        }
+
+        $jumlahAntrian = (clone $query)->count();
+        $jumlahSelesai = (clone $query)->where('status', 'selesai')->count();
+
+        $pendapatan = (clone $query)
+            ->where('status', 'selesai')
             ->join('produks', 'queues.produk_id', '=', 'produks.id')
             ->sum('produks.harga');
 
@@ -27,8 +40,8 @@ class StatsHarian extends BaseWidget
                 ->description('Seluruh antrian'),
             Stat::make('Antrian Selesai', $jumlahSelesai)
                 ->description('Status selesai'),
-            Stat::make('Pendapatan Hari Ini', 'Rp ' . number_format($pendapatanHariIni, 0, ',', '.'))
-                ->description('Dari antrian selesai hari ini'),
+            Stat::make('Pendapatan', 'Rp ' . number_format($pendapatan, 0, ',', '.'))
+                ->description('Dari antrian selesai/filter'),
         ];
     }
 }

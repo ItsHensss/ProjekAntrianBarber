@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Resources\StatsHarianResource\Widgets\StatsHarian;
 use Filament\Pages\Dashboard as PagesDashboard;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
 use Filament\Forms\Components\DatePicker;
@@ -36,5 +37,12 @@ class Dashboard extends PagesDashboard
                     ])
                     ->columns(3),
             ]);
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            StatsHarian::make()->filters($this->filters),
+        ];
     }
 }
