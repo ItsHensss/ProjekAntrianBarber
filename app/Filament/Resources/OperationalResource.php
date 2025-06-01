@@ -34,13 +34,17 @@ class OperationalResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('day')
+                    ->label('Hari')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('open_time')
+                    ->label('Jam Buka')
                     ->required(),
                 Forms\Components\TextInput::make('close_time')
+                    ->label('Jam Tutup')
                     ->required(),
                 Forms\Components\Toggle::make('is_open')
+                    ->label('Buka?')
                     ->required(),
                 Forms\Components\Hidden::make('tenant_id')
                     ->default(fn() => Auth::user()?->teams->first()?->id)
@@ -53,16 +57,22 @@ class OperationalResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('day')
+                    ->label('Hari')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('open_time'),
-                Tables\Columns\TextColumn::make('close_time'),
+                Tables\Columns\TextColumn::make('open_time')
+                    ->label('Jam Buka'),
+                Tables\Columns\TextColumn::make('close_time')
+                    ->label('Jam Tutup'),
                 Tables\Columns\IconColumn::make('is_open')
+                    ->label('Buka?')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Dibuat Pada')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Diperbarui Pada')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
