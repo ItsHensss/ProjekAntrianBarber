@@ -21,19 +21,37 @@ class GrafikPemasukanPerbulan extends ChartWidget
 
     protected function getData(): array
     {
-        $currentYear = Carbon::now()->year;
+        $filters = $this->filters ?? [];
 
-        // Ambil data pemasukan per bulan berdasarkan antrian selesai
-        $pemasukanPerBulan = Queue::selectRaw('MONTH(booking_date) as bulan, SUM(produks.harga) as total')
+        $query = Queue::query()
             ->join('produks', 'queues.produk_id', '=', 'produks.id')
-            ->where('queues.status', 'selesai')
-            ->whereYear('booking_date', $currentYear)
-            ->groupBy(DB::raw('MONTH(booking_date)'))
-            ->orderBy(DB::raw('MONTH(booking_date)'))
+            ->where('queues.status', 'selesai');
+
+        // Filter tenant jika ada
+        if (!empty($filters['tenant_id'])) {
+            $query->where('queues.tenant_id', $filters['tenant_id']);
+        }
+
+        // Filter tanggal jika ada
+        if (!empty($filters['startDate']) && !empty($filters['endDate'])) {
+            $query->whereBetween('queues.booking_date', [$filters['startDate'], $filters['endDate']]);
+        } elseif (!empty($filters['startDate'])) {
+            $query->whereDate('queues.booking_date', '>=', $filters['startDate']);
+        } elseif (!empty($filters['endDate'])) {
+            $query->whereDate('queues.booking_date', '<=', $filters['endDate']);
+        } else {
+            // Default: tahun ini
+            $currentYear = now()->year;
+            $query->whereYear('queues.booking_date', $currentYear);
+        }
+
+        $pemasukanPerBulan = $query
+            ->selectRaw('MONTH(queues.booking_date) as bulan, SUM(produks.harga) as total')
+            ->groupBy(DB::raw('MONTH(queues.booking_date)'))
+            ->orderBy(DB::raw('MONTH(queues.booking_date)'))
             ->pluck('total', 'bulan')
             ->toArray();
 
-        // Susun data agar 12 bulan selalu tampil
         $dataChart = [];
         for ($i = 1; $i <= 12; $i++) {
             $dataChart[] = $pemasukanPerBulan[$i] ?? 0;
