@@ -32,7 +32,7 @@
 							</div>
 							<div class="top-center">
 								<div class="wow fadeInRight">
-									<h1 class="id-color">Make Your Own Style</h1>
+									<h1 class="id-color">Demine Barbers</h1>
 								</div>
 							</div>
 							<div class="v-center">
