@@ -35,15 +35,19 @@ class ProdukResource extends Resource
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('image')
+                    ->label('Gambar')
                     ->image()
                     ->required(),
                 Forms\Components\TextInput::make('judul')
+                    ->label('Judul')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('harga')
+                    ->label('Harga')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('deskripsi')
+                    ->label('Deskripsi')
                     ->columnSpanFull(),
                 Forms\Components\Hidden::make('tenant_id')
                     ->default(fn() => Auth::user()?->teams->first()?->id)
@@ -55,16 +59,21 @@ class ProdukResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Gambar'),
                 Tables\Columns\TextColumn::make('judul')
+                    ->label('Judul')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('harga')
+                    ->label('Harga')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Dibuat Pada')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Diperbarui Pada')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
