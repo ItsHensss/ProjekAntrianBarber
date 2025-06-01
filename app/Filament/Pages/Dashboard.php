@@ -25,24 +25,17 @@ class Dashboard extends PagesDashboard
                         Select::make('tenant_id')
                             ->label('Tenant')
                             ->options(Tenant::all()->pluck('name', 'id'))
+                            ->default(1)
                             ->searchable()
                             ->placeholder('Pilih Tenant'),
                         DatePicker::make('startDate')
                             ->label('Tanggal Awal')
-                            ->maxDate(fn(Get $get) => $get('endDate') ?: now()),
+                            ->default(now()->startOfMonth()),
                         DatePicker::make('endDate')
                             ->label('Tanggal Akhir')
-                            ->minDate(fn(Get $get) => $get('startDate') ?: now())
-                            ->maxDate(now()),
+                            ->default(now()->endOfMonth()),
                     ])
                     ->columns(3),
             ]);
-    }
-
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            StatsHarian::make()->filters($this->filters),
-        ];
     }
 }
