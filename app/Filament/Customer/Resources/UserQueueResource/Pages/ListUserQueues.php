@@ -30,21 +30,6 @@ class ListUserQueues extends ListRecords
                         ->reactive()
                         ->required(),
 
-                    Select::make('requested_chapster_id')
-                        ->label('Pilih Chapster')
-                        ->options(function (callable $get) {
-                            $tenantId = $get('tenant_id');
-                            if ($tenantId == 1) {
-                                return [
-                                    'umum' => 'Umum',
-                                    'dani' => 'Dani',
-                                ];
-                            }
-                            return ['umum' => 'Umum'];
-                        })
-                        ->required()
-                        ->reactive(),
-
                     Select::make('produk_id')
                         ->label('Pilih Produk')
                         ->options(function (callable $get) {
@@ -100,7 +85,6 @@ class ListUserQueues extends ListRecords
                         'user_id' => $user->id,
                         'tenant_id' => $tenantId,
                         'produk_id' => $data['produk_id'],
-                        'requested_chapster_id' => $data['requested_chapster_id'],
                         'booking_date' => $bookingDate,
                         'nomor_antrian' => $nextNomorAntrian,
                         'status' => 'menunggu',
