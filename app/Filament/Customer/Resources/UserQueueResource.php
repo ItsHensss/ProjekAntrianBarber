@@ -111,7 +111,7 @@ class UserQueueResource extends Resource
             ])
             ->actions([
                 Tables\Actions\Action::make('batalkan')
-                    ->label('Batalkan')
+                    ->label('Cancel')
                     ->action(function (Queue $record) {
                         $record->update(['status' => 'batal']);
                     })

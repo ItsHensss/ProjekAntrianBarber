@@ -247,7 +247,7 @@ class QueueResource extends Resource
                     ),
                 // action batalkan
                 Tables\Actions\Action::make('batalkan')
-                    ->label('Batalkan')
+                    ->label('cancel')
                     ->action(function (Queue $record) {
                         $record->update(['status' => 'batal']);
                     })
