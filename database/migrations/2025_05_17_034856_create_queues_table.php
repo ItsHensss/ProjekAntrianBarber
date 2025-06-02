@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('nomor_antrian');
             $table->enum('status', ['menunggu', 'selesai', 'batal'])->default('menunggu');
             $table->boolean('is_validated')->default(false);
-            $table->enum('requested_chapster_id', ['dani', 'umum'])->nullable();
             $table->date('booking_date')->nullable();
             $table->timestamps();
         });

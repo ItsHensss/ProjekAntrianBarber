@@ -13,7 +13,6 @@ class Queue extends Model
         'nomor_antrian',
         'status',
         'is_validated',
-        'requested_chapster_id',
         'tenant_id',
         'booking_date',
     ];
