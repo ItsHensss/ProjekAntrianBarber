@@ -57,19 +57,6 @@ class ListUserQueues extends ListRecords
                         ]);
                     }
 
-                    $existingQueue = Queue::where('customer_id', $customer->id)
-                        ->whereNotIn('status', ['selesai', 'batal'])
-                        ->first();
-
-                    if ($existingQueue) {
-                        Notification::make()
-                            ->title('Gagal Mendaftar')
-                            ->body('Anda sudah memiliki antrian yang belum selesai.')
-                            ->danger()
-                            ->send();
-                        return;
-                    }
-
                     $bookingDate = $data['booking_date'];
                     $tenantId = $data['tenant_id'];
 
