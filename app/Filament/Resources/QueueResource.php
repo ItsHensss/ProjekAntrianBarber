@@ -218,7 +218,8 @@ class QueueResource extends Resource
                         return redirect()->route('antrian.print', ['queue' => $record->id]);
                     })
                     ->icon('heroicon-o-printer')
-                    ->color('primary'),
+                    ->color('primary')
+                    ->disabled(fn(Queue $record) => $record->status === 'selesai'),
                 // action to validate the queue
                 Tables\Actions\Action::make('validate')
                     ->label('Validate')
