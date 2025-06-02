@@ -211,56 +211,54 @@ class QueueResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\ActionGroup::make([
-                    //action untuk print struk
-                    Tables\Actions\Action::make('print_struk')
-                        ->label('Print Struk')
-                        ->action(function (Queue $record) {
-                            return redirect()->route('antrian.print', ['queue' => $record->id]);
-                        })
-                        ->icon('heroicon-o-printer')
-                        ->color('primary'),
-                    // action to validate the queue
-                    Tables\Actions\Action::make('validate')
-                        ->label('Validate')
-                        ->action(function (Queue $record) {
-                            $record->update(['is_validated' => true]);
-                        })
-                        ->requiresConfirmation()
-                        ->icon('heroicon-o-check-circle')
-                        ->color('success')
-                        ->disabled(fn(Queue $record) => $record->is_validated || $record->status === 'batal'),
-                    // action selesai
-                    Tables\Actions\Action::make('selesai')
-                        ->label('Selesai')
-                        ->action(function (Queue $record) {
-                            $record->update(['status' => 'selesai']);
-                        })
-                        ->requiresConfirmation()
-                        ->icon('heroicon-o-check')
-                        ->color('success')
-                        ->disabled(
-                            fn(Queue $record) =>
-                            !$record->is_validated ||
-                                $record->status === 'selesai' ||
-                                $record->status === 'batal'
-                        ),
-                    // action batalkan
-                    Tables\Actions\Action::make('batalkan')
-                        ->label('Batalkan')
-                        ->action(function (Queue $record) {
-                            $record->update(['status' => 'batal']);
-                        })
-                        ->requiresConfirmation()
-                        ->icon('heroicon-o-x-circle')
-                        ->color('danger')
-                        ->disabled(
-                            fn(Queue $record) =>
-                            !$record->is_validated ||
-                                $record->status === 'batal' ||
-                                $record->status === 'selesai'
-                        ),
-                ])->label('Aksi Lain')->icon('heroicon-o-cog')->color('white'),
+                //action untuk print struk
+                Tables\Actions\Action::make('print_struk')
+                    ->label('Print Struk')
+                    ->action(function (Queue $record) {
+                        return redirect()->route('antrian.print', ['queue' => $record->id]);
+                    })
+                    ->icon('heroicon-o-printer')
+                    ->color('primary'),
+                // action to validate the queue
+                Tables\Actions\Action::make('validate')
+                    ->label('Validate')
+                    ->action(function (Queue $record) {
+                        $record->update(['is_validated' => true]);
+                    })
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-check-circle')
+                    ->color('success')
+                    ->disabled(fn(Queue $record) => $record->is_validated || $record->status === 'batal'),
+                // action selesai
+                Tables\Actions\Action::make('selesai')
+                    ->label('Selesai')
+                    ->action(function (Queue $record) {
+                        $record->update(['status' => 'selesai']);
+                    })
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-check')
+                    ->color('success')
+                    ->disabled(
+                        fn(Queue $record) =>
+                        !$record->is_validated ||
+                            $record->status === 'selesai' ||
+                            $record->status === 'batal'
+                    ),
+                // action batalkan
+                Tables\Actions\Action::make('batalkan')
+                    ->label('Batalkan')
+                    ->action(function (Queue $record) {
+                        $record->update(['status' => 'batal']);
+                    })
+                    ->requiresConfirmation()
+                    ->icon('heroicon-o-x-circle')
+                    ->color('danger')
+                    ->disabled(
+                        fn(Queue $record) =>
+                        !$record->is_validated ||
+                            $record->status === 'batal' ||
+                            $record->status === 'selesai'
+                    ),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
