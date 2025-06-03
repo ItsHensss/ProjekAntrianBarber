@@ -46,6 +46,21 @@ class DatabaseSeeder extends Seeder
             $users->push($user->id);
         }
 
+        // seeder user baru
+        $admin = User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
+        $chapster = User::factory()->create([
+            'name' => 'Chapster',
+            'email' => 'chapster@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
+        $users->push($admin->id);
+        $users->push($chapster->id);
+
+
         $tenant = Tenant::create([
             'name' => 'cabang utama',
             'slug' => 'cabang-utama'
