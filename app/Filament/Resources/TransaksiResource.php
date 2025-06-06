@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TransaksiResource\Pages;
-use App\Filament\Resources\TransaksiResource\RelationManagers;
 use App\Models\Queue;
 use App\Models\Transaksi;
 use Filament\Forms;
@@ -12,6 +11,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\Filter;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -52,6 +53,32 @@ class TransaksiResource extends Resource
                 TextColumn::make('booking_date')
                     ->label('Tanggal Booking')
                     ->date('l, d F Y'),
+            ])
+            ->filters([
+                // Filter berdasarkan tanggal
+                Filter::make('booking_date')
+                    ->label('Tanggal Booking')
+                    ->form([
+                        Forms\Components\DatePicker::make('from_date')
+                            ->label('Dari Tanggal')
+                            ->default(now()->startOfMonth()),
+
+                        Forms\Components\DatePicker::make('to_date')
+                            ->label('Sampai Tanggal')
+                            ->default(now()),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['from_date']) && !empty($data['to_date'])) {
+                            $query->whereBetween('booking_date', [
+                                Carbon::parse($data['from_date'])->startOfDay(),
+                                Carbon::parse($data['to_date'])->endOfDay(),
+                            ]);
+                        } elseif (!empty($data['from_date'])) {
+                            $query->whereDate('booking_date', '>=', Carbon::parse($data['from_date'])->startOfDay());
+                        } elseif (!empty($data['to_date'])) {
+                            $query->whereDate('booking_date', '<=', Carbon::parse($data['to_date'])->endOfDay());
+                        }
+                    }),
             ])
             ->defaultSort('created_at', 'desc');
     }
