@@ -86,6 +86,6 @@
 
 </body>
 
-<!-- Mirrored from madebydesignesia.com/themes/blaxcut/gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 19 May 2025 12:21:14 GMT -->
+<!-- Mirrored from madebydesignesia.com/themes/blaxcut/gallery.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 19 May 2025 12:21:14 GMT -->
 
 </html>
