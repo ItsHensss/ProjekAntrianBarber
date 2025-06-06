@@ -211,7 +211,8 @@ class QueueResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                //action untuk print struk
+
+                // action untuk print struk
                 Tables\Actions\Action::make('print_struk')
                     ->label('Print Struk')
                     ->action(function (Queue $record) {
@@ -219,7 +220,8 @@ class QueueResource extends Resource
                     })
                     ->icon('heroicon-o-printer')
                     ->color('primary')
-                    ->disabled(fn(Queue $record) => $record->status === 'selesai'),
+                    ->disabled(fn(Queue $record) => $record->status === 'selesai' || $record->status === 'batal'), // menambahkan kondisi 'batal'
+
                 // action to validate the queue
                 Tables\Actions\Action::make('validate')
                     ->label('Validate')
@@ -230,6 +232,7 @@ class QueueResource extends Resource
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->disabled(fn(Queue $record) => $record->is_validated || $record->status === 'batal'),
+
                 // action selesai
                 Tables\Actions\Action::make('selesai')
                     ->label('Selesai')
@@ -245,6 +248,7 @@ class QueueResource extends Resource
                             $record->status === 'selesai' ||
                             $record->status === 'batal'
                     ),
+
                 // action batalkan
                 Tables\Actions\Action::make('batalkan')
                     ->label('cancel')
@@ -261,6 +265,7 @@ class QueueResource extends Resource
                             $record->status === 'selesai'
                     ),
             ])
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
