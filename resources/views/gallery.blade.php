@@ -47,15 +47,19 @@
 						</div>
 					@else
 						<div id="gallery" class="row g-3">
-							@foreach ($foto_interior as $foto)
-								<div class="col-12 col-md-4 item">
-									<div class="de-image-hover h-100 rounded">
-										<a href="{{ asset('storage/' . $foto->image) }}" class="image-popup d-block h-100">
+							@foreach ($foto_interior as $index => $foto)
+								@php
+									// Variasi layout: besar di awal, lalu 2 kecil, lalu 1 besar, dst
+									$layout = $index % 4 == 0 ? 'col-md-8' : 'col-md-4';
+								@endphp
+								<div class="{{ $layout }} item">
+									<div class="de-image-hover rounded">
+										<a href="{{ asset('storage/' . $foto->image) }}" class="image-popup">
 											<span class="dih-title-wrap">
 												<span class="dih-title">{{ $foto->judul ?? 'Foto Interior' }}</span>
 											</span>
 											<span class="dih-overlay"></span>
-											<img src="{{ asset('storage/' . $foto->image) }}" class="lazy img-fluid w-100 h-100 object-fit-cover" alt="{{ $foto->judul }}">
+											<img src="{{ asset('storage/' . $foto->image) }}" class="lazy img-fluid" alt="{{ $foto->judul }}">
 										</a>
 										@if ($foto->deskripsi)
 											<div class="small mt-2 px-2 text-white">
