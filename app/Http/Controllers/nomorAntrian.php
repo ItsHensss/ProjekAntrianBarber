@@ -41,7 +41,8 @@ class nomorAntrian extends Controller
             'cabang' => $queue->tenant,
         ])->setOptions(['chroot' => public_path()]);
 
-        $pdf->setPaper([0, 0, 283.46, 708.66]); // ukuran 100mm x 180mm (1 mm = 2.8346 point)
+        // Ukuran kertas POS58: lebar 58mm, panjang fleksibel (misal 100mm)
+        $pdf->setPaper([0, 0, 164.57, 283.46]); // 58mm x 100mm (1 mm = 2.8346 point)
 
         return $pdf->stream('antrian-' . $queue->nomor_antrian . '.pdf');
     }
