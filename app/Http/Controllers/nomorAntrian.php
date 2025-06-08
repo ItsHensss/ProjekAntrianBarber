@@ -35,15 +35,17 @@ class nomorAntrian extends Controller
     {
         $queue = Queue::with(['produk', 'customer', 'tenant.lokasi'])->findOrFail($id);
 
+        // Load view dengan data
         $pdf = Pdf::loadView('printAntrian', [
             'queue' => $queue,
             'produk' => $queue->produk,
             'cabang' => $queue->tenant,
         ])->setOptions(['chroot' => public_path()]);
 
-        // Ukuran kertas POS58: lebar 58mm, panjang fleksibel (misal 100mm)
-        $pdf->setPaper([0, 0, 164.57, 283.46]); // 58mm x 100mm (1 mm = 2.8346 point)
+        // Set ukuran kertas dengan lebar 58mm dan panjang 210mm
+        $pdf->setPaper([0, 0, 78, 88]); // lebar 58mm, panjang 210mm
 
+        // Return PDF stream
         return $pdf->stream('antrian-' . $queue->nomor_antrian . '.pdf');
     }
 }

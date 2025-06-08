@@ -6,16 +6,17 @@
 	<title>Print Antrian</title>
 	<style>
 		@page {
-			size: 80mm 100mm;
-			margin: 0;
+			size: 78mm 78mm;
+			margin-top: 0;
+			margin-right: 0;
+			margin-left: 0mm;
+			margin-right: 0;
 		}
 
 		html,
 		body {
-			width: 80mm;
-			height: 100mm;
-			margin: 0;
-			padding: 0;
+			width: 78mm;
+			height: 78mm;
 			font-family: Arial, sans-serif;
 			font-size: 10pt;
 			text-align: center;
@@ -23,39 +24,45 @@
 		}
 
 		.container {
-			width: 76mm;
-			margin: 0 auto;
-			padding: 4mm 2mm;
+			width: 78mm;
 			box-sizing: border-box;
+			text-align: center;
+			/* Menyesuaikan teks agar terpusat */
 		}
 
 		.judul {
-			font-size: 14pt;
+			font-size: 15pt;
 			font-weight: bold;
 			margin-bottom: 6px;
 		}
 
 		.nomor-antrian {
-			font-size: 36pt;
+			font-size: 27pt;
 			font-weight: bold;
 			margin: 10px 0;
 		}
 
 		.tanggal {
-			margin-bottom: 6px;
-			font-size: 10pt;
+			margin-bottom: 3px;
+			font-size: 12pt;
 		}
 
 		.alamat {
-			font-size: 9pt;
+			font-size: 8pt;
 			color: #666;
-			margin-bottom: 6px;
+			margin-bottom: 3px;
 		}
 
 		.footer {
-			margin-top: 10px;
-			font-size: 9pt;
+			margin-top: 5px;
+			font-size: 8pt;
 			word-break: break-word;
+		}
+
+		hr {
+			border: 0;
+			border-top: 1px dashed #000;
+			margin: 5px 0;
 		}
 	</style>
 </head>
@@ -66,6 +73,8 @@
 		<div class="nomor-antrian">{{ $queue->nomor_antrian }}</div>
 		<div class="tanggal">{{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}</div>
 		<div class="alamat">{{ $cabang->lokasi->first()->alamat ?? '-' }}</div>
+
+		<hr>
 
 		<div class="footer">
 			Pelanggan: {{ $queue->customer->nama ?? '-' }} <br>
