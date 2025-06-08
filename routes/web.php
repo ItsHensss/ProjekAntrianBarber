@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\service;
 use App\Http\Controllers\booking;
 use App\Http\Controllers\contactController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\galleryController;
 use App\Http\Controllers\nomorAntrian;
 
@@ -17,3 +18,5 @@ Route::get('/services', [service::class, 'index'])->name('services');
 Route::get('/antrian/cabang/{id}', [NomorAntrian::class, 'index'])->name('antrian.cabang');
 Route::get('/antrian/today/json/{id}', [NomorAntrian::class, 'jsonToday'])->name('antrian.today.json');
 Route::get('/antrian/{queue}/print', [NomorAntrian::class, 'print'])->name('antrian.print');
+
+Route::get('/export-transaksi', [ExportController::class, 'export'])->name('export.transaksi');
