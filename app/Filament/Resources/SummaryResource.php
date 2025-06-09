@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SummaryResource\Pages;
+use App\Models\Queue;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -10,6 +11,7 @@ use Filament\Tables\Table;
 
 class SummaryResource extends Resource
 {
+    protected static ?string $model = Queue::class;
     protected static ?string $tenantOwnershipRelationshipName = 'tenant';
     protected static ?string $label = 'Ringkasan';
     protected static ?string $pluralLabel = 'Ringkasan';
