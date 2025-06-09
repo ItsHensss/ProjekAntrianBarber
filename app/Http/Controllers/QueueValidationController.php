@@ -12,8 +12,9 @@ class QueueValidationController extends Controller
     {
         // Memuat produk yang berelasi dengan queue
         $produk = $queue->produk; // pastikan relasi 'produk' ada di model Queue
+        $cabang = $queue->tenant; // pastikan relasi 'tenant' ada di model Queue
 
-        return view('validasi', compact('queue', 'produk'));
+        return view('validasi', compact('queue', 'produk', 'cabang'));
     }
 
     public function validateQueue(Request $request, Queue $queue)
@@ -30,7 +31,18 @@ class QueueValidationController extends Controller
             'user_id' => Auth::id(),
         ]);
 
+        // Ambil nama cabang dari relasi tenant
+        $tenant = $queue->tenant; // pastikan relasi 'tenant' ada di model Queue
+        $namaCabang = $tenant ? $tenant->nama_cabang : 'cabang-utama';
+
+        // Kirim URL kembali ke halaman antrian dan nama cabang ke view
+        $backUrl = url("/admin/{$namaCabang}/antrian");
+
         return redirect()->route('validasi.antrian.show', $queue->id)
-            ->with('success', 'Antrian berhasil divalidasi oleh chapster.');
+            ->with([
+                'success' => 'Antrian berhasil divalidasi oleh chapster.',
+                'back_url' => $backUrl,
+                'nama_cabang' => $namaCabang,
+            ]);
     }
 }
