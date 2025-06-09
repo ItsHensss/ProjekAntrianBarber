@@ -44,7 +44,9 @@ class nomorAntrian extends Controller
         $qrUrl = route('antrian.qr.decrypt', ['encrypted' => $encrypted]);
 
         // Generate QRCode
-        $qrCode = base64_encode(QrCode::format('png')->size(100)->generate($qrUrl));
+        $qrCodeImage = QrCode::format('png')->size(100)->generate($qrUrl);
+        $qrCode = 'data:image/png;base64,' . base64_encode($qrCodeImage);
+
 
         // Load view
         $pdf = Pdf::loadView('printAntrian', [
