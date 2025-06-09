@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Queue;
 use App\Models\Tenant;
 use Barryvdh\DomPDF\Facade\Pdf;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 
 class nomorAntrian extends Controller
@@ -35,17 +37,25 @@ class nomorAntrian extends Controller
     {
         $queue = Queue::with(['produk', 'customer', 'tenant.lokasi'])->findOrFail($id);
 
-        // Load view dengan data
+        // Enkripsi ID
+        $encrypted = Crypt::encryptString($queue->id);
+
+        // Buat URL terenkripsi
+        $qrUrl = route('antrian.qr.decrypt', ['encrypted' => $encrypted]);
+
+        // Generate QRCode
+        $qrCode = base64_encode(QrCode::format('png')->size(100)->generate($qrUrl));
+
+        // Load view
         $pdf = Pdf::loadView('printAntrian', [
             'queue' => $queue,
             'produk' => $queue->produk,
             'cabang' => $queue->tenant,
+            'qrCode' => $qrCode, // Kirim ke view
         ])->setOptions(['chroot' => public_path()]);
 
-        // Set ukuran kertas dengan lebar 58mm dan panjang 210mm
-        $pdf->setPaper([0, 0, 78, 88]); // lebar 58mm, panjang 210mm
+        $pdf->setPaper([0, 0, 78, 88]);
 
-        // Return PDF stream
         return $pdf->stream('antrian-' . $queue->nomor_antrian . '.pdf');
     }
 }

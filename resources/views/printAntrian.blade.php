@@ -94,6 +94,14 @@
 			Produk: {{ $queue->produk->judul ?? '-' }} <br>
 			Harga: Rp {{ number_format($queue->produk->harga ?? 0, 0, ',', '.') }}
 		</div>
+
+		@if (isset($qrCode))
+			<div style="margin-top:10px;">
+				<img src="data:image/png;base64,{{ $qrCode }}" alt="QR Code" style="width:80px; height:auto;">
+				<div style="font-size:7pt; margin-top:3px;">Scan untuk validasi</div>
+			</div>
+		@endif
+
 	</div>
 </body>
 
