@@ -33,12 +33,10 @@ class QueueValidationController extends Controller
 
         // Ambil nama cabang dari relasi tenant
         $tenant = $queue->tenant; // pastikan relasi 'tenant' ada di model Queue
-        $namaCabang = $tenant ? $tenant->name : 'cabang-utama';
-        // Ganti spasi dengan tanda '-'
-        $namaCabangUrl = str_replace(' ', '-', $namaCabang);
+        $namaCabang = $tenant->slug;
 
         // Kirim URL kembali ke halaman antrian dan nama cabang ke view
-        $backUrl = url("/admin/{$namaCabangUrl}/antrian");
+        $backUrl = url("/admin/{$namaCabang}/antrian");
 
         return redirect()->route('validasi.antrian.show', $queue->id)
             ->with([
