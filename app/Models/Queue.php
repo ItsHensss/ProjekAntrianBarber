@@ -10,6 +10,7 @@ class Queue extends Model
     protected $fillable = [
         'customer_id',
         'produk_id',
+        'user_id',
         'nomor_antrian',
         'status',
         'is_validated',
@@ -34,5 +35,11 @@ class Queue extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    // relasi ke user yang melayani
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

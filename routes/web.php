@@ -11,6 +11,12 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\galleryController;
 use App\Http\Controllers\nomorAntrian;
 
+use App\Http\Controllers\QueueValidationController;
+
+
+Route::get('/validasi-antrian/{queue}', [QueueValidationController::class, 'show'])->name('validasi.antrian.show');
+Route::post('/validasi-antrian/{queue}', [QueueValidationController::class, 'validateQueue'])->name('validasi.antrian.post');
+
 Route::get('/', [home::class, 'index'])->name('home');
 Route::get('/about', [aboutController::class, 'index'])->name('about');
 Route::get('/gallery', [galleryController::class, 'index'])->name('gallery');
