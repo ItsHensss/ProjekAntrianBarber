@@ -14,6 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiResource extends Resource
 {
@@ -45,6 +46,12 @@ class TransaksiResource extends Resource
                     ->label('Produk')
                     ->searchable(),
 
+                TextColumn::make('status')
+                    ->label('Status'),
+
+                TextColumn::make('user.name')
+                    ->label('Chapster'),
+
                 TextColumn::make('produk.harga')
                     ->label('Harga Produk')
                     ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
@@ -52,6 +59,36 @@ class TransaksiResource extends Resource
                 TextColumn::make('booking_date')
                     ->label('Tanggal Booking')
                     ->date('l, d F Y'),
+            ])
+            ->filters([
+                Tables\Filters\SelectFilter::make('user_id')
+                    ->label('Group by Chapster')
+                    ->options(fn() => \App\Models\User::pluck('name', 'id'))
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value'])) {
+                            $query->where('user_id', $data['value']);
+                        }
+                    }),
+
+                Tables\Filters\SelectFilter::make('produk_id')
+                    ->label('Group by Produk')
+                    ->options(fn() => \App\Models\Produk::where('tenant_id', Auth::user()?->teams->first()?->id)->pluck('judul', 'id'))
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value'])) {
+                            $query->where('produk_id', $data['value']);
+                        }
+                    }),
+
+                Tables\Filters\Filter::make('booking_date')
+                    ->label('Group by Tanggal Booking')
+                    ->form([
+                        Forms\Components\DatePicker::make('booking_date'),
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['booking_date'])) {
+                            $query->whereDate('booking_date', $data['booking_date']);
+                        }
+                    }),
             ])
             ->defaultSort('created_at', 'desc');
     }
