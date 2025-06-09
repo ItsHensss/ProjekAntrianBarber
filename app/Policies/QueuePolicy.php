@@ -15,7 +15,7 @@ class QueuePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_queue');
+        return $user->can('view_any_transaksi');
     }
 
     /**
@@ -23,7 +23,7 @@ class QueuePolicy
      */
     public function view(User $user, Queue $queue): bool
     {
-        return $user->can('view_queue');
+        return $user->can('view_transaksi');
     }
 
     /**
@@ -31,7 +31,7 @@ class QueuePolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_queue');
+        return $user->can('create_transaksi');
     }
 
     /**
@@ -39,7 +39,7 @@ class QueuePolicy
      */
     public function update(User $user, Queue $queue): bool
     {
-        return $user->can('update_queue');
+        return $user->can('update_transaksi');
     }
 
     /**
@@ -47,7 +47,7 @@ class QueuePolicy
      */
     public function delete(User $user, Queue $queue): bool
     {
-        return $user->can('delete_queue');
+        return $user->can('delete_transaksi');
     }
 
     /**
@@ -55,7 +55,7 @@ class QueuePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_queue');
+        return $user->can('delete_any_transaksi');
     }
 
     /**
@@ -63,7 +63,7 @@ class QueuePolicy
      */
     public function forceDelete(User $user, Queue $queue): bool
     {
-        return $user->can('force_delete_queue');
+        return $user->can('force_delete_transaksi');
     }
 
     /**
@@ -71,7 +71,7 @@ class QueuePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_queue');
+        return $user->can('force_delete_any_transaksi');
     }
 
     /**
@@ -79,7 +79,7 @@ class QueuePolicy
      */
     public function restore(User $user, Queue $queue): bool
     {
-        return $user->can('restore_queue');
+        return $user->can('restore_transaksi');
     }
 
     /**
@@ -87,7 +87,7 @@ class QueuePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_queue');
+        return $user->can('restore_any_transaksi');
     }
 
     /**
@@ -95,7 +95,7 @@ class QueuePolicy
      */
     public function replicate(User $user, Queue $queue): bool
     {
-        return $user->can('replicate_queue');
+        return $user->can('replicate_transaksi');
     }
 
     /**
@@ -103,6 +103,6 @@ class QueuePolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_queue');
+        return $user->can('reorder_transaksi');
     }
 }
