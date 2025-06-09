@@ -112,7 +112,7 @@ class ListQueues extends ListRecords
                     }
 
                     $bookingDate = $data['booking_date'];
-                    $tenantId = $user->tenant_id;
+                    $tenantId = Auth::user()?->teams->first()?->id;
 
                     $lastQueue = Queue::where('tenant_id', $tenantId)
                         ->whereDate('booking_date', $bookingDate)
