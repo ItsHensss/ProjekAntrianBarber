@@ -3,46 +3,69 @@
 namespace App\Http\Controllers;
 
 use App\Models\Queue;
-use Illuminate\Http\Response;
 
 class ExportController extends Controller
 {
     public function export()
     {
-        $fileName = 'transaksi.csv';
-        $queues = Queue::with(['customer', 'produk'])->get();
+        $fileName = 'transaksi.xlsx';
 
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => "attachment; filename=\"$fileName\"",
-        ];
+        $query = Queue::query()->with(['customer', 'produk', 'user']);
 
-        $callback = function () use ($queues) {
-            $handle = fopen('php://output', 'w');
+        // FILTER: berdasarkan user_id (Chapster)
+        if (request()->has('user_id')) {
+            $query->where('user_id', request('user_id'));
+        }
 
-            // Header CSV
-            fputcsv($handle, [
-                'ID',
-                'Nama Pelanggan',
-                'Produk',
-                'Harga Produk',
-                'Tanggal Booking',
-            ]);
+        // FILTER: berdasarkan produk_id
+        if (request()->has('produk_id')) {
+            $query->where('produk_id', request('produk_id'));
+        }
 
-            // Isi Data
-            foreach ($queues as $item) {
-                fputcsv($handle, [
-                    $item->id,
-                    $item->customer->nama ?? '-',
-                    $item->produk->judul ?? '-',
-                    'Rp ' . number_format($item->produk->harga ?? 0, 0, ',', '.'),
-                    \Carbon\Carbon::parse($item->booking_date)->format('d-m-Y'),
-                ]);
-            }
+        // FILTER: berdasarkan booking_date
+        if (request()->has('booking_date')) {
+            $query->whereDate('booking_date', request('booking_date'));
+        }
 
-            fclose($handle);
-        };
+        // SORTING
+        if (request()->has('sortColumn') && request()->has('sortDirection')) {
+            $query->orderBy(request('sortColumn'), request('sortDirection'));
+        } else {
+            $query->latest();
+        }
 
-        return response()->stream($callback, 200, $headers);
+        $queues = $query->get();
+
+        // Gunakan PhpSpreadsheet untuk membuat file Excel
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Header Excel
+        $sheet->fromArray([
+            ['ID', 'Nama Pelanggan', 'Produk', 'Chapster', 'Harga Produk', 'Tanggal Booking']
+        ], null, 'A1');
+
+        // Isi Data
+        $row = 2;
+        foreach ($queues as $item) {
+            $sheet->fromArray([
+                $item->id,
+                $item->customer->nama ?? '-',
+                $item->produk->judul ?? '-',
+                $item->user->name ?? '-',
+                'Rp ' . number_format($item->produk->harga ?? 0, 0, ',', '.'),
+                \Carbon\Carbon::parse($item->booking_date)->format('d-m-Y'),
+            ], null, 'A' . $row);
+            $row++;
+        }
+
+        // Output Excel ke response
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+
+        return response()->streamDownload(function () use ($writer) {
+            $writer->save('php://output');
+        }, $fileName, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ]);
     }
 }

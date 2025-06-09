@@ -13,8 +13,10 @@ class ListTransaksis extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('export-transaksi')
-                ->label('Ekspor Transaksi')
+            Action::make('Export Transaksi')
+                ->url(fn(): string => route('export.transaksi', request()->query()))
+                ->openUrlInNewTab()
+                ->label('Export Transaksi')
                 ->icon('heroicon-o-folder-arrow-down')
                 ->color('primary')
                 ->url(route('export.transaksi'))
