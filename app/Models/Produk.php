@@ -21,4 +21,10 @@ class Produk extends Model
     {
         return $this->belongsTo(Tenant::class);
     }
+
+    // relasi
+    public function queues()
+    {
+        return $this->hasMany(Queue::class);
+    }
 }

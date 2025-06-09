@@ -18,12 +18,12 @@
 			<div class="card-body">
 				<p><strong>Nomor Antrian:</strong> {{ $queue->nomor_antrian }}</p>
 				<p><strong>Nama Pelanggan:</strong> {{ $queue->customer->nama ?? '-' }}</p>
-				<p><strong>Produk:</strong> {{ $queue->produk->nama ?? '-' }}</p>
+				<p><strong>Produk:</strong> {{ $produk->judul ?? '-' }}</p>
 				<p><strong>Status:</strong> {{ ucfirst($queue->status) }}</p>
 				<p><strong>Sudah divalidasi?</strong> {{ $queue->is_validated ? 'Ya' : 'Belum' }}</p>
 
 				@auth
-					@if (!$queue->is_validated && $queue->status != 'selesai')
+					@if ($queue->status != 'selesai')
 						<form action="{{ route('validasi.antrian.post', $queue->id) }}" method="POST">
 							@csrf
 							<button type="submit" class="btn btn-success mt-3">Validasi Sekarang</button>
@@ -36,6 +36,8 @@
 				@else
 					<div class="alert alert-warning mt-3">
 						Silakan login sebagai chapster untuk memvalidasi antrian.
+						<br>
+						<a href="/admin" class="btn btn-primary mt-2">Login Sebagai Chapster</a>
 					</div>
 				@endauth
 			</div>

@@ -89,13 +89,8 @@ class QueueResource extends Resource
                 Forms\Components\Hidden::make('is_validated')
                     ->default(true),
 
-                Forms\Components\Select::make('requested_chapster_id')
-                    ->label('Chapster yang Diminta')
-                    ->options([
-                        'umum' => 'Umum',
-                        'dani' => 'Dani',
-                    ])
-                    ->required(),
+                Forms\Components\Select::make('user_id')
+                    ->label('Chapster yang Melayani'),
 
                 DatePicker::make('booking_date')
                     ->label('Tanggal Booking')
@@ -132,11 +127,11 @@ class QueueResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('produk.judul')
                     ->label('Produk')
-                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nomor_antrian')
                     ->label('Nomor Antrian')
                     ->numeric()
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
@@ -151,7 +146,7 @@ class QueueResource extends Resource
                     ->label('Tervalidasi')
                     ->sortable()
                     ->boolean(),
-                Tables\Columns\TextColumn::make('requested_chapster_id')
+                Tables\Columns\TextColumn::make('user_id')
                     ->label('Chapster')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('booking_date')

@@ -10,7 +10,10 @@ class QueueValidationController extends Controller
 {
     public function show(Queue $queue)
     {
-        return view('antrian.validasi', compact('queue'));
+        // Memuat produk yang berelasi dengan queue
+        $produk = $queue->produk; // pastikan relasi 'produk' ada di model Queue
+
+        return view('validasi', compact('queue', 'produk'));
     }
 
     public function validateQueue(Request $request, Queue $queue)
