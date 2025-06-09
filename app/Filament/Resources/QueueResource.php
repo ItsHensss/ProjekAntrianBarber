@@ -232,7 +232,10 @@ class QueueResource extends Resource
                 Tables\Actions\Action::make('selesai')
                     ->label('Selesai')
                     ->action(function (Queue $record) {
-                        $record->update(['status' => 'selesai']);
+                        $record->update([
+                            'status' => 'selesai',
+                            'user_id' => Auth::user()?->id,
+                        ]);
                     })
                     ->requiresConfirmation()
                     ->icon('heroicon-o-check')

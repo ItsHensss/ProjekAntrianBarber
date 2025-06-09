@@ -95,10 +95,10 @@ class ListQueues extends ListRecords
                             'nomor' => $data['nomor'],
                         ]);
                         $data = $this->mutateFormDataBeforeCreate($data);
-                        $userIdForQueue = $customer?->user_id;
+                        $userIdForQueue = Auth::user()?->id;
                     } else {
                         $customer = Customer::find($data['customer_id']);
-                        $userIdForQueue = $customer?->user_id;
+                        $userIdForQueue = Auth::user()?->id;
                         $data = $this->mutateFormDataBeforeCreate($data);
                     }
 

@@ -28,7 +28,7 @@ class nomorAntrian extends Controller
             ->get();
 
         if ($queues->isEmpty()) {
-            return response()->json(0);
+            return response()->json(['message' => 'Belum ada antrian']);
         }
 
         return response()->json($queues);
