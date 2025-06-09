@@ -6,8 +6,8 @@
 	<title>Print Antrian</title>
 	<style>
 		@page {
-			size: 78mm 78mm;
-			margin-top: 0;
+			size: 78mm 100mm;
+			margin-top: 20;
 			margin-right: 0;
 			margin-left: 0mm;
 			margin-right: 0;
@@ -69,7 +69,20 @@
 
 <body>
 	<div class="container">
-		<div class="judul">Nomor Antrian {{ $cabang->name }}</div>
+		<!-- Logo di atas judul -->
+		<img src="images/logo-besar.png" alt="Logo" style="width:60px; height:auto; margin-bottom:4px;">
+
+		<!-- Nama barber + nama cabang -->
+		<div style="font-size:16pt; font-weight:bold; margin-bottom:2px;">
+			Demine Barbers
+		</div>
+		<div style="font-size:11pt; font-weight:normal; margin-bottom:4px;">
+			{{ $cabang->name }}
+		</div>
+
+		<hr>
+
+		<div class="judul">Nomor Antrian</div>
 		<div class="nomor-antrian">{{ $queue->nomor_antrian }}</div>
 		<div class="tanggal">{{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}</div>
 		<div class="alamat">{{ $cabang->lokasi->first()->alamat ?? '-' }}</div>
