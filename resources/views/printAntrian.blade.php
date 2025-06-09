@@ -6,7 +6,7 @@
 	<title>Print Antrian</title>
 	<style>
 		@page {
-			size: 78mm 130mm;
+			size: 78mm 150mm;
 			margin-top: 20;
 			margin-right: 0;
 			margin-left: 0mm;
@@ -97,8 +97,8 @@
 
 		@if (isset($qrCode))
 			<div style="margin-top:10px;">
-				<img src="{{ $qrCode }}" alt="QR Code" style="width:80px; height:auto;">
-				<div style="font-size:7pt; margin-top:3px;">Scan untuk validasi</div>
+				<img src="{{ $qrCode }}" alt="QR Code" style="width:150px; height:auto;">
+				<div style="font-size:7pt; margin-top:3px;">QR Code di scan oleh chapster jika anda sudah selesai dilayani.</div>
 			</div>
 		@endif
 

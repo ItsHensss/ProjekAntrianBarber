@@ -43,18 +43,19 @@ class nomorAntrian extends Controller
         // Buat URL terenkripsi
         $qrUrl = route('antrian.qr.decrypt', ['encrypted' => $encrypted]);
 
-        // Generate QRCode
-        $qrCodeImage = QrCode::format('png')->size(100)->generate($qrUrl);
-        $qrCode = 'data:image/png;base64,' . base64_encode($qrCodeImage);
+        // Gunakan API eksternal (misalnya QRServer)
+        $qrCode = "https://api.qrserver.com/v1/create-qr-code/?data=" . urlencode($qrUrl) . "&size=150x150";
 
-
-        // Load view
+        // Load view PDF
         $pdf = Pdf::loadView('printAntrian', [
             'queue' => $queue,
             'produk' => $queue->produk,
             'cabang' => $queue->tenant,
-            'qrCode' => $qrCode, // Kirim ke view
-        ])->setOptions(['chroot' => public_path()]);
+            'qrCode' => $qrCode,
+        ])->setOptions([
+            'chroot' => public_path(), // tetap boleh
+            'isRemoteEnabled' => true // <- INI PENTING
+        ]);
 
         $pdf->setPaper([0, 0, 78, 88]);
 
