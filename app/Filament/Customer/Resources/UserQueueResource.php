@@ -123,7 +123,7 @@ class UserQueueResource extends Resource
                             return false;
                         }
                         // Sembunyikan jika status sudah selesai atau is_validated belum true
-                        if ($record->status === 'batal' || $record->status === 'selesai' || !$record->is_validated) {
+                        if ($record->status === 'batal' || $record->status === 'selesai') {
                             return false;
                         }
                         return $record->customer_id === $customer->id;
