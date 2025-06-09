@@ -19,7 +19,7 @@ class SummaryResource extends Resource
     protected static ?string $navigationLabel = 'Ringkasan';
     protected static ?string $recordTitleAttribute = 'id';
     protected static ?string $modelLabel = 'Ringkasan';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
     public static function form(Form $form): Form
     {
