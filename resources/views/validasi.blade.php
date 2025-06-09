@@ -71,6 +71,12 @@
 							<div class="alert alert-success mt-3" role="alert">
 								Antrian sudah divalidasi.
 							</div>
+							@if (session('back_url'))
+								<a href="{{ session('back_url') }}" class="btn btn-outline-primary w-100 fw-semibold rounded-pill mt-3 py-2" style="font-size:1rem;">
+									<i class="bi bi-arrow-left me-2"></i>
+									Kembali ke Antrian
+								</a>
+							@endif
 						@endif
 					@else
 						<div class="alert alert-warning mt-3 text-center" role="alert">
@@ -94,13 +100,6 @@
 				confirmButtonColor: '#3085d6',
 			});
 		</script>
-		@if (session('back_url'))
-			<div class="d-flex justify-content-center mt-3">
-				<a href="{{ session('back_url') }}" class="btn btn-outline-primary rounded-pill px-4">
-					<i class="bi bi-arrow-left"></i> Kembali ke Antrian
-				</a>
-			</div>
-		@endif
 	@endif
 
 	@if (session('error'))
