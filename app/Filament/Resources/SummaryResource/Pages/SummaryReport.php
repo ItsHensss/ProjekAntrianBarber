@@ -20,10 +20,22 @@ class SummaryReport extends Page
 
     protected function getSummaryData()
     {
-        $dates = ['2025-06-06', '2025-06-07'];
+        // Ambil rentang tanggal minggu ini (Senin - Minggu)
+        $startOfWeek = now()->startOfWeek();
+        $endOfWeek = now()->endOfWeek();
+
+        $dates = [];
+        $period = new \DatePeriod(
+            $startOfWeek,
+            new \DateInterval('P1D'),
+            $endOfWeek->copy()->addDay() // supaya end date ikut terhitung
+        );
+        foreach ($period as $date) {
+            $dates[] = $date->format('Y-m-d');
+        }
 
         $queues = Queue::with(['user', 'produk'])
-            ->whereIn('booking_date', $dates)
+            ->whereBetween('booking_date', [$startOfWeek->format('Y-m-d'), $endOfWeek->format('Y-m-d')])
             ->get();
 
         $summary = [];

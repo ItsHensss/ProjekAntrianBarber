@@ -3,26 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SummaryResource\Pages;
-use App\Models\Queue;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Auth;
 
 class SummaryResource extends Resource
 {
-    protected static ?string $model = Queue::class;
     protected static ?string $tenantOwnershipRelationshipName = 'tenant';
     protected static ?string $label = 'Ringkasan';
     protected static ?string $pluralLabel = 'Ringkasan';
     protected static ?string $slug = 'summary';
     protected static ?string $navigationLabel = 'Ringkasan';
-
     protected static ?string $recordTitleAttribute = 'id';
     protected static ?string $modelLabel = 'Ringkasan';
-
-
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -33,9 +27,14 @@ class SummaryResource extends Resource
             ]);
     }
 
-    public static function canAccess(): bool
+    public static function canViewAny(): bool
     {
-        return Auth::user()?->can('view_any_summary');
+        return true;
+    }
+
+    public static function canView($record): bool
+    {
+        return true;
     }
 
     public static function table(Table $table): Table
