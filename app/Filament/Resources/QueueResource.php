@@ -90,7 +90,10 @@ class QueueResource extends Resource
                     ->default(true),
 
                 Forms\Components\Select::make('user_id')
-                    ->label('Chapster yang Melayani'),
+                    ->label('Chapster yang Melayani')
+                    ->options(fn() => \App\Models\User::pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
 
                 DatePicker::make('booking_date')
                     ->label('Tanggal Booking')
@@ -146,7 +149,7 @@ class QueueResource extends Resource
                     ->label('Tervalidasi')
                     ->sortable()
                     ->boolean(),
-                Tables\Columns\TextColumn::make('user_id')
+                Tables\Columns\TextColumn::make('user.name')
                     ->label('Chapster')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('booking_date')
