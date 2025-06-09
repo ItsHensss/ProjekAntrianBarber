@@ -23,7 +23,8 @@ class nomorAntrian extends Controller
         $queues = Queue::with(['customer', 'produk'])
             ->whereDate('booking_date', today())
             ->where('tenant_id', $id)
-            ->orderBy('nomor_antrian')
+            ->where('status', 'menunggu')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         if ($queues->isEmpty()) {
