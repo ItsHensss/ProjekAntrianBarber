@@ -6,7 +6,6 @@ use App\Models\Queue;
 use Filament\Resources\Pages\Page;
 use Illuminate\Support\Carbon;
 use Livewire\WithPagination;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class TransaksiReport extends Page
 {
