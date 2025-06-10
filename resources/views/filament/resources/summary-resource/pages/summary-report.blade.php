@@ -9,9 +9,18 @@
 				<x-filament::button type="submit" class="w-full md:w-auto">
 					Tampilkan
 				</x-filament::button>
+				<x-filament::button tag="a" href="{{ route('summary.export.pdf', ['from' => $from, 'until' => $until]) }}" target="_blank" color="gray"
+					class="w-full md:w-auto">
+					PDF
+				</x-filament::button>
 			</div>
+
 		</div>
 	</form>
+	@php
+		$from = $this->from;
+		$until = $this->until;
+	@endphp
 
 	<h2 class="mb-4 text-lg font-bold text-gray-900 dark:text-gray-100">Laporan Ringkasan</h2>
 
