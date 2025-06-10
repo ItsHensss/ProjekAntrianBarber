@@ -95,10 +95,8 @@ class ListQueues extends ListRecords
                             'nomor' => $data['nomor'],
                         ]);
                         $data = $this->mutateFormDataBeforeCreate($data);
-                        $userIdForQueue = Auth::user()?->id;
                     } else {
                         $customer = Customer::find($data['customer_id']);
-                        $userIdForQueue = Auth::user()?->id;
                         $data = $this->mutateFormDataBeforeCreate($data);
                     }
 
@@ -122,7 +120,6 @@ class ListQueues extends ListRecords
 
                     Queue::create([
                         'customer_id' => $customer->id,
-                        'user_id' => $userIdForQueue,
                         'tenant_id' => Auth::user()?->teams->first()?->id,
                         'produk_id' => $data['produk_id'],
                         'booking_date' => $bookingDate,
