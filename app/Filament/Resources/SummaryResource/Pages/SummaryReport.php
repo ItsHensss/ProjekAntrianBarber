@@ -2,40 +2,44 @@
 
 namespace App\Filament\Resources\SummaryResource\Pages;
 
+use Illuminate\Support\Carbon;
 use App\Filament\Resources\SummaryResource;
 use App\Models\Queue;
 use Filament\Resources\Pages\Page;
+use Livewire\WithPagination;
 
 class SummaryReport extends Page
 {
     protected static string $resource = SummaryResource::class;
     protected static string $view = 'filament.resources.summary-resource.pages.summary-report';
+    use WithPagination;
 
     public $data = [];
+    public $from;
+    public $until;
 
     public function mount(): void
     {
+        $this->from = now()->startOfWeek()->toDateString();
+        $this->until = now()->endOfWeek()->toDateString();
+
         $this->data = $this->getSummaryData();
     }
 
-    protected function getSummaryData()
+    public function getSummaryData()
     {
-        // Ambil rentang tanggal minggu ini (Senin - Minggu)
-        $startOfWeek = now()->startOfWeek();
-        $endOfWeek = now()->endOfWeek();
+        $start = Carbon::parse($this->from)->startOfDay();
+        $end = Carbon::parse($this->until)->endOfDay();
 
         $dates = [];
-        $period = new \DatePeriod(
-            $startOfWeek,
-            new \DateInterval('P1D'),
-            $endOfWeek->copy()->addDay() // supaya end date ikut terhitung
-        );
+        $period = new \DatePeriod($start, new \DateInterval('P1D'), $end->copy()->addDay());
+
         foreach ($period as $date) {
             $dates[] = $date->format('Y-m-d');
         }
 
         $queues = Queue::with(['user', 'produk'])
-            ->whereBetween('booking_date', [$startOfWeek->format('Y-m-d'), $endOfWeek->format('Y-m-d')])
+            ->whereBetween('booking_date', [$start->format('Y-m-d'), $end->format('Y-m-d')])
             ->get();
 
         $summary = [];
@@ -56,7 +60,6 @@ class SummaryReport extends Page
             $summary[$name][$layanan][$date]++;
         }
 
-        // Hitung total
         foreach ($summary as $name => $layanans) {
             foreach ($layanans as $layanan => $tanggal) {
                 $summary[$name][$layanan]['total'] = array_sum($tanggal);
@@ -67,5 +70,15 @@ class SummaryReport extends Page
             'dates' => $dates,
             'summary' => $summary,
         ];
+    }
+
+    public function updatedFrom()
+    {
+        $this->data = $this->getSummaryData();
+    }
+
+    public function updatedUntil()
+    {
+        $this->data = $this->getSummaryData();
     }
 }

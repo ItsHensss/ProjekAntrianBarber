@@ -1,6 +1,20 @@
 <x-filament::page>
 	<h2 class="mb-4 text-lg font-bold text-gray-900 dark:text-gray-100">Laporan Ringkasan</h2>
 
+	<form wire:submit.prevent="getSummaryData" class="mb-6 space-y-4">
+		<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+			<x-filament::input type="date" wire:model.defer="from" label="Tanggal Awal" />
+			<x-filament::input type="date" wire:model.defer="until" label="Tanggal Akhir" />
+			<div class="flex items-end gap-3">
+				<x-filament::button type="submit" class="w-full md:w-auto">
+					Tampilkan
+				</x-filament::button>
+			</div>
+		</div>
+	</form>
+
+	<h2 class="mb-4 text-lg font-bold text-gray-900 dark:text-gray-100">Laporan Ringkasan</h2>
+
 	@php
 		$today = \Carbon\Carbon::today();
 	@endphp
