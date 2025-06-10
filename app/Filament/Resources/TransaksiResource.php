@@ -99,7 +99,7 @@ class TransaksiResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTransaksis::route('/'),
+            'index' => Pages\TransaksiReport::route('/'),
         ];
     }
 }
