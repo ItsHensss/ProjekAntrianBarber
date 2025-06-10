@@ -15,10 +15,11 @@ class SummaryExportController extends Controller
         $until = Carbon::parse($request->input('until'))->endOfDay();
 
         $dates = [];
-        $period = new \DatePeriod($from, new \DateInterval('P1D'), $until->copy()->addDay());
-        foreach ($period as $date) {
-            $dates[] = $date->format('Y-m-d');
-        }
+        $period = new \DatePeriod(
+            $from,
+            new \DateInterval('P1D'),
+            $until->copy()->addDay()
+        );
 
         $queues = Queue::with(['user', 'produk'])
             ->whereBetween('booking_date', [$from->format('Y-m-d'), $until->format('Y-m-d')])

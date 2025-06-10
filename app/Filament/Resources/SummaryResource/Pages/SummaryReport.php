@@ -28,18 +28,23 @@ class SummaryReport extends Page
 
     public function getSummaryData()
     {
-        $start = Carbon::parse($this->from)->startOfDay();
-        $end = Carbon::parse($this->until)->endOfDay();
+        $from = Carbon::parse($this->from)->startOfDay();
+        $until = Carbon::parse($this->until)->startOfDay()->addDay(); // pakai di akhir saja
 
         $dates = [];
-        $period = new \DatePeriod($start, new \DateInterval('P1D'), $end->copy()->addDay());
+        $period = new \DatePeriod(
+            $from,
+            new \DateInterval('P1D'),
+            $until // tanpa addDay() lagi
+        );
 
         foreach ($period as $date) {
             $dates[] = $date->format('Y-m-d');
         }
 
+
         $queues = Queue::with(['user', 'produk'])
-            ->whereBetween('booking_date', [$start->format('Y-m-d'), $end->format('Y-m-d')])
+            ->whereBetween('booking_date', [$from->format('Y-m-d'), $until->format('Y-m-d')])
             ->get();
 
         $summary = [];
