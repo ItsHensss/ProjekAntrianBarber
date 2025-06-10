@@ -9,6 +9,7 @@ use App\Http\Controllers\galleryController;
 use App\Http\Controllers\nomorAntrian;
 use App\Http\Controllers\QueueValidationController;
 use App\Http\Controllers\SummaryExportController;
+use App\Http\Controllers\TransaksiExportController;
 use Illuminate\Support\Facades\Crypt;
 
 Route::get('/validasi-antrian/{queue}', [QueueValidationController::class, 'show'])->name('validasi.antrian.show');
