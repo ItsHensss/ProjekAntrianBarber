@@ -39,9 +39,15 @@
 							<a href="https://wa.me/6285942966128" class="btn-main" target="_blank" rel="noopener">
 								Kontak Kami
 							</a>
-							<a href="{{ url('customer') }}" class="btn-main" style="margin-left: 10px;">
-								Booking
-							</a>
+							@if (Auth::check())
+								<a href="{{ url('customer') }}" class="btn-main" style="margin-left: 10px;">
+									Dashboard
+								</a>
+							@else
+								<a href="{{ url('customer') }}" class="btn-main" style="margin-left: 10px;">
+									Booking
+								</a>
+							@endif
 							<span id="menu-btn"></span>
 						</div>
 					</div>
