@@ -26,75 +26,15 @@ class TransaksiResource extends Resource
     protected static ?string $modelLabel = 'Transaksi';
     protected static ?string $pluralModelLabel = 'Transaksi';
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                TextColumn::make('id')
-                    ->label('ID')
-                    ->searchable(),
+    // public static function canViewAny(): bool
+    // {
+    //     return true;
+    // }
 
-                TextColumn::make('customer.nama')
-                    ->label('Nama Pelanggan')
-                    ->searchable(),
-
-                TextColumn::make('produk.judul')
-                    ->label('Produk')
-                    ->searchable(),
-
-                TextColumn::make('status')
-                    ->label('Status'),
-
-                TextColumn::make('user.name')
-                    ->label('Chapster'),
-
-                TextColumn::make('produk.harga')
-                    ->label('Harga Produk')
-                    ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
-
-                TextColumn::make('booking_date')
-                    ->label('Tanggal Booking')
-                    ->date('l, d F Y'),
-            ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('user_id')
-                    ->label('Group by Chapster')
-                    ->options(fn() => \App\Models\User::pluck('name', 'id'))
-                    ->query(function (Builder $query, array $data) {
-                        if (!empty($data['value'])) {
-                            $query->where('user_id', $data['value']);
-                        }
-                    }),
-
-                Tables\Filters\SelectFilter::make('produk_id')
-                    ->label('Group by Produk')
-                    ->options(fn() => \App\Models\Produk::where('tenant_id', Auth::user()?->teams->first()?->id)->pluck('judul', 'id'))
-                    ->query(function (Builder $query, array $data) {
-                        if (!empty($data['value'])) {
-                            $query->where('produk_id', $data['value']);
-                        }
-                    }),
-
-                Tables\Filters\Filter::make('booking_date')
-                    ->label('Group by Tanggal Booking')
-                    ->form([
-                        Forms\Components\DatePicker::make('booking_date'),
-                    ])
-                    ->query(function (Builder $query, array $data) {
-                        if (!empty($data['booking_date'])) {
-                            $query->whereDate('booking_date', $data['booking_date']);
-                        }
-                    }),
-            ])
-            ->defaultSort('created_at', 'desc');
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
+    // public static function canView($record): bool
+    // {
+    //     return true;
+    // }
 
     public static function getPages(): array
     {
