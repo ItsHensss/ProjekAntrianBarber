@@ -16,6 +16,7 @@ class Lokasi extends Model
         'kota',
         'telepon',
         'email',
+        'tenant_id',
     ];
 
     public function tenant(): BelongsTo
