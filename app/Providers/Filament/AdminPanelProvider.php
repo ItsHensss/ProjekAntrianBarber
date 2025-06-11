@@ -7,6 +7,7 @@ use App\Filament\Pages\Tenancy\RegisterTeam;
 use App\Filament\Resources\GrafikAntrianPerbulanResource\Widgets\GrafikAntrianPerbulan;
 use App\Filament\Resources\GrafikPemasukanPerbulanResource\Widgets\GrafikPemasukanPerbulan;
 use App\Filament\Resources\StatsHarianResource\Widgets\StatsHarian;
+use App\Http\Middleware\EnsureUserHasRole;
 use App\Models\Tenant;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -67,6 +68,7 @@ class AdminPanelProvider extends PanelProvider
             ], isPersistent: true)
             ->authMiddleware([
                 Authenticate::class,
+                EnsureUserHasRole::class,
             ])
             ->tenantRegistration(RegisterTeam::class)
             ->plugins([
