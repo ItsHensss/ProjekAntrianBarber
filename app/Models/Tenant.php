@@ -53,4 +53,8 @@ class Tenant extends Model
     {
         return $this->hasMany(Lokasi::class);
     }
+    public function lokasi()
+    {
+        return $this->hasMany(Lokasi::class);
+    }
 }
