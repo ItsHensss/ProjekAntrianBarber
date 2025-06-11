@@ -6,6 +6,7 @@ use Illuminate\Support\Carbon;
 use App\Filament\Resources\SummaryResource;
 use App\Models\Queue;
 use Filament\Resources\Pages\Page;
+use Illuminate\Support\Facades\Auth;
 use Livewire\WithPagination;
 
 class SummaryReport extends Page
@@ -29,23 +30,22 @@ class SummaryReport extends Page
     public function getSummaryData()
     {
         $from = Carbon::parse($this->from)->startOfDay();
-        $until = Carbon::parse($this->until)->startOfDay()->addDay(); // pakai di akhir saja
+        $until = Carbon::parse($this->until)->startOfDay()->addDay();
 
         $dates = [];
-        $period = new \DatePeriod(
-            $from,
-            new \DateInterval('P1D'),
-            $until // tanpa addDay() lagi
-        );
-
+        $period = new \DatePeriod($from, new \DateInterval('P1D'), $until);
         foreach ($period as $date) {
             $dates[] = $date->format('Y-m-d');
         }
 
+        $query = Queue::with(['user', 'produk']);
 
-        $queues = Queue::with(['user', 'produk'])
-            ->whereBetween('booking_date', [$from->format('Y-m-d'), $until->format('Y-m-d')])
-            ->get();
+        // Filter berdasarkan user login jika bukan super admin
+        if (!Auth::user()->hasRole('super_admin')) {
+            $query->where('user_id', Auth::id());
+        }
+
+        $queues = $query->whereBetween('booking_date', [$from->format('Y-m-d'), $until->format('Y-m-d')])->get();
 
         $summary = [];
 
