@@ -14,29 +14,30 @@
 			</div>
 		</div>
 	</form>
-
-	<table class="min-w-full table-auto border-collapse border border-gray-300 dark:border-gray-700">
-		<thead>
-			<tr class="bg-gray-100 dark:bg-gray-800">
-				<th class="border px-4 py-2">Tanggal</th>
-				<th class="border px-4 py-2">Pelanggan</th>
-				<th class="border px-4 py-2">Produk</th>
-				<th class="border px-4 py-2">Harga</th>
-				<th class="border px-4 py-2">Chapster</th>
-				<th class="border px-4 py-2">Status</th>
-			</tr>
-		</thead>
-		<tbody>
-			@foreach ($data as $item)
-				<tr class="bg-white dark:bg-gray-900">
-					<td class="border px-4 py-2">{{ $item->booking_date }}</td>
-					<td class="border px-4 py-2">{{ $item->customer->nama ?? '-' }}</td>
-					<td class="border px-4 py-2">{{ $item->produk->judul ?? '-' }}</td>
-					<td class="border px-4 py-2">Rp {{ number_format($item->produk->harga ?? 0, 0, ',', '.') }}</td>
-					<td class="border px-4 py-2">{{ $item->user->name ?? '-' }}</td>
-					<td class="border px-4 py-2">{{ $item->status }}</td>
+	<div class="overflow-x-auto">
+		<table class="min-w-full table-auto border-collapse border border-gray-300 dark:border-gray-700">
+			<thead>
+				<tr class="bg-gray-100 dark:bg-gray-800">
+					<th class="border px-4 py-2">Tanggal</th>
+					<th class="border px-4 py-2">Pelanggan</th>
+					<th class="border px-4 py-2">Produk</th>
+					<th class="border px-4 py-2">Harga</th>
+					<th class="border px-4 py-2">Chapster</th>
+					<th class="border px-4 py-2">Status</th>
 				</tr>
-			@endforeach
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				@foreach ($data as $item)
+					<tr class="bg-white dark:bg-gray-900">
+						<td class="border px-4 py-2">{{ $item->booking_date }}</td>
+						<td class="border px-4 py-2">{{ $item->customer->nama ?? '-' }}</td>
+						<td class="border px-4 py-2">{{ $item->produk->judul ?? '-' }}</td>
+						<td class="border px-4 py-2">Rp {{ number_format($item->produk->harga ?? 0, 0, ',', '.') }}</td>
+						<td class="border px-4 py-2">{{ $item->user->name ?? '-' }}</td>
+						<td class="border px-4 py-2">{{ $item->status }}</td>
+					</tr>
+				@endforeach
+			</tbody>
+		</table>
+	</div>
 </x-filament::page>
