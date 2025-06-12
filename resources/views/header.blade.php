@@ -32,15 +32,19 @@
 									@endforeach
 								</ul>
 							</li>
+							<li><a class="menu-item">Lainnya</a>
+								<ul>
+									<li><a href="{{ url('admin') }}" target="_blank" style="margin-left: 10px;">
+											Login Chapster
+										</a></li>
+								</ul>
+							</li>
 						</ul>
 					</div>
 					<div class="de-flex-col">
 						<div class="menu_side_area">
-							<a href="https://wa.me/6285942966128" class="btn-main" target="_blank" rel="noopener">
+							<a href="https://{{ $lokasiPertama->telepon }}" class="btn-main" target="_blank" rel="noopener">
 								Kontak Kami
-							</a>
-							<a href="{{ url('admin') }}" class="btn-main" target="_blank" style="margin-left: 10px;">
-								Login
 							</a>
 							@if (Auth::check())
 								<a href="{{ url('customer') }}" class="btn-main" style="margin-left: 10px;">
