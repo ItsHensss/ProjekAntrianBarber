@@ -28,6 +28,8 @@ class CustomerPanelProvider extends PanelProvider
             ->path('customer')
             ->topNavigation()
             ->login()
+            ->profile()
+            ->passwordReset()
             ->registration()
             ->spa()
             ->colors([
