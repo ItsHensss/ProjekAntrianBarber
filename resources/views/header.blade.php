@@ -39,6 +39,9 @@
 							<a href="https://wa.me/6285942966128" class="btn-main" target="_blank" rel="noopener">
 								Kontak Kami
 							</a>
+							<a href="{{ url('admin') }}" class="btn-main" target="_blank" style="margin-left: 10px;">
+								Login
+							</a>
 							@if (Auth::check())
 								<a href="{{ url('customer') }}" class="btn-main" style="margin-left: 10px;">
 									Dashboard
