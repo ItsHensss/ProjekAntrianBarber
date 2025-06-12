@@ -30,6 +30,7 @@ class CustomerPanelProvider extends PanelProvider
             ->login()
             ->profile()
             ->passwordReset()
+            ->emailVerification()
             ->registration()
             ->spa()
             ->colors([
