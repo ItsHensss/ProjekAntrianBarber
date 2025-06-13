@@ -47,14 +47,25 @@
 								Kontak Kami
 							</a>
 							@if (Auth::check())
-								<a href="{{ url('customer') }}" class="btn-main" style="margin-left: 10px;">
-									Dashboard
-								</a>
+								@if (Auth::user()->hasRole('super_admin'))
+									<a href="{{ url('admin') }}" class="btn-main" style="margin-left: 10px;">
+										Dashboard Admin
+									</a>
+								@elseif (Auth::user()->hasRole('basic_user'))
+									<a href="{{ url('admin') }}" class="btn-main" style="margin-left: 10px;">
+										Dashboard Chapster
+									</a>
+								@else
+									<a href="{{ url('customer') }}" class="btn-main" style="margin-left: 10px;">
+										Dashboard Customer
+									</a>
+								@endif
 							@else
 								<a href="{{ url('customer') }}" class="btn-main" style="margin-left: 10px;">
 									Booking
 								</a>
 							@endif
+
 							<span id="menu-btn"></span>
 						</div>
 					</div>
