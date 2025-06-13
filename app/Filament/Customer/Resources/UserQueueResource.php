@@ -82,8 +82,10 @@ class UserQueueResource extends Resource
                         if ($customerId) {
                             return $query->where('customer_id', $customerId);
                         }
-                        // Jika user tidak punya customer, kembalikan query tanpa filter
-                        return $query;
+                        // Jika user tidak punya customer, munculkan alert
+                        session()->flash('danger', 'Customer ID tidak ada, harap register sebagai customer.');
+                        // Kembalikan query tanpa mengubah apapun (filter tidak aktif)
+                        return $query->whereRaw('1 = 0');
                     }),
                 Filter::make('today')
                     ->label('Antrian Hari Ini')
