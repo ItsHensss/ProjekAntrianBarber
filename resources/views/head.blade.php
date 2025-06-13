@@ -1,10 +1,10 @@
-<title>Blaxcut - Barbershop</title>
-<link rel="icon" href="{{ asset('images/icon.png') }}" type="image/gif" sizes="16x16">
+<title>Demine - Barbershop</title>
+<link rel="icon" href="{{ asset('images/logo.png') }}" type="image/gif" sizes="16x16">
 <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta content="Blaxcut - Barbershop Website Template" name="description">
-<meta content="" name="keywords">
-<meta content="" name="author">
+<meta content="Deminebarbershop" name="description">
+<meta content="Deminebarbershop" name="keywords">
+<meta content="Deminebarbershop" name="author">
 <!-- CSS Files
 																================================================== -->
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" id="bootstrap">
