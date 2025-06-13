@@ -69,8 +69,10 @@
 					<div class="row">
 						<div class="col-lg-12" data-jarallax-element="-50">
 							<p class="lead big wow fadeInUp">
-								Didirikan dengan semangat tinggi terhadap seni barber, kami sangat menjunjung profesionalisme dan dedikasi dalam memberikan layanan terbaik.
-								Sejak Anda melangkah masuk, Anda akan disambut dengan keramahan dan suasana hangat yang membuat Anda merasa nyaman seperti di rumah sendiri.
+								Didirikan dengan semangat tinggi terhadap seni barber, kami sangat menjunjung
+								profesionalisme dan dedikasi dalam memberikan layanan terbaik.
+								Sejak Anda melangkah masuk, Anda akan disambut dengan keramahan dan suasana hangat yang
+								membuat Anda merasa nyaman seperti di rumah sendiri.
 							</p>
 						</div>
 					</div>
@@ -86,13 +88,29 @@
 							<div class="spacer-single"></div>
 						</div>
 					</div>
+					<!-- Modal -->
+					<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="photoModalLabel">Photo Details</h5>
+									<!-- Menggunakan kelas btn-close-white untuk warna putih -->
+									<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									<img id="modalImage" class="img-fluid" alt="Selected photo">
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<div class="row">
 						<div class="col-lg-12" data-jarallax-element="-20">
 							<div class="d-carousel wow fadeInRight">
 								<div id="item-carousel-big" class="owl-carousel no-hide owl-center" data-wow-delay="1s">
 									@foreach ($fotoPotongans as $foto)
 										<div class="c-item">
-											<a href="#">
+											<a href="#" data-bs-toggle="modal" data-bs-target="#photoModal" onclick="setModalImage('{{ asset('storage/' . $foto->image) }}')">
 												<span class="c-item_info">
 													<span class="c-item_title">{{ $foto->judul }}</span>
 													<span class="c-item_wm">#{{ $loop->iteration }}</span>
@@ -122,10 +140,13 @@
 							<img src="images/misc/man-2.png" class="img-fluid wow fadeInRight" alt="">
 						</div>
 						<div class="col-lg-6" data-jarallax-element="-60">
-							<h2 class="wow fadeInRight" data-wow-delay=".3s">Kami Hadir untuk Meningkatkan <span class="id-color">Kepercayaan Diri</span> Anda Lewat Gaya
+							<h2 class="wow fadeInRight" data-wow-delay=".3s">Kami Hadir untuk Meningkatkan <span class="id-color">Kepercayaan Diri</span> Anda Lewat
+								Gaya
 								Terbaik</h2>
-							<p class="wow fadeInRight" data-wow-delay=".4s">Kami berkomitmen memberikan layanan grooming terbaik dengan perpaduan teknik klasik dan tren
-								modern. Rasakan suasana hangat dan profesional, serta tim barber berpengalaman yang siap membantu Anda tampil percaya diri dan berkelas.</p>
+							<p class="wow fadeInRight" data-wow-delay=".4s">Kami berkomitmen memberikan layanan
+								grooming terbaik dengan perpaduan teknik klasik dan tren
+								modern. Rasakan suasana hangat dan profesional, serta tim barber berpengalaman yang siap
+								membantu Anda tampil percaya diri dan berkelas.</p>
 							<a href="{{ url('customer') }}" class="btn-main wow fadeInRight" data-wow-delay=".5s" style="margin-left: 10px;">
 								Booking Sekarang
 							</a>
@@ -193,11 +214,15 @@
 								<div class="de-separator"></div>
 								@foreach ($lokasiCabang as $lokasi)
 									<div class="d-col mb-3">
-										<div class="d-title text-truncate" style="max-width: 100%; white-space: normal; word-break: break-word;">{{ $lokasi->nama_cabang }}</div>
-										<div class="d-content id-color" style="max-width: 100%; white-space: normal; word-break: break-word;">{{ $lokasi->alamat }},
+										<div class="d-title text-truncate" style="max-width: 100%; white-space: normal; word-break: break-word;">
+											{{ $lokasi->nama_cabang }}</div>
+										<div class="d-content id-color" style="max-width: 100%; white-space: normal; word-break: break-word;">
+											{{ $lokasi->alamat }},
 											{{ $lokasi->kota }}</div>
-										<div class="d-content id-color" style="max-width: 100%; white-space: normal; word-break: break-word;">Telp: {{ $lokasi->telepon }}</div>
-										<div class="d-content id-color" style="max-width: 100%; white-space: normal; word-break: break-word;">Email: {{ $lokasi->email }}</div>
+										<div class="d-content id-color" style="max-width: 100%; white-space: normal; word-break: break-word;">Telp:
+											{{ $lokasi->telepon }}</div>
+										<div class="d-content id-color" style="max-width: 100%; white-space: normal; word-break: break-word;">
+											Email: {{ $lokasi->email }}</div>
 									</div>
 								@endforeach
 								<div class="d-deco"></div>
@@ -220,6 +245,12 @@
 	@include('script')
 
 </body>
+<script>
+	function setModalImage(imageUrl) {
+		// Set image in the modal
+		document.getElementById('modalImage').src = imageUrl;
+	}
+</script>
 
 <!-- Mirrored from madebydesignesia.com/themes/blaxcut/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 19 May 2025 12:21:00 GMT -->
 
