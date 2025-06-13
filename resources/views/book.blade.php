@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
 
-<!-- Mirrored from madebydesignesia.com/themes/blaxcut/book.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 19 May 2025 12:21:11 GMT -->
-
 <head>
 	@include('head')
 </head>
@@ -168,7 +166,7 @@
 						<img src="images/logo.png" class="" alt="">
 					</div>
 					<div class="col-lg-4 text-lg-end text-center">
-						Copyright 2025 - Blaxcut by Designesia
+						Copyright 2025 - Deminebarbershop
 					</div>
 				</div>
 			</div>

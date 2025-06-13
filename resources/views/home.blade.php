@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="zxx">
 
-<!-- Mirrored from madebydesignesia.com/themes/blaxcut/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 19 May 2025 12:20:51 GMT -->
-
 <head>
 	@include('head')
 </head>
