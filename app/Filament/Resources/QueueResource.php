@@ -157,16 +157,6 @@ class QueueResource extends Resource
                     ->label('Tanggal Booking')
                     ->date('l, d F Y')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Dibuat Pada')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Diperbarui Pada')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 // filter antrian hari ini

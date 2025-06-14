@@ -55,6 +55,8 @@ class OperationalResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
+
             ->columns([
                 Tables\Columns\TextColumn::make('day')
                     ->label('Hari')
@@ -66,16 +68,6 @@ class OperationalResource extends Resource
                 Tables\Columns\IconColumn::make('is_open')
                     ->label('Buka?')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Dibuat Pada')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Diperbarui Pada')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

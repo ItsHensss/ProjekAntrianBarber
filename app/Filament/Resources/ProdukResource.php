@@ -57,6 +57,8 @@ class ProdukResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
+
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Gambar'),
@@ -67,16 +69,6 @@ class ProdukResource extends Resource
                     ->label('Harga')
                     ->searchable()
                     ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.')),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Dibuat Pada')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Diperbarui Pada')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
