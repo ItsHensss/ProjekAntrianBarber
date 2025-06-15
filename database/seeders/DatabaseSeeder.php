@@ -18,11 +18,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         // panggil shield seeder
-        $this->call([
-            ShieldSeeder::class,
-            CustomerSeeder::class,
-            queueSeeder::class,
-        ]);
+
         $names = [
             'Budi Santoso',
             'Siti Aminah',
@@ -194,6 +190,12 @@ class DatabaseSeeder extends Seeder
                 'created_at' => '2025-05-29 05:14:52',
                 'updated_at' => '2025-05-29 05:14:52',
             ],
+        ]);
+
+        $this->call([
+            ShieldSeeder::class,
+            CustomerSeeder::class,
+            queueSeeder::class,
         ]);
     }
 }
