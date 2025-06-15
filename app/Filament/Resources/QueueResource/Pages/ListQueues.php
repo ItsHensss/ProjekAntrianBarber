@@ -12,6 +12,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Get;
+use Filament\Notifications\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Support\Facades\Auth;
@@ -80,32 +81,32 @@ class ListQueues extends ListRecords
                     $user = Auth::user();
 
                     // Ambil customer dan user id sesuai kondisi pelanggan baru atau tidak
-                    if (!empty($data['is_new_customer']) && $data['is_new_customer']) {
-                        // Buat user baru
-                        // $newUser = \App\Models\User::create([
-                        //     'name' => $data['nama'],
-                        //     'email' => $data['user_email'],
-                        //     'password' => bcrypt($data['user_password']),
-                        // ]);
-                        // Buat customer baru
-                        $customer = Customer::create([
-                            'nama' => $data['nama'],
-                            'nomor' => $data['nomor'],
-                        ]);
-                        $data = $this->mutateFormDataBeforeCreate($data);
-                    } else {
-                        $customer = Customer::find($data['customer_id']);
-                        $data = $this->mutateFormDataBeforeCreate($data);
-                    }
+                    // if (!empty($data['is_new_customer']) && $data['is_new_customer']) {
+                    //     // Buat user baru
+                    //     // $newUser = \App\Models\User::create([
+                    //     //     'name' => $data['nama'],
+                    //     //     'email' => $data['user_email'],
+                    //     //     'password' => bcrypt($data['user_password']),
+                    //     // ]);
+                    //     // Buat customer baru
+                    //     $customer = Customer::create([
+                    //         'nama' => $data['nama'],
+                    //         'nomor' => $data['nomor'],
+                    //     ]);
+                    //     $data = $this->mutateFormDataBeforeCreate($data);
+                    // } else {
+                    //     $customer = Customer::find($data['customer_id']);
+                    //     $data = $this->mutateFormDataBeforeCreate($data);
+                    // }
 
-                    if (!$customer) {
-                        Notification::make()
-                            ->title('Gagal Mendaftar')
-                            ->body('Pelanggan tidak ditemukan.')
-                            ->danger()
-                            ->send();
-                        return;
-                    }
+                    // if (!$customer) {
+                    //     Notification::make()
+                    //         ->title('Gagal Mendaftar')
+                    //         ->body('Pelanggan tidak ditemukan.')
+                    //         ->danger()
+                    //         ->send();
+                    //     return;
+                    // }
 
                     $bookingDate = $data['booking_date'];
                     $tenantId = Auth::user()?->teams->first()?->id;
@@ -130,7 +131,7 @@ class ListQueues extends ListRecords
                         ->body("Berhasil mendaftar dengan nomor antrian: {$nextNomorAntrian}")
                         ->success()
                         ->actions([
-                            Actions\Action::make('printNow')
+                            Action::make('printNow')
                                 ->label('Print Sekarang')
                                 ->url(route('antrian.print', ['queue' => $queue->id]))
                                 ->openUrlInNewTab(),
