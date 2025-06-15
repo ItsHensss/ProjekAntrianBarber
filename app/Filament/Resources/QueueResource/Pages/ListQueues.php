@@ -35,8 +35,7 @@ class ListQueues extends ListRecords
                         ->label('Pilih Pelanggan')
                         ->searchable()
                         ->options(fn() => Customer::pluck('nama', 'id'))
-                        ->visible(fn(Get $get) => !$get('is_new_customer'))
-                        ->required(fn(Get $get) => !$get('is_new_customer')),
+                        ->visible(fn(Get $get) => !$get('is_new_customer')),
 
                     TextInput::make('nama')
                         ->label('Nama Pelanggan')
@@ -46,7 +45,6 @@ class ListQueues extends ListRecords
                     TextInput::make('nomor')
                         ->label('Nomor Pelanggan')
                         ->numeric()
-                        ->required(fn(Get $get) => $get('is_new_customer'))
                         ->visible(fn(Get $get) => $get('is_new_customer')),
 
                     // TextInput::make('user_email')

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('customer_id')->constrained()->onDelete('cascade');
-            $table->foreignId('produk_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('customer_id')->nullable(); // relasi ke customer
+            $table->unsignedBigInteger('produk_id')->nullable(); // relasi ke produk
             $table->unsignedBigInteger('tenant_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable(); // chapster yang melayani
             $table->integer('nomor_antrian');

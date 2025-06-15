@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
         // panggil shield seeder
         $this->call([
             ShieldSeeder::class,
+            CustomerSeeder::class,
+            queueSeeder::class,
         ]);
         $names = [
             'Budi Santoso',

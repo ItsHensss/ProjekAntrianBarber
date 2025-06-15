@@ -13,10 +13,18 @@ class CustomerSeeder extends Seeder
         $faker = Faker::create('id_ID');
 
         for ($i = 0; $i < 100; $i++) {
+            // Buat user baru
+            $user = \App\Models\User::create([
+                'name' => $faker->name,
+                'email' => $faker->unique()->safeEmail,
+                'password' => bcrypt('password'), // default password
+            ]);
+
+            // Buat customer dengan user_id
             Customer::create([
-                'nama' => $faker->name,
+                'nama' => $user->name,
                 'nomor' => $faker->phoneNumber,
-                'user_id' => null,
+                'user_id' => $user->id,
             ]);
         }
     }
