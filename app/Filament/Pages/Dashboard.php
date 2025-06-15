@@ -30,10 +30,10 @@ class Dashboard extends PagesDashboard
                             ->placeholder('Pilih Tenant'),
                         DatePicker::make('startDate')
                             ->label('Tanggal Awal')
-                            ->default(now()->startOfMonth()),
+                            ->default(now()),
                         DatePicker::make('endDate')
                             ->label('Tanggal Akhir')
-                            ->default(now()->endOfMonth()),
+                            ->default(now()),
                     ])
                     ->columns(3),
             ]);
