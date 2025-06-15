@@ -116,8 +116,7 @@ class ListQueues extends ListRecords
                         ->first();
                     $nextNomorAntrian = $lastQueue ? $lastQueue->nomor_antrian + 1 : 1;
 
-                    Queue::create([
-                        // 'customer_id' => $customer->id,
+                    $queue = Queue::create([
                         'tenant_id' => Auth::user()?->teams->first()?->id,
                         'produk_id' => $data['produk_id'],
                         'booking_date' => $bookingDate,
@@ -128,8 +127,14 @@ class ListQueues extends ListRecords
 
                     Notification::make()
                         ->title('Berhasil Mendaftar')
-                        ->body('Berhasil mendaftar dengan nomor antrian: ' . $nextNomorAntrian)
+                        ->body("Berhasil mendaftar dengan nomor antrian: {$nextNomorAntrian}")
                         ->success()
+                        ->actions([
+                            Actions\Action::make('printNow')
+                                ->label('Print Sekarang')
+                                ->url(route('antrian.print', ['queue' => $queue->id]))
+                                ->openUrlInNewTab(),
+                        ])
                         ->send();
                 })
         ];
