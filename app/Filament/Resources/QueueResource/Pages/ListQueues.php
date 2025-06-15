@@ -26,26 +26,26 @@ class ListQueues extends ListRecords
             Actions\Action::make('Daftar Antrian')
                 ->label('Daftar Antrian')
                 ->form([
-                    Toggle::make('is_new_customer')
-                        ->label('Pelanggan Baru?')
-                        ->default(false)
-                        ->reactive(),
+                    // Toggle::make('is_new_customer')
+                    //     ->label('Pelanggan Baru?')
+                    //     ->default(false)
+                    //     ->reactive(),
 
-                    Select::make('customer_id')
-                        ->label('Pilih Pelanggan')
-                        ->searchable()
-                        ->options(fn() => Customer::pluck('nama', 'id'))
-                        ->visible(fn(Get $get) => !$get('is_new_customer')),
+                    // Select::make('customer_id')
+                    //     ->label('Pilih Pelanggan')
+                    //     ->searchable()
+                    //     ->options(fn() => Customer::pluck('nama', 'id'))
+                    //     ->visible(fn(Get $get) => !$get('is_new_customer')),
 
-                    TextInput::make('nama')
-                        ->label('Nama Pelanggan')
-                        ->required(fn(Get $get) => $get('is_new_customer'))
-                        ->visible(fn(Get $get) => $get('is_new_customer')),
+                    // TextInput::make('nama')
+                    //     ->label('Nama Pelanggan')
+                    //     ->required(fn(Get $get) => $get('is_new_customer'))
+                    //     ->visible(fn(Get $get) => $get('is_new_customer')),
 
-                    TextInput::make('nomor')
-                        ->label('Nomor Pelanggan')
-                        ->numeric()
-                        ->visible(fn(Get $get) => $get('is_new_customer')),
+                    // TextInput::make('nomor')
+                    //     ->label('Nomor Pelanggan')
+                    //     ->numeric()
+                    //     ->visible(fn(Get $get) => $get('is_new_customer')),
 
                     // TextInput::make('user_email')
                     //     ->label('Email User')
@@ -117,7 +117,7 @@ class ListQueues extends ListRecords
                     $nextNomorAntrian = $lastQueue ? $lastQueue->nomor_antrian + 1 : 1;
 
                     Queue::create([
-                        'customer_id' => $customer->id,
+                        // 'customer_id' => $customer->id,
                         'tenant_id' => Auth::user()?->teams->first()?->id,
                         'produk_id' => $data['produk_id'],
                         'booking_date' => $bookingDate,
