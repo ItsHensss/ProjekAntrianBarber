@@ -134,10 +134,11 @@ class ListQueues extends ListRecords
                             Action::make('printNow')
                                 ->label('Print Sekarang')
                                 ->url(route('antrian.print', ['queue' => $queue->id]))
-                                ->openUrlInNewTab()
-                                ->sendToDatabase(Auth::user()),
+                                ->openUrlInNewTab(),
                         ])
-                        ->send();
+
+                        ->send()
+                        ->sendToDatabase(Auth::user());
                 })
         ];
     }
