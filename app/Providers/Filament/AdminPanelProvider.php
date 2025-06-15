@@ -4,6 +4,7 @@ namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
 use App\Filament\Pages\Tenancy\RegisterTeam;
+use App\Filament\Resources\AntrianPerProdukStatsResource\Widgets\AntrianPerProdukStats;
 use App\Filament\Resources\GrafikAntrianPerbulanResource\Widgets\GrafikAntrianPerbulan;
 use App\Filament\Resources\GrafikPemasukanPerbulanResource\Widgets\GrafikPemasukanPerbulan;
 use App\Filament\Resources\StatsHarianResource\Widgets\StatsHarian;
@@ -51,6 +52,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 StatsHarian::class,
                 GrafikAntrianPerbulan::class,
+                AntrianPerProdukStats::class,
                 GrafikPemasukanPerbulan::class,
             ])
             ->middleware([
