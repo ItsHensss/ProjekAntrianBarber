@@ -51,7 +51,7 @@
 									<a href="{{ url('admin') }}" class="btn-main" style="margin-left: 10px;">
 										Dashboard Admin
 									</a>
-								@elseif (Auth::user()->hasRole('basic_user'))
+								@elseif (Auth::user()->hasRole('chapster'))
 									<a href="{{ url('admin') }}" class="btn-main" style="margin-left: 10px;">
 										Dashboard Chapster
 									</a>

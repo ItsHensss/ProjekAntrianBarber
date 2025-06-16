@@ -126,9 +126,9 @@ class QueueResource extends Resource
         return $table
             ->defaultSort('created_at', 'desc')
             ->columns([
-                Tables\Columns\TextColumn::make('customer.nama')
-                    ->label('Pelanggan')
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('customer.nama')
+                //     ->label('Pelanggan')
+                //     ->searchable(),
                 Tables\Columns\TextColumn::make('produk.judul')
                     ->label('Produk')
                     ->sortable(),
