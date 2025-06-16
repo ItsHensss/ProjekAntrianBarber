@@ -12,7 +12,7 @@ class SummaryExportController extends Controller
     public function export(Request $request)
     {
         $from = Carbon::parse($request->input('from'))->startOfDay();
-        $until = Carbon::parse($request->input('until'))->startOfDay()->addDay(); // ✅ tambahkan di sini saja
+        $until = Carbon::parse($request->input('until'))->endOfDay();
 
         $dates = [];
         $period = new \DatePeriod(

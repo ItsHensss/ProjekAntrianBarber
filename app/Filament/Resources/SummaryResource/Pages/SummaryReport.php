@@ -21,8 +21,8 @@ class SummaryReport extends Page
 
     public function mount(): void
     {
-        $this->from = now()->startOfWeek()->toDateString();
-        $this->until = now()->endOfWeek()->toDateString();
+        $this->from = now()->startOfMonth()->toDateString();
+        $this->until = now()->endOfMonth()->toDateString();
 
         $this->data = $this->getSummaryData();
     }
