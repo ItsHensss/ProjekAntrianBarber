@@ -23,7 +23,6 @@ Route::get('/qrcode/antrian/{encrypted}', function ($encrypted) {
     }
 })->name('antrian.qr.decrypt');
 
-
 Route::get('/', [home::class, 'index'])->name('home');
 Route::get('/about', [aboutController::class, 'index'])->name('about');
 Route::get('/gallery', [galleryController::class, 'index'])->name('gallery');
