@@ -9,10 +9,11 @@
 				<x-filament::button type="submit" class="w-full md:w-auto">
 					Tampilkan
 				</x-filament::button>
-				<x-filament::button tag="a" href="{{ route('summary.export.pdf', ['from' => $from, 'until' => $until]) }}" target="_blank" color="gray"
-					class="w-full md:w-auto">
-					PDF
+				<x-filament::button tag="a" href="{{ route('summary.export.excel', ['from' => $from, 'until' => $until]) }}" target="_blank"
+					color="success">
+					Excel
 				</x-filament::button>
+
 			</div>
 		</div>
 	</form>

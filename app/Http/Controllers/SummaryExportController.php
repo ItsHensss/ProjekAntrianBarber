@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use App\Models\Queue;
-use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class SummaryExportController extends Controller
 {
@@ -14,23 +17,26 @@ class SummaryExportController extends Controller
         $from = Carbon::parse($request->input('from'))->startOfDay();
         $until = Carbon::parse($request->input('until'))->endOfDay();
 
+        // Daftar tanggal
         $dates = [];
-        $period = new \DatePeriod(
-            $from,
-            new \DateInterval('P1D'),
-            $until // ✅ tanpa addDay() lagi
-        );
-
+        $period = new \DatePeriod($from, new \DateInterval('P1D'), $until->copy()->addDay());
         foreach ($period as $date) {
             $dates[] = $date->format('Y-m-d');
         }
 
-        $queues = Queue::with(['user', 'produk'])
-            ->whereBetween('booking_date', [$from->format('Y-m-d'), $until->copy()->subDay()->format('Y-m-d')]) // ⬅️ dikurangi lagi saat query
-            ->get();
+        // Query antrian
+        $query = Queue::with(['user', 'produk'])
+            ->whereBetween('booking_date', [$from->format('Y-m-d'), $until->format('Y-m-d')])
+            ->where('status', 'selesai');
 
+        if (!Auth::user()->hasRole('super_admin')) {
+            $query->where('user_id', Auth::id());
+        }
+
+        $queues = $query->get();
+
+        // Ringkasan
         $summary = [];
-
         foreach ($queues as $queue) {
             $name = $queue->user->name ?? '-';
             $layanan = $queue->produk->judul ?? '-';
@@ -53,14 +59,40 @@ class SummaryExportController extends Controller
             }
         }
 
-        $data = [
-            'from' => $from->format('Y-m-d'),
-            'until' => $until->copy()->subDay()->format('Y-m-d'), // untuk ditampilkan sesuai input
-            'dates' => $dates,
-            'summary' => $summary,
-        ];
+        // Generate Excel
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
 
-        $pdf = FacadePdf::loadView('exports.summary', $data)->setPaper('A4', 'landscape');
-        return $pdf->stream("Laporan_Ringkasan_{$from->format('Ymd')}_{$until->copy()->subDay()->format('Ymd')}.pdf");
+        // Header
+        $header = ['Nama Karyawan', 'Jenis Layanan'];
+        $header = array_merge($header, $dates);
+        $header[] = 'Total';
+        $sheet->fromArray($header, null, 'A1');
+
+        // Data
+        $row = 2;
+        foreach ($summary as $karyawan => $layanans) {
+            foreach ($layanans as $layanan => $items) {
+                $dataRow = [$karyawan, $layanan];
+                foreach ($dates as $date) {
+                    $dataRow[] = $items[$date] ?? 0;
+                }
+                $dataRow[] = $items['total'] ?? 0;
+                $sheet->fromArray($dataRow, null, 'A' . $row);
+                $row++;
+            }
+        }
+
+        // Simpan dan unduh
+        $filename = 'Laporan_Ringkasan_' . $from->format('Ymd') . '_' . $until->format('Ymd') . '.xlsx';
+
+        return new StreamedResponse(function () use ($spreadsheet) {
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+        }, 200, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Content-Disposition' => "attachment;filename=\"{$filename}\"",
+            'Cache-Control' => 'max-age=0',
+        ]);
     }
 }

@@ -33,5 +33,7 @@ Route::get('/antrian/today/json/{id}', [NomorAntrian::class, 'jsonToday'])->name
 Route::get('/antrian/{queue}/print', [NomorAntrian::class, 'print'])->name('antrian.print');
 
 Route::get('/export-transaksi', [ExportController::class, 'export'])->name('export.transaksi');
-Route::get('/summary/export/pdf', [SummaryExportController::class, 'export'])->name('summary.export.pdf');
+Route::get('/summary/export/excel', [SummaryExportController::class, 'export'])
+    ->name('summary.export.excel');
+
 Route::get('/transaksi/export/pdf', [TransaksiExportController::class, 'export'])->name('transaksi.export.pdf');
