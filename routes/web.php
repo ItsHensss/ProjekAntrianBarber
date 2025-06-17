@@ -35,5 +35,5 @@ Route::get('/antrian/{queue}/print', [NomorAntrian::class, 'print'])->name('antr
 Route::get('/export-transaksi', [ExportController::class, 'export'])->name('export.transaksi');
 Route::get('/summary/export/excel', [SummaryExportController::class, 'export'])
     ->name('summary.export.excel');
-
-Route::get('/transaksi/export/pdf', [TransaksiExportController::class, 'export'])->name('transaksi.export.pdf');
+Route::get('/transaksi/export/excel', [\App\Http\Controllers\TransaksiExportController::class, 'export'])
+    ->name('transaksi.export.excel');
