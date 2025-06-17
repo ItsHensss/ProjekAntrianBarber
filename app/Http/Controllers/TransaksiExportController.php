@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Queue;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Carbon\Carbon;
 
 class TransaksiExportController extends Controller
@@ -19,12 +20,33 @@ class TransaksiExportController extends Controller
             ->orderBy('booking_date', 'asc')
             ->get();
 
-        $pdf = Pdf::loadView('exports.transaksi', [
-            'data' => $data,
-            'from' => $from->toDateString(),
-            'until' => $until->subDay()->toDateString(),
-        ])->setPaper('A4', 'landscape');
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
 
-        return $pdf->stream("Laporan_Transaksi_{$from->format('Ymd')}_{$until->subDay()->format('Ymd')}.pdf");
+        // Header
+        $headers = ['Tanggal', 'Pelanggan', 'Produk', 'Harga', 'Chapster', 'Status'];
+        $sheet->fromArray($headers, null, 'A1');
+
+        // Data Rows
+        $row = 2;
+        foreach ($data as $item) {
+            $sheet->setCellValue("A{$row}", $item->booking_date);
+            $sheet->setCellValue("B{$row}", $item->customer->nama ?? '-');
+            $sheet->setCellValue("C{$row}", $item->produk->judul ?? '-');
+            $sheet->setCellValue("D{$row}", $item->produk->harga ?? 0);
+            $sheet->setCellValue("E{$row}", $item->user->name ?? '-');
+            $sheet->setCellValue("F{$row}", $item->status);
+            $row++;
+        }
+
+        // Download response
+        $filename = "Laporan_Transaksi_{$from->format('Ymd')}_{$until->subDay()->format('Ymd')}.xlsx";
+        $writer = new Xlsx($spreadsheet);
+
+        // Buat response streaming
+        $tempFile = tempnam(sys_get_temp_dir(), $filename);
+        $writer->save($tempFile);
+
+        return response()->download($tempFile, $filename)->deleteFileAfterSend(true);
     }
 }
