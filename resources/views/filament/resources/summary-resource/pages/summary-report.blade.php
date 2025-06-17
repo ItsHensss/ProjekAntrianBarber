@@ -10,7 +10,7 @@
 					Tampilkan
 				</x-filament::button>
 				<x-filament::button tag="a" href="{{ route('summary.export.excel', ['from' => $from, 'until' => $until]) }}" target="_blank"
-					color="success">
+					color="success" class="w-full md:w-auto">
 					Excel
 				</x-filament::button>
 
