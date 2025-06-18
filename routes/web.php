@@ -14,13 +14,8 @@ use Illuminate\Support\Facades\Crypt;
 
 Route::get('/validasi-antrian/{queue}', [QueueValidationController::class, 'show'])->name('validasi.antrian.show');
 Route::post('/validasi-antrian/{queue}', [QueueValidationController::class, 'validateQueue'])->name('validasi.antrian.post');
-Route::get('/qrcode/antrian/{encrypted}', function ($encrypted) {
-    try {
-        $id = Crypt::decryptString($encrypted);
-        return redirect()->route('validasi.antrian.show', ['queue' => $id]);
-    } catch (\Exception $e) {
-        abort(404);
-    }
+Route::get('/qrcode/antrian/{queue}', function ($queue) {
+    return redirect()->route('validasi.antrian.show', ['queue' => $queue]);
 })->name('antrian.qr.decrypt');
 
 Route::get('/', [home::class, 'index'])->name('home');

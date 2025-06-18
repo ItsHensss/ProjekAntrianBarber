@@ -5,11 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Queue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class QueueValidationController extends Controller
 {
-    public function show(Queue $queue)
+    public function show($encrypted)
     {
+        try {
+            $id = Crypt::decryptString($encrypted);
+        } catch (\Exception $e) {
+            abort(404);
+        }
+
+        $queue = Queue::findOrFail($id);
+
         // Memuat produk yang berelasi dengan queue
         $produk = $queue->produk; // pastikan relasi 'produk' ada di model Queue
         $cabang = $queue->tenant; // pastikan relasi 'tenant' ada di model Queue
